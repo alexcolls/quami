@@ -10,6 +10,7 @@ import eight from './8.mp3';
 import nine from './9.mp3';
 import ten from './10.mp3';
 import eleven from './11.mp3';
+import twelve from './12.mp3';
 
 const audio = [
   zero,
@@ -23,7 +24,8 @@ const audio = [
   eight,
   nine,
   ten,
-  eleven
+  eleven,
+  twelve
 ];
 
 export default audio;

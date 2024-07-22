@@ -1,3 +1,3 @@
 <template>
-  <Main />
+  <Canvas />
 </template>

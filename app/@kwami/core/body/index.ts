@@ -10,7 +10,7 @@ import setupScene from './scene';
 import KwamiAudio from './audio';
 import Blob from './Blob';
 
-export default class Kwami {
+export default class KwamiBody {
   renderer: WebGLRenderer;
   camera: PerspectiveCamera;
   controls: any;

@@ -1,3 +1,10 @@
-import Kwami from './kwami';
+import KwamiBody from './core/body';
 
-export default Kwami;
+export default class Kwami {
+  body: KwamiBody;
+  mind: any;
+  soul: any;
+  constructor (canvas: HTMLCanvasElement) {
+    this.body = new KwamiBody(canvas);
+  }
+}

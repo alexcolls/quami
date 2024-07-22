@@ -6,7 +6,7 @@ export default defineNuxtConfig({
   app: {
     baseURL: '/',
     head: {
-      title: 'INNOCV Smart Doc AI',
+      title: 'QUAMI',
       meta: [
         { charset: 'utf-8' },
         {
@@ -16,15 +16,11 @@ export default defineNuxtConfig({
         {
           hid: 'description',
           name: 'description',
-          content: 'INNOCV Smart Doc AI'
+          content: 'QUAMI is just what you want'
         }
       ],
       link: [
-        {
-          rel: 'icon',
-          href: 'favicon.png',
-          color: '#000000'
-        }
+        { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
       ]
     },
     pageTransition: { name: 'page', mode: 'out-in' }

@@ -1,11 +1,8 @@
-import Kwami from '~/@kwami/core/body';
-import useAudio from '~/stores/audio';
-import audioFiles from '~/@kwami/assets/audio';
+import Kwami from '~/@kwami';
 
 const useQStore = defineStore('q', {
   state: () => ({
     kwami: {} as Kwami,
-    audio: useAudio(audioFiles),
     state: {
       blob: {
         vec: {
