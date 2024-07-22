@@ -8,7 +8,7 @@ import type {
 import audioFiles from '../../assets/audio';
 import setupScene from './scene';
 import KwamiAudio from './audio';
-import Blob from './Blob';
+import Blob from './lib/Blob';
 
 export default class KwamiBody {
   renderer: WebGLRenderer;
@@ -20,7 +20,7 @@ export default class KwamiBody {
     ambient: AmbientLight;
   };
 
-  public body: Blob;
+  public selected: Blob;
   public scene: Scene;
   public audio: KwamiAudio;
 
@@ -32,7 +32,7 @@ export default class KwamiBody {
     this.lights = lights;
     this.scene = scene;
     this.audio = new KwamiAudio(audioFiles);
-    this.body = new Blob(
+    this.selected = new Blob(
       'tricolor',
       'normal',
       this.scene,
@@ -40,7 +40,7 @@ export default class KwamiBody {
       this.renderer,
       this.audio
     );
-    this.scene.add(this.body.mesh);
+    this.scene.add(this.selected.mesh);
     this.resizeEvent();
   }
 
@@ -58,7 +58,7 @@ export default class KwamiBody {
   select (body: string, skin: string) {
     switch (body.toLowerCase()) {
       case 'spikyblob':
-        this.body = new Blob(
+        this.selected = new Blob(
           'tricolor',
           'normal',
           this.scene,

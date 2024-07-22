@@ -71,12 +71,12 @@
               <div v-else>
                 <div class="px-4">
                   <h2>
-                    Vector X {{ q.kwami.body.vec.x }}
+                    Vector X {{ q.kwami.body.selected.vec.x }}
                   </h2>
                 </div>
                 <div class="px-2">
                   <URange
-                    v-model="q.kwami.body.vec.x"
+                    v-model="q.kwami.body.selected.vec.x"
                     :step="0.01"
                     color="green"
                     :min="0"
@@ -85,12 +85,12 @@
                 </div>
                 <div class="px-4">
                   <h2>
-                    Vector Y {{ q.kwami.body.vec.y }}
+                    Vector Y {{ q.kwami.body.selected.vec.y }}
                   </h2>
                 </div>
                 <div class="px-2">
                   <URange
-                    v-model="q.kwami.body.vec.y"
+                    v-model="q.kwami.body.selected.vec.y"
                     :step="0.01"
                     color="green"
                     :min="0"
@@ -100,12 +100,12 @@
                 <div>
                   <div class="px-4">
                     <h2>
-                      Vector Z {{ q.kwami.body.vec.z }}
+                      Vector Z {{ q.kwami.body.selected.vec.z }}
                     </h2>
                   </div>
                   <div class="px-2">
                     <URange
-                      v-model="q.kwami.body.vec.z"
+                      v-model="q.kwami.body.selected.vec.z"
                       :step="0.01"
                       color="green"
                       :min="0"
@@ -143,12 +143,12 @@
               <div v-else>
                 <div class="px-4">
                   <h2>
-                    Time X {{ q.kwami.body.time.x }}
+                    Time X {{ q.kwami.body.selected.time.x }}
                   </h2>
                 </div>
                 <div class="px-2">
                   <URange
-                    v-model="q.kwami.body.time.x"
+                    v-model="q.kwami.body.selected.time.x"
                     :step="0.01"
                     color="green"
                     :min="0"
@@ -157,12 +157,12 @@
                 </div>
                 <div class="px-4">
                   <h2>
-                    Time Y {{ q.kwami.body.time.y }}
+                    Time Y {{ q.kwami.body.selected.time.y }}
                   </h2>
                 </div>
                 <div class="px-2">
                   <URange
-                    v-model="q.kwami.body.time.y"
+                    v-model="q.kwami.body.selected.time.y"
                     ::step="0.01"
                     color="green"
                     :min="0"
@@ -171,12 +171,12 @@
                 </div>
                 <div class="px-4">
                   <h2>
-                    Time Z {{ q.kwami.body.time.z }}
+                    Time Z {{ q.kwami.body.selected.time.z }}
                   </h2>
                 </div>
                 <div class="px-2">
                   <URange
-                    v-model="q.kwami.body.time.z"
+                    v-model="q.kwami.body.selected.time.z"
                     :step="0.01"
                     color="green"
                     :min="0"
@@ -214,12 +214,12 @@
                 <div class="grid grid-cols-8">
                   <div class="col-start-1 col-end-4 border border-gray-800/20">
                     <h2 class="text-sm text-gray-200 m-2">
-                      x {{ q.kwami.body.audioEffect.x }}
+                      x {{ q.kwami.body.selected.audioEffect.x }}
                     </h2>
                   </div>
                   <div class="col-start-4 col-end-8 px-2">
                     <URange
-                      v-model="q.kwami.body.audioEffect.x"
+                      v-model="q.kwami.body.selected.audioEffect.x"
                       :step="0.01"
                       color="green"
                       :min="0"
@@ -229,12 +229,12 @@
                 </div>
                 <div class="px-4">
                   <h2>
-                    Audio Y {{ q.kwami.body.audioEffect.y }}
+                    Audio Y {{ q.kwami.body.selected.audioEffect.y }}
                   </h2>
                 </div>
                 <div class="px-2">
                   <URange
-                    v-model="q.kwami.body.audioEffect.y"
+                    v-model="q.kwami.body.selected.audioEffect.y"
                     :step="0.01"
                     color="green"
                     :min="0"
@@ -243,12 +243,12 @@
                 </div>
                 <div class="px-4">
                   <h2>
-                    Audio Z {{ q.kwami.body.audioEffect.z }}
+                    Audio Z {{ q.kwami.body.selected.audioEffect.z }}
                   </h2>
                 </div>
                 <div class="px-2">
                   <URange
-                    v-model="q.kwami.body.audioEffect.z"
+                    v-model="q.kwami.body.selected.audioEffect.z"
                     :step="0.01"
                     color="green"
                     :min="0"
@@ -260,12 +260,12 @@
             <div v-if="item.key === 'mind'" class="space-y-3">
               <div class="px-4">
                 <h2>
-                  Resolution {{ q.kwami.body.vec.x }}
+                  Resolution {{ q.kwami.body.selected.vec.x }}
                 </h2>
               </div>
               <div class="px-2">
                 <URange
-                  v-model="q.kwami.body.vec.x"
+                  v-model="q.kwami.body.selected.vec.x"
                   :step="0.1"
                   color="purple"
                   :min="0"
@@ -329,35 +329,35 @@ const getRandomXYZColor = () => {
 onMounted(() => {
   watchEffect(() => {
     if (syncVectors.value) {
-      q.kwami.body.vec.x = vecsValue.value;
-      q.kwami.body.vec.y = vecsValue.value;
-      q.kwami.body.vec.z = vecsValue.value;
+      q.kwami.body.selected.vec.x = vecsValue.value;
+      q.kwami.body.selected.vec.y = vecsValue.value;
+      q.kwami.body.selected.vec.z = vecsValue.value;
     } else {
       vecsValue.value = Math.floor(((
-        q.kwami.body.vec.x +
-        q.kwami.body.vec.y +
-        q.kwami.body.vec.z) / 3) * 100) / 100;
+        q.kwami.body.selected.vec.x +
+        q.kwami.body.selected.vec.y +
+        q.kwami.body.selected.vec.z) / 3) * 100) / 100;
     }
   });
 
   watchEffect(() => {
     if (syncTime.value) {
-      q.kwami.body.time.x = timeValue.value;
-      q.kwami.body.time.y = timeValue.value;
-      q.kwami.body.time.z = timeValue.value;
+      q.kwami.body.selected.time.x = timeValue.value;
+      q.kwami.body.selected.time.y = timeValue.value;
+      q.kwami.body.selected.time.z = timeValue.value;
     }
   });
 
   watchEffect(() => {
     if (syncAudio.value) {
-      q.kwami.body.audioEffect.x = audioValue.value;
-      q.kwami.body.audioEffect.y = audioValue.value;
-      q.kwami.body.audioEffect.z = audioValue.value;
+      q.kwami.body.selected.audioEffect.x = audioValue.value;
+      q.kwami.body.selected.audioEffect.y = audioValue.value;
+      q.kwami.body.selected.audioEffect.z = audioValue.value;
     }
   });
 
   watchEffect(() => {
-    q.kwami.body.colors(
+    q.kwami.body.selected.colors(
       colorX.value,
       colorY.value,
       colorZ.value

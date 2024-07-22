@@ -8,7 +8,7 @@
   <!-- <button @click="toggleAudio" class="z-50 relative p-4 bg-red-400">
     {{ q.audio.audioInstance.paused ? 'Play' : 'Pause' }}
   </button> -->
-  <MainConfigPanel v-if="isMounted" />
+  <ModalConfigKwami v-if="isMounted" />
   <AudioMenu
     :playing="playing"
     :play-audio="toggleAudio"
@@ -26,23 +26,23 @@ const canvas = ref<HTMLCanvasElement>();
 const playing = ref(false);
 
 const toggleAudio = () => {
-  if (q.kwami.audio.instance.paused) {
-    q.kwami.audio.playAudio();
-    q.kwami.body.state = 'speak';
+  if (q.kwami.body.audio.instance.paused) {
+    q.kwami.body.audio.playAudio();
+    q.kwami.body.selected.state = 'speak';
     playing.value = true;
   } else {
-    q.kwami.audio.pauseAudio();
-    q.kwami.body.state = 'normal';
+    q.kwami.body.audio.pauseAudio();
+    q.kwami.body.selected.state = 'normal';
     playing.value = false;
   }
 };
 
 const nextAudio = () => {
-  q.kwami.audio.nextAudio();
+  q.kwami.body.audio.nextAudio();
 };
 
 const previousAudio = () => {
-  q.kwami.audio.prevAudio();
+  q.kwami.body.audio.prevAudio();
 };
 
 const isMouseDown = ref(false);

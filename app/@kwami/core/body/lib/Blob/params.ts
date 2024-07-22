@@ -1,4 +1,4 @@
-import { getRandomHexColor, getRandomBoolean } from '../../../utils/randoms';
+import { getRandomHexColor, getRandomBoolean } from '../../../../utils/randoms';
 
 export default {
   body: {

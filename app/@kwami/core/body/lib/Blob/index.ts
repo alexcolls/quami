@@ -9,9 +9,9 @@ import {
   getRandomBetween,
   getRandomBoolean,
   getRandomHexColor
-} from '../../../utils/randoms';
-import { getFrequencyData, type AudioData } from '../../../utils/audio';
-import type KwamiAudio from '../audio';
+} from '../../../../utils/randoms';
+import { getFrequencyData, type AudioData } from '../../../../utils/audio';
+import type KwamiAudio from '../../audio';
 import { type Skins } from './skins/interface';
 import setupSkins from './skins';
 import setupModel from './geometry';
