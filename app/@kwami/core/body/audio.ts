@@ -1,15 +1,16 @@
-import SpeechSynthesisRecorder from '~/@kwami/services/speechSynthesisRecord';
+import SpeechSynthesisRecorder from '~/@kwami/utils/recorder';
 
 export default class KwamiAudio {
   instance: HTMLAudioElement;
-  frequencyData = new Uint8Array();
-  analyser = {} as AnalyserNode;
   files: string[];
   file = 0;
+  frequencyData = new Uint8Array();
+  analyser: AnalyserNode | undefined;
 
   constructor (audioFiles: string[]) {
     this.instance = new Audio(audioFiles[this.file]);
     this.files = audioFiles;
+    this.initializeAudio();
   }
 
   nextAudio (): void {
@@ -18,6 +19,7 @@ export default class KwamiAudio {
       this.file = 0;
     }
     this.instance.src = this.files[this.file];
+    this.instance.play();
   }
 
   prevAudio (): void {
@@ -26,6 +28,7 @@ export default class KwamiAudio {
       this.file = this.files.length - 1;
     }
     this.instance.src = this.files[this.file];
+    this.instance.play();
   }
 
   async setSpokenLanguage (text: string): Promise<void> {
@@ -63,20 +66,19 @@ export default class KwamiAudio {
   }
 
   initializeAudio (): void {
-    if (!this.instance) { return; }
+    if (!this.instance || this.analyser) {
+      return;
+    }
     const audioContext = new window.AudioContext();
     if (audioContext.state === 'suspended') {
       audioContext.resume();
     }
-    if (!this.analyser) {
-      const sourceNode = audioContext.createMediaElementSource(
-        this.instance);
-      const analyser = audioContext.createAnalyser();
-      sourceNode.connect(analyser);
-      analyser.connect(audioContext.destination);
-      this.analyser = analyser;
-      this.frequencyData = new Uint8Array(analyser.frequencyBinCount);
-    }
+    const sourceNode = audioContext.createMediaElementSource(this.instance);
+    const analyser = audioContext.createAnalyser();
+    sourceNode.connect(analyser);
+    analyser.connect(audioContext.destination);
+    this.analyser = analyser;
+    this.frequencyData = new Uint8Array(analyser.frequencyBinCount);
   }
 
   playAudio (): void {
@@ -91,9 +93,10 @@ export default class KwamiAudio {
     }
   }
 
-  getFrequencyData (): void {
-    if (this.analyser && this.frequencyData) {
+  getFrequencyData (): Uint8Array {
+    if (this.analyser) {
       this.analyser.getByteFrequencyData(this.frequencyData);
     }
+    return this.frequencyData;
   }
 }

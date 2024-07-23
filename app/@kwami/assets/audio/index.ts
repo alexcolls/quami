@@ -12,7 +12,7 @@ import ten from './10.mp3';
 import eleven from './11.mp3';
 import twelve from './12.mp3';
 
-const audio = [
+const audioFiles = [
   zero,
   one,
   two,
@@ -28,4 +28,4 @@ const audio = [
   twelve
 ];
 
-export default audio;
+export default audioFiles;

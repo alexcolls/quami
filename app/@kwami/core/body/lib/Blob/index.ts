@@ -10,7 +10,6 @@ import {
   getRandomBoolean,
   getRandomHexColor
 } from '../../../../utils/randoms';
-import { getFrequencyData, type AudioData } from '../../../../utils/audio';
 import type KwamiAudio from '../../audio';
 import { type Skins } from './skins/interface';
 import setupSkins from './skins';
@@ -32,7 +31,6 @@ export default class Blob {
   camera: PerspectiveCamera;
   state: State;
   audio: KwamiAudio;
-  audioData: AudioData | undefined;
 
   audioEffect = {
     splitFreq: true,
@@ -78,13 +76,12 @@ export default class Blob {
     this.scene = scene;
     this.camera = camera;
     this.audio = audio;
-    this.audioData = getFrequencyData(this.audio.instance);
-    if (this.audioData) {
+    if (this.audio && this.audio.analyser) {
       const animate = () => {
         blobAnimation(
           this.mesh,
-          this.audioData!.frequencyData,
-          this.audioData!.analyser,
+          this.audio.frequencyData,
+          this.audio.analyser!,
           this.vec.x,
           this.vec.y,
           this.vec.z,
@@ -97,6 +94,8 @@ export default class Blob {
       };
       animate();
     }
+
+    this.scene.add(this.mesh);
   }
 
   vector (vec: string, value: number) {

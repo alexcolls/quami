@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'; // Ensure you have this import
-import SpeechSynthesisRecorder from '~/@kwami/services/speechSynthesisRecord';
+import SpeechSynthesisRecorder from '~/@kwami/utils/recorder';
 
 const useAudioStore = (audioFiles: string[]) => {
   return defineStore('audio', {

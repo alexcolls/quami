@@ -18,7 +18,6 @@
 </template>
 
 <script setup lang="ts">
-
 const { q } = useStore();
 const isMounted = ref(false);
 const canvas = ref<HTMLCanvasElement>();
@@ -48,27 +47,11 @@ const previousAudio = () => {
 const isMouseDown = ref(false);
 const mouseMoved = ref(false);
 
-// const handleMouseDown = () => {
-//   isMouseDown.value = true;
-//   mouseMoved.value = false;
-// };
-
-// const handleMouseUp = () => {
-//   if (isMouseDown.value && !mouseMoved.value) {
-//     handleCanvasClick();
-//   }
-//   isMouseDown.value = false;
-// };
-
 const handleMouseMove = () => {
   if (isMouseDown.value) {
     mouseMoved.value = true;
   }
 };
-
-// function handleCanvasClick () {
-//   if (!mouseMoved.value) { kwami.form.on('click'); }
-// }
 
 const handleDoubleClick = () => {
   toggleAudio();
@@ -78,45 +61,5 @@ onMounted(() => {
   if (!canvas.value) { return; }
   q.init(canvas.value);
   isMounted.value = true;
-  // watchEffect(() => {
-  //   kwami.state.body.vector('x', kwamiStore.body.blob.vec.x);
-  // });
-
-  // watchEffect(() => {
-  //   kwami.form.vector('y', kwamiStore.body.blob.vec.y);
-  // });
-
-  // watchEffect(() => {
-  //   kwami.form.vector('z', kwamiStore.body.blob.vec.z);
-  // });
-
-  // watchEffect(() => {
-  //   kwami.form.time.x = kwamiStore.body.blob.time.x;
-  // });
-
-  // watchEffect(() => {
-  //   kwami.form.time.y = kwamiStore.body.blob.time.y;
-  // });
-
-  // watchEffect(() => {
-  //   kwami.form.time.z = kwamiStore.body.blob.time.z;
-  // });
-
-  // watchEffect(() => {
-  //   kwami.form.color('x', kwamiStore.body.blob.color.x);
-  // });
-
-  // watchEffect(() => {
-  //   kwami.form.color('y', kwamiStore.body.blob.color.y);
-  // });
-
-  // watchEffect(() => {
-  //   kwami.form.color('z', kwamiStore.body.blob.color.z);
-  // });
-
-  // watch(() => kwamiStore.body.blob.color.random, () => {
-  //   kwami.form.on('click');
-  // });
 });
-
 </script>
