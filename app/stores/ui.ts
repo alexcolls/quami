@@ -3,6 +3,7 @@ const useUIStore = defineStore('ui', {
   state: () => ({
     isDark: false,
     size: 'md',
+    logoURL: 'https://www.innocv.com/',
     langs: [
       { value: 'ca', label: 'Català' },
       { value: 'en', label: 'English' },
@@ -14,8 +15,11 @@ const useUIStore = defineStore('ui', {
     notification: {
       position: 'bottom-0'
     },
-    navPath: '',
-    uiKey: 0
+    primary: 'orange',
+    gray: 'stone',
+    iLocale: 0,
+    iVideo: 0,
+    key: 0
   })
 });
 

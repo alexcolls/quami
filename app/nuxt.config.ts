@@ -42,7 +42,8 @@ export default defineNuxtConfig({
     '@pinia/nuxt',
     '@pinia-plugin-persistedstate/nuxt',
     '@nuxt/ui',
-    '@nuxt/image'
+    '@nuxt/image',
+    '@nuxtjs/supabase'
   ],
   googleFonts: {
     families: {
@@ -63,8 +64,7 @@ export default defineNuxtConfig({
   imports: {
     dirs: [
       'utils',
-      'stores',
-      'services'
+      'stores'
     ]
   },
   piniaPersistedstate: {

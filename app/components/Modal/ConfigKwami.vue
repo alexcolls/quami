@@ -257,6 +257,20 @@
                 </div>
               </div>
             </div>
+            <div class="px-4">
+              <h2>
+                ROTATION XYZ {{ audioValue }}
+              </h2>
+            </div>
+            <div class="px-2">
+              <URange
+                v-model="rotationX"
+                :step="0.01"
+                color="green"
+                :min="0"
+                :max="100"
+              />
+            </div>
             <div v-if="item.key === 'mind'" class="space-y-3">
               <div class="px-4">
                 <h2>
@@ -320,6 +334,10 @@ const timeValue = ref(0);
 const syncAudio = ref(true);
 const audioValue = ref(0);
 
+const rotationX = ref(0);
+const rotationY = ref(0);
+const rotationZ = ref(0);
+
 const getRandomXYZColor = () => {
   colorX.value = getRandomHexColor();
   colorY.value = getRandomHexColor();
@@ -362,6 +380,12 @@ onMounted(() => {
       colorY.value,
       colorZ.value
     );
+  });
+
+  watchEffect(() => {
+    q.kwami.body.selected.rotation.x = rotationX.value;
+    q.kwami.body.selected.rotation.y = rotationY.value;
+    q.kwami.body.selected.rotation.z = rotationZ.value;
   });
 });
 

@@ -89,6 +89,9 @@ export default class Blob {
           this.time.y,
           this.time.z
         );
+        this.mesh.rotation.x += this.rotation.x;
+        this.mesh.rotation.y += this.rotation.y;
+        this.mesh.rotation.z += this.rotation.z;
         this.renderer.render(this.scene, this.camera);
         requestAnimationFrame(animate);
       };
