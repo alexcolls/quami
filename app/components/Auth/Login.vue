@@ -1,55 +1,17 @@
 <template>
   <div
-    :key="key"
-    class="relative flex items-center justify-center h-[88vh] w-full
-      overflow-hidden z-0"
+    class="relative flex items-center justify-center
+      overflow-hidden z-0 h-screen w-screen m-0 p-0"
   >
-    <video
-      v-show="showFirstVideo"
-      autoplay
-      muted
-      loop
-      class="fixed top-0 left-0 h-screen w-screen cursor-pointer
-        z-[-1] object-cover transition-opacity duration-500 ease-in-out"
-      :class="isBlurred ? 'blur' : 'no-blur'"
-      :style="{ opacity: showFirstVideo ? 1 : 0 }"
-      @click="getVideo"
-      @loadeddata="handleVideoLoaded"
-    >
-      <source :src="video1" type="video/mp4">
-      {{ $t('error.video') }}
-    </video>
-    <video
-      v-show="!showFirstVideo"
-      autoplay
-      muted
-      loop
-      class="fixed top-0 left-0 h-screen w-screen cursor-pointer
-        z-[-1] object-cover transition-opacity duration-500 ease-in-out"
-      :class="isBlurred ? 'blur' : 'no-blur'"
-      :style="{ opacity: showFirstVideo ? 0 : 1 }"
-      @click="getVideo"
-      @loadeddata="handleVideoLoaded"
-    >
-      <source :src="video2" type="video/mp4">
-      {{ $t('error.video') }}
-    </video>
-    <div
-      class="w-full max-w-md p-8 space-y-6 bg-opacity-10 border
-        backdrop-filter backdrop-blur-md rounded-lg border-primary-500
-        transition-all duration-500 !bg-gray-200/20 dark:!bg-gray-800/20
-        shadow-lg shadow-primary-700/40 dark:shadow-primary-300/40"
+    <CommonBackgroundVideos />
+    <CommonMagicModal
+      :window-name="$t('login')"
       :class="isValid(state.user) ? 'h-[360px]' : 'h-[280px]'"
     >
-      <CommonTxtColor
-        class="text-center text-white mt-2 uppercase tracking-widest"
-      >
-        {{ $t('login') }}
-      </CommonTxtColor>
       <UForm
         :schema="schema"
         :state="state"
-        class="space-y-4"
+        class="space-y-4 m-8"
         @submit="onSubmit"
       >
         <UFormGroup
@@ -89,7 +51,7 @@
           <LayoutBtnLogout />
         </div>
       </UForm>
-    </div>
+    </CommonMagicModal>
   </div>
 </template>
 
@@ -100,8 +62,8 @@ import videos from 'assets/vid/links.json';
 const supabase = useSupabaseClient();
 
 const signInWithOAuth = async () => {
-  const { error } = await supabase.auth.signInWithOtp({ email: state.user });
-  if (error) { console.log(error); }
+  const res = await supabase.auth.signInWithOtp({ email: state.user });
+  return res;
 };
 
 const signOut = async () => {

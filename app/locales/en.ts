@@ -1,3 +1,4 @@
 export default {
-  app: 'quami'
+  app: 'quami',
+  login: 'Login'
 };

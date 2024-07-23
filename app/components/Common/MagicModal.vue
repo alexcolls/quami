@@ -1,17 +1,18 @@
 <template>
   <div
     ref="modalRef"
-    class="absolute lg:m-8 inset-5 overflow-y-auto inline-block
+    class="absolute inset-5 overflow-y-auto inline-block
       align-middle rounded-lg text-left overflow-hidden shadow-xl transform
-      transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full bg-opacity-60
-      backdrop-blur-md border border-gray-800/20 z-50
+      transition-all sm:align-middle sm:max-w-lg sm:w-full bg-opacity-60
+      backdrop-blur-md border border-gray-800/20 z-50 -mt-5 -ml-5
       hover:border-primary-500 dark:hover:border-primary-400"
+    @dblclick="resetPosition"
   >
     <div
       class="flex justify-between w-full cursor-move draggable-handle p-2
-        border-b border-gray-800/20 text-white bg-gray-500 dark:bg-gray-900
+        border-b border-gray-800/20 text-white
         hover:border-primary-500 dark:hover:border-primary-400
-        dark:hover:bg-slate-500/10 hover:bg-gray-700"
+      bg-slate-500/10 select-none"
       @mousedown="startDrag"
     >
       <div class="text-sm flex">
@@ -21,7 +22,7 @@
           class="w-4 h-4 ml-1 opacity-80"
         >
         <h1 class="ml-2">
-          KWAMI
+          {{ windowName }}
         </h1>
       </div>
       <button
@@ -48,31 +49,50 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
+
+defineProps<{
+  windowName: string;
+}>();
 
 const isOpen = ref(true);
 
 const closeModal = () => {
   isOpen.value = false;
 };
-const modalRef = ref(null);
+const modalRef = ref<HTMLElement>();
 let isDragging = false;
-let offsetX, offsetY;
+let offsetX: number, offsetY: number;
 const originalX = 0;
-const originalY = 0; // Store original position
+const originalY = 0;
 
-const startDrag = (e) => {
+const startDrag = (e: any) => {
   isDragging = true;
-  offsetX = e.clientX - modalRef.value.getBoundingClientRect().left;
-  offsetY = e.clientY - modalRef.value.getBoundingClientRect().top;
+  offsetX = e.clientX - modalRef.value!.getBoundingClientRect().left;
+  offsetY = e.clientY - modalRef.value!.getBoundingClientRect().top;
 };
 
-const doDrag = (e) => {
+const doDrag = (e: any) => {
   if (!isDragging) { return; }
   requestAnimationFrame(() => {
-    const top = e.clientY - offsetY;
-    const left = e.clientX - offsetX;
-    modalRef.value.style.transform = `translate(${left}px, ${top}px)`;
+    const modalRect = modalRef.value!.getBoundingClientRect();
+
+    let top = e.clientY - offsetY;
+    let left = e.clientX - offsetX;
+
+    if (top < 0) {
+      top = 0;
+    } else if (top + modalRect.height > window.innerHeight) {
+      top = window.innerHeight - modalRect.height;
+    }
+
+    if (left < 0) {
+      left = 0;
+    } else if (left + modalRect.width > window.innerWidth) {
+      left = window.innerWidth - modalRect.width;
+    }
+
+    modalRef.value!.style.transform = `translate(${left}px, ${top}px)`;
   });
 };
 
@@ -81,18 +101,17 @@ const endDrag = () => {
 };
 
 const resetPosition = () => {
-  modalRef.value.style.transform = `translate(${originalX}px, ${originalY}px)`;
+  modalRef.value!.style.transform = `translate(${originalX}px, ${originalY}px)`;
 };
 
 onMounted(() => {
   window.addEventListener('mousemove', doDrag);
   window.addEventListener('mouseup', endDrag);
-  modalRef.value.addEventListener('dblclick', resetPosition);
 });
 
 onUnmounted(() => {
   window.removeEventListener('mousemove', doDrag);
   window.removeEventListener('mouseup', endDrag);
-  modalRef.value.removeEventListener('dblclick', resetPosition);
 });
+
 </script>

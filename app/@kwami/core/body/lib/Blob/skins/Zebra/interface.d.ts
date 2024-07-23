@@ -1,4 +1,4 @@
-export interface ZebraSkinArgs {
+interface ZebraSkinArgs {
   wireframe: boolean;
   lightPosition: string | {};
   shininess: number;

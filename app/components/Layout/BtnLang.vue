@@ -7,7 +7,10 @@
       :options="langs"
       class="px-1"
       :ui="{
-        base: 'bg-red-500'
+        background: 'bg-red-500 dark:bg-red-600',
+        option: {
+          active: 'bg-red-500 dark:bg-red-600',
+        }
       }"
     />
   </div>

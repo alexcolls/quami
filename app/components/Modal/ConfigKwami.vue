@@ -1,5 +1,5 @@
 <template>
-  <CommonModal>
+  <CommonMagicModal>
     <div class="sm:p-6 px-4 pt-5 pb-4">
       <div>
         <div
@@ -295,7 +295,7 @@
         <!-- <RadarChart /> -->
       </div>
     </div>
-  </CommonModal>
+  </CommonMagicModal>
 </template>
 
 <script setup lang="ts">

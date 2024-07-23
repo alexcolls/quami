@@ -1,7 +1,6 @@
 import { ShaderMaterial, Color } from 'three';
 import vertexShader from './vertex.glsl?raw';
 import fragmentShader from './shader.glsl?raw';
-import { type TricolorSkinArgs } from './interface';
 
 export default function tricolorSkin (args: TricolorSkinArgs) {
   return new ShaderMaterial({

@@ -1,4 +1,4 @@
-export interface TricolorSkinArgs {
+interface TricolorSkinArgs {
   wireframe: boolean;
   lightPosition: string | {};
   shininess: number;

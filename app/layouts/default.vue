@@ -1,7 +1,7 @@
 <template>
   <div class="m-auto min-h-screen min-w-screen">
-    <LayoutHeader />
+    <!-- <LayoutHeader /> -->
     <slot />
-    <LayoutFooter />
+    <!-- <LayoutFooter /> -->
   </div>
 </template>

@@ -1,8 +1,9 @@
 <template>
   <div>
+    <CommonBackgroundVideos />
     <canvas
       ref="canvas"
-      class="fixed h-screen w-screen"
+      class="fixed h-screen w-screen !bg-transparent"
       @mousemove="handleMouseMove"
       @dblclick="handleDoubleClick"
     />
