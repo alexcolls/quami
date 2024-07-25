@@ -46,6 +46,8 @@ export default defineNuxtConfig({
     '@nuxtjs/supabase'
   ],
   googleFonts: {
+    download: true,
+    base64: true,
     families: {
       Roboto: true,
       'Josefin+Sans': true,
@@ -72,7 +74,8 @@ export default defineNuxtConfig({
   },
   ui: {
     icons: [
-      'heroicons'
+      'heroicons',
+      'icon-park-solid'
     ]
   },
   colorMode: {

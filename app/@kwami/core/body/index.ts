@@ -26,6 +26,7 @@ export default class KwamiBody {
 
   constructor (canvas: HTMLCanvasElement) {
     const { renderer, camera, controls, lights, scene } = setupScene(canvas);
+    lights.top.position.set(0, 1000, 0);
     this.renderer = renderer;
     this.camera = camera;
     this.controls = controls;

@@ -10,8 +10,10 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
+    "@iconify-json/icon-park-solid": "^1.1.14",
     "@iconify-json/material-symbols": "^1.1.61",
     "@iconify-json/pepicons-pop": "^1.1.8",
+    "@iconify/json": "^2.2.231",
     "@nuxt/eslint-config": "^0.2.0",
     "@nuxt/image": "^1.7.0",
     "@nuxt/ui": "^2.17.0",

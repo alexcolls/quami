@@ -1,41 +1,20 @@
-import Kwami from '~/@kwami';
+import Kwami from '~/@kwami/core/body';
 
 const useQStore = defineStore('q', {
+  persist: false,
   state: () => ({
-    kwami: {} as Kwami,
-    state: {
-      blob: {
-        vec: {
-          x: 0,
-          y: 0,
-          z: 0
-        },
-        time: {
-          x: 0,
-          y: 0,
-          z: 0
-        },
-        audio: {
-          splitFreq: true,
-          xFreq: 'low',
-          yFreq: 'mid',
-          zFreq: 'high',
-          x: 0,
-          y: 0,
-          z: 0
-        },
-        color: {
-          random: 0,
-          x: '',
-          y: '',
-          z: ''
-        }
-      }
-    }
+    body: {} as Kwami,
+    kwamiBackup: null as Kwami | null,
+    isInit: false
   }),
   actions: {
     init (canvas: HTMLCanvasElement): void {
-      this.kwami = new Kwami(canvas);
+      if (this.kwamiBackup) {
+        this.body = { ...this.kwamiBackup };
+        return;
+      }
+      this.body = new Kwami(canvas);
+      this.kwamiBackup = { ...this.body };
     }
   }
 });

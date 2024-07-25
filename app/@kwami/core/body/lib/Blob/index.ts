@@ -13,7 +13,7 @@ import {
 import type KwamiAudio from '../../audio';
 import { type Skins } from './skins/interface';
 import setupSkins from './skins';
-import setupModel from './geometry';
+import setupGeometry from './geometry';
 import params from './params';
 import events from './events';
 import blobAnimation from './animation';
@@ -24,7 +24,7 @@ export default class Blob {
   events = events;
   params = params;
   skins = setupSkins(params.skins);
-  model = setupModel(params.body.resolution.default);
+  geometry = setupGeometry(params.body.resolution.default);
   renderer: WebGLRenderer;
   mesh: Mesh;
   scene: Scene;
@@ -71,7 +71,7 @@ export default class Blob {
     audio: KwamiAudio
   ) {
     this.state = state;
-    this.mesh = new Mesh(this.model, this.skins[skin]);
+    this.mesh = new Mesh(this.geometry, this.skins[skin]);
     this.renderer = renderer;
     this.scene = scene;
     this.camera = camera;
@@ -97,7 +97,6 @@ export default class Blob {
       };
       animate();
     }
-
     this.scene.add(this.mesh);
   }
 
@@ -135,6 +134,12 @@ export default class Blob {
     this.skins.tricolor.uniforms._color3.value = new Color(z);
   }
 
+  resolution (value: number) {
+    this.params.body.resolution.default = value;
+    this.geometry = setupGeometry(value);
+    this.mesh.geometry = this.geometry;
+  }
+
   on (event: string, callback?: () => boolean): void {
     if (callback) {
       this.events[event] = callback;
@@ -169,7 +174,7 @@ export default class Blob {
           getRandomHexColor()
         );
         this.skins.tricolor.wireframe = getRandomBoolean(0.1);
-        this.skins.tricolor.uniforms.shininess.value = 1000;
+        this.skins.tricolor.uniforms.shininess.value = 100000;
         break;
       case 'doubleclick':
         this.events.onDoubleClick();

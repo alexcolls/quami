@@ -10,7 +10,8 @@ export type NormalStateArgs = {
   spikes: number;
   frequencyData: Uint8Array;
   analyser: AnalyserNode;
-  // audioEffectFactor: number;
+  audioEffectFactor: number;
+  resolution: boolean;
 };
 
 export default function animation1 (args: NormalStateArgs) {

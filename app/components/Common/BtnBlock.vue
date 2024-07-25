@@ -2,7 +2,8 @@
   <UButton
     color="gray"
     variant="ghost"
-    icon="i-heroicons-x-mark-20-solid"
+    :icon="isBlocked ?
+      'i-icon-park-solid-lock' : 'i-icon-park-solid-unlock'"
     class="hover:shadow-sm !shadow-gray-400/80 dark:hover:bg-gray-800/80
       active:shadow-inner transition-all duration-300 ease-in-out border
       active:duration-500 active:!opacity-80 !ring-0 focus-visible:!ring-0
@@ -18,3 +19,11 @@
     }"
   />
 </template>
+
+<script setup lang="ts">
+
+defineProps<{
+  isBlocked: boolean;
+}>();
+
+</script>

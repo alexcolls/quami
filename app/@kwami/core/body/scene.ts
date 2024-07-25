@@ -13,7 +13,7 @@ export default function setupScene (canvas: HTMLCanvasElement) {
   const renderer = setupRenderer(canvas);
   const camera = setupCamera(canvas);
   const controls = setupControls(camera, renderer);
-  const lights = setupLights(0.7, 0.25, 1);
+  const lights = setupLights(0.7, 0.40, 1);
   const scene = new Scene();
   scene.add(lights.top);
   scene.add(lights.bottom);
@@ -69,7 +69,7 @@ function setupLights (
     bottom: new DirectionalLight(0xFFFFFF, bottomIntensity),
     ambient: new AmbientLight(0x798296, ambientIntensity)
   };
-  lights.top.position.set(0, 500, 200);
+  lights.top.position.set(0, 500, 2000);
   lights.top.castShadow = true;
   lights.top.shadow.mapSize.width = 4048;
   lights.top.shadow.mapSize.height = 4048;

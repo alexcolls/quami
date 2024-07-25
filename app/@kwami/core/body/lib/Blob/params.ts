@@ -20,14 +20,14 @@ export default {
     resolution: {
       min: 120,
       max: 220,
-      default: 120
+      default: 180
     }
   },
   skins: {
     tricolor: {
       wireframe: getRandomBoolean(0.1),
-      lightPosition: { x: 0, y: 500, z: 200 },
-      shininess: 1000,
+      lightPosition: { x: 1000, y: 2500, z: 200 },
+      shininess: 10000,
       color1: getRandomHexColor(),
       color2: getRandomHexColor(),
       color3: getRandomHexColor()

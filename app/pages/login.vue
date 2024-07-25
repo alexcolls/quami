@@ -1,13 +1,11 @@
 <template>
-  <AuthLogin />
+  <Auth />
 </template>
 
 <script setup lang="ts">
 
-const { auth } = useStore();
-
-if (auth.isAuth && auth.token.length > 12) {
-  navigateTo('/');
-}
+definePageMeta({
+  middleware: ['auth']
+});
 
 </script>

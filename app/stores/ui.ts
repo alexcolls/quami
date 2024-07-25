@@ -1,5 +1,5 @@
 const useUIStore = defineStore('ui', {
-  persist: true,
+  persist: false,
   state: () => ({
     isDark: false,
     size: 'md',

@@ -1,16 +1,15 @@
 <template>
   <div>
-    <CommonBackgroundVideos />
     <canvas
       ref="canvas"
       class="fixed h-screen w-screen !bg-transparent"
       @mousemove="handleMouseMove"
       @dblclick="handleDoubleClick"
     />
+    <!-- <CommonBackgroundVideos /> -->
     <!-- <button @click="toggleAudio" class="z-50 relative p-4 bg-red-400">
     {{ q.audio.audioInstance.paused ? 'Play' : 'Pause' }}
   </button> -->
-    <ModalConfigKwami v-if="isMounted" />
     <AudioMenu
       :playing="playing"
       :play-audio="toggleAudio"
@@ -18,33 +17,36 @@
       :prev-audio="previousAudio"
     />
   </div>
+  <ModalConfigKwami v-if="isMounted" />
+  <ModalTheme v-if="isMounted" />
 </template>
 
 <script setup lang="ts">
 const { q } = useStore();
+
 const isMounted = ref(false);
 const canvas = ref<HTMLCanvasElement>();
 
 const playing = ref(false);
 
 const toggleAudio = () => {
-  if (q.kwami.body.audio.instance.paused) {
-    q.kwami.body.audio.playAudio();
-    q.kwami.body.selected.state = 'speak';
+  if (q.body.audio.instance.paused) {
+    q.body.audio.playAudio();
+    q.body.selected.state = 'speak';
     playing.value = true;
   } else {
-    q.kwami.body.audio.pauseAudio();
-    q.kwami.body.selected.state = 'normal';
+    q.body.audio.pauseAudio();
+    q.body.selected.state = 'normal';
     playing.value = false;
   }
 };
 
 const nextAudio = () => {
-  q.kwami.body.audio.nextAudio();
+  q.body.audio.nextAudio();
 };
 
 const previousAudio = () => {
-  q.kwami.body.audio.prevAudio();
+  q.body.audio.prevAudio();
 };
 
 const isMouseDown = ref(false);
