@@ -1,5 +1,6 @@
 <template>
-  <CommonMagicModal
+  <CommonMagicModalBtn
+    icon="i-icon-park-solid-ghost"
     :window-name="$t('createYourQuami')"
     class="w-[400px] lg:w-[500px] h-fit"
   >
@@ -269,7 +270,7 @@
         <!-- <RadarChart /> -->
       </div>
     </div>
-  </CommonMagicModal>
+  </CommonMagicModalBtn>
 </template>
 
 <script setup lang="ts">

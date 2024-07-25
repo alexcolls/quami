@@ -1,5 +1,5 @@
 <template>
-  <div v-if="auth.isAuth && auth.token.length > 10">
+  <div>
     <UTooltip
       :text="$t('logout')"
       :shortcuts="['⌘', 'O']"

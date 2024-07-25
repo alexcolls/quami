@@ -27,13 +27,6 @@
           </h1>
         </div>
         <div class="flex">
-          <CommonBtnXs
-            :icon="isBlocked ?
-              'i-icon-park-solid-lock text-red-500' :
-              'i-icon-park-solid-unlock'"
-            class="p-0.5"
-            @click="isBlocked = !isBlocked"
-          />
           <CommonBtnClose
             :icon="!isOpen ? icon : 'i-heroicons-x-mark-20-solid'"
             class="m-0"
@@ -41,18 +34,18 @@
           />
         </div>
       </div>
-      <div
-        v-if="isOpen"
-        class="shadow-inner hover:shadow-green-500 p-2 overflow-visible"
-        :class="isBlocked ?
-          'cursor-not-allowed hover:shadow-red-500' :
-          'cursor-auto hover:shadow-green-500'"
-      >
-        <slot />
+      <div class="h-full mt-auto flex flex-col-reverse">
         <div
           v-if="isBlocked"
-          class="absolute bg-opacity-50 cursor-not-allowed"
+          class="!bottom-0 inset-0 bg-opacity-50
+          cursor-not-allowed h-1/2 "
         />
+      </div>
+      <div
+        v-if="isOpen"
+        class="shadow-inner hover:shadow-primary-500 p-2 overflow-visible"
+      >
+        <slot />
       </div>
     </div>
   </div>
@@ -114,7 +107,6 @@ const resetPosition = () => {
   modalRef.value!.style.transform = `translate(${originalX}px, ${originalY}px)`;
 };
 
-// Resize logic
 const startResize = (dir: string) => () => {
   isResizing = true;
   resizeDirection = dir;
