@@ -10,7 +10,7 @@
     <!-- <button @click="toggleAudio" class="z-50 relative p-4 bg-red-400">
     {{ q.audio.audioInstance.paused ? 'Play' : 'Pause' }}
   </button> -->
-    <AudioMenu
+    <ModalMusic
       :playing="playing"
       :play-audio="toggleAudio"
       :next-audio="nextAudio"

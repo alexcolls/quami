@@ -1,7 +1,7 @@
 <template>
   <CommonMagicModalBtn
     icon="i-icon-park-solid-ghost"
-    :window-name="$t('createYourQuami')"
+    :title="$t('createYourQuami')"
     class="w-[400px] lg:w-[500px] h-fit"
   >
     <div class="sm:p-6 px-4 pt-5 pb-4">
@@ -13,11 +13,13 @@
                 SKIN
               </h1>
               <div class="flex">
-                <input
-                  v-model="colorX"
-                  type="color"
-                  class="rounded-xl w-8 bg-transparent border-0"
-                >
+                <div class="rounded-full overflow-hidden -p-6">
+                  <input
+                    v-model="colorX"
+                    type="color"
+                    class="!rounded-full relative w-8 bg-transparent border-0"
+                  >
+                </div>
                 <input
                   v-model="colorY"
                   type="color"

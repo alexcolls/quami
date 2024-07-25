@@ -1,6 +1,6 @@
 <template>
   <CommonMagicModalBtn
-    window-name="Theme"
+    title="Theme"
     icon="i-icon-park-solid-eyes"
   >
     <div class="flex">

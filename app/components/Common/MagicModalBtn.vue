@@ -23,7 +23,7 @@
             class="w-4 h-4 ml-1 mt-1 opacity-80"
           />
           <h1 class="ml-2 mt-1">
-            {{ windowName }}
+            {{ title }}
           </h1>
         </div>
         <div class="flex">
@@ -54,7 +54,7 @@
 <script setup lang="ts">
 
 defineProps<{
-  windowName: string;
+  title: string;
   icon: string;
 }>();
 
