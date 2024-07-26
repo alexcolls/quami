@@ -63,8 +63,8 @@ const isBlocked = ref(true);
 
 const modalRef = ref<HTMLElement>();
 let isDragging = false;
-let isResizing = false;
-let resizeDirection = '';
+// const isResizing = false;
+// const resizeDirection = '';
 let offsetX: number, offsetY: number;
 const originalX = 0;
 const originalY = 0;
@@ -107,40 +107,40 @@ const resetPosition = () => {
   modalRef.value!.style.transform = `translate(${originalX}px, ${originalY}px)`;
 };
 
-const startResize = (dir: string) => () => {
-  isResizing = true;
-  resizeDirection = dir;
-  window.addEventListener('mousemove', doResize);
-  window.addEventListener('mouseup', endResize);
-};
+// const startResize = (dir: string) => () => {
+//   isResizing = true;
+//   resizeDirection = dir;
+//   window.addEventListener('mousemove', doResize);
+//   window.addEventListener('mouseup', endResize);
+// };
 
-const doResize = (e: MouseEvent) => {
-  if (!isResizing) { return; }
-  requestAnimationFrame(() => {
-    const modalRect = modalRef.value!.getBoundingClientRect();
+// const doResize = (e: MouseEvent) => {
+//   if (!isResizing) { return; }
+//   requestAnimationFrame(() => {
+//     const modalRect = modalRef.value!.getBoundingClientRect();
 
-    if (resizeDirection.includes('right')) {
-      modalRef.value!.style.width = `${e.clientX - modalRect.left}px`;
-    }
-    if (resizeDirection.includes('left')) {
-      modalRef.value!.style.width = `${modalRect.right - e.clientX}px`;
-      modalRef.value!.style.left = `${e.clientX}px`;
-    }
-    if (resizeDirection.includes('bottom')) {
-      modalRef.value!.style.height = `${e.clientY - modalRect.top}px`;
-    }
-    if (resizeDirection.includes('top')) {
-      modalRef.value!.style.height = `${modalRect.bottom - e.clientY}px`;
-      modalRef.value!.style.top = `${e.clientY}px`;
-    }
-  });
-};
+//     if (resizeDirection.includes('right')) {
+//       modalRef.value!.style.width = `${e.clientX - modalRect.left}px`;
+//     }
+//     if (resizeDirection.includes('left')) {
+//       modalRef.value!.style.width = `${modalRect.right - e.clientX}px`;
+//       modalRef.value!.style.left = `${e.clientX}px`;
+//     }
+//     if (resizeDirection.includes('bottom')) {
+//       modalRef.value!.style.height = `${e.clientY - modalRect.top}px`;
+//     }
+//     if (resizeDirection.includes('top')) {
+//       modalRef.value!.style.height = `${modalRect.bottom - e.clientY}px`;
+//       modalRef.value!.style.top = `${e.clientY}px`;
+//     }
+//   });
+// };
 
-const endResize = () => {
-  isResizing = false;
-  window.removeEventListener('mousemove', doResize);
-  window.removeEventListener('mouseup', endResize);
-};
+// const endResize = () => {
+//   isResizing = false;
+//   window.removeEventListener('mousemove', doResize);
+//   window.removeEventListener('mouseup', endResize);
+// };
 
 onMounted(() => {
   window.addEventListener('mousemove', doDrag);

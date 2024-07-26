@@ -19,7 +19,7 @@
 
 <script setup lang="ts">
 
-const { auth } = useStore();
+// const { auth } = useStore();
 const { logout } = useAlerts();
 
 defineShortcuts({
@@ -30,7 +30,6 @@ defineShortcuts({
 });
 
 const onLogout = () => {
-  auth.logout();
   navigateTo('login');
   logout.success();
 };

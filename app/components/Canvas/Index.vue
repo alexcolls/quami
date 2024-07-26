@@ -16,9 +16,9 @@
       :next-audio="nextAudio"
       :prev-audio="previousAudio"
     />
+    <ModalBody v-if="isMounted" />
+    <ModalTheme v-if="isMounted" />
   </div>
-  <ModalConfigKwami v-if="isMounted" />
-  <ModalTheme v-if="isMounted" />
 </template>
 
 <script setup lang="ts">
