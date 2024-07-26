@@ -1,7 +1,7 @@
 <template>
   <CommonMagicModalBtn
     icon="i-icon-park-solid-ghost"
-    :title="$t('createYourQuami')"
+    :title="$t('body')"
     class="w-[400px] lg:w-[500px] h-fit"
   >
     <div class="sm:p-6 px-4 pt-5 pb-4">

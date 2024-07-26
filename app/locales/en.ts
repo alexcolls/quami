@@ -3,5 +3,7 @@ export default {
   login: 'Login',
   email: 'Email',
   welcome: 'Welcome',
-  createYourQuami: 'Create your first Quami'
+  body: 'Body',
+  theme: 'Theme',
+  music: 'Music'
 };

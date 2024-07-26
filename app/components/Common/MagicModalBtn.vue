@@ -1,49 +1,50 @@
 <template>
-  <div class="flex justify-center items-center relative w-screen">
+  <div
+    class="flex justify-center items-center relative w-screen
+      bg-transparent border-none rounded-xl"
+  >
     <div
       ref="modalRef"
       class="fixed inset-5 overflow-visible inline-block
-    align-middle rounded-lg text-left shadow-lg transform
-    transition-all sm:align-middle sm:max-w-lg sm:w-fit bg-opacity-60
-    backdrop-blur-md border z-50 lg:-mt-5 lg:-ml-5 h-fit
-    hover:border-primary-500 dark:hover:border-primary-400 select-none
-    hover:shadow-primary-500 hover:dark:shadow-primary-400 border-gray-500/20"
+        align-middle rounded-xl rounded-b-xl text-left shadow-lg transform
+        transition-all sm:align-middle sm:max-w-lg sm:w-fit bg-opacity-60
+        backdrop-blur-md border z-50 lg:-mt-5 lg:-ml-5 h-fit
+        hover:border-primary-500 dark:hover:border-primary-400 select-none
+        hover:shadow-primary-500 hover:dark:shadow-primary-400
+        border-gray-500/20"
     >
       <div
-        class="flex justify-between w-full cursor-move draggable-handle p-2
-    border-b border-gray-800/20 text-white
-    hover:border-primary-500 dark:hover:border-primary-400
-    bg-slate-500/10 select-none"
+        class="flex justify-between w-full cursor-move draggable-handle
+          border-b border-gray-800/20 rounded-t-xl pt-[10px] pb-[6px]
+          hover:border-primary-500 dark:hover:border-primary-400 px-[10px]
+          bg-slate-500/10 select-none"
+        :class="isOpen ? 'rounded-t-xl' : 'rounded-xl'"
         @mousedown="startDrag"
         @dblclick="resetPosition"
       >
         <div v-if="isOpen" class="text-sm flex">
           <UIcon
             :name="icon"
-            class="w-4 h-4 ml-1 mt-1 opacity-80"
+            class="w-4 h-4 ml-1 mt-1.5 opacity-80"
           />
           <h1 class="ml-2 mt-1">
             {{ title }}
           </h1>
         </div>
-        <div class="flex">
-          <CommonBtnClose
-            :icon="!isOpen ? icon : 'i-heroicons-x-mark-20-solid'"
-            class="m-0"
-            @click="isOpen = !isOpen"
+        <div class="flex rounded-b-xl mb-1">
+          <CommonBtnModal
+            :is-open="isOpen"
+            :title="title"
+            :icon="icon"
+            :on-click="() => isOpen = !isOpen"
+            :is-tooltip="true"
           />
         </div>
       </div>
-      <div class="h-full mt-auto flex flex-col-reverse">
-        <div
-          v-if="isBlocked"
-          class="!bottom-0 inset-0 bg-opacity-50
-          cursor-not-allowed h-1/2 "
-        />
-      </div>
       <div
         v-if="isOpen"
-        class="shadow-inner hover:shadow-primary-500 p-2 overflow-visible"
+        class="shadow-inner hover:shadow-primary-500 p-2 overflow-visible
+          rounded-b-xl"
       >
         <slot />
       </div>

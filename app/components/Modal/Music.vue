@@ -1,6 +1,6 @@
 <template>
   <CommonMagicModalBtn
-    title="Music"
+    :title="$t('music')"
     icon="i-icon-park-solid-music-one"
   >
     <!-- <button class="m-5 p-4 bg-transparent" @click="toggleLeftPanel">
