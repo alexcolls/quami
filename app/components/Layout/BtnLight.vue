@@ -10,7 +10,7 @@
     <UIcon
       :name="ui.isDark ?
         'i-heroicons-moon-20-solid' : 'i-heroicons-sun-20-solid'"
-      class="h-5 w-5"
+      class="h-5 w-5 text-primary-950 dark:text-primary-50"
     />
   </UButton>
 </template>

@@ -14,12 +14,86 @@
         hover:border border-gray-300 dark:border-gray-700"
     >
       <UIcon
-        name="i-heroicons-paint-brush-solid"
-        class="h-5 w-5"
+        name="i-heroicons-light-bulb-solid"
+        class="h-5 w-5 text-primary-900 dark:text-primary-100"
       />
     </UButton>
     <template #panel>
-      <UCard class="bg-gray-100 dark:bg-gray-900">
+      <UCard class="bg-gray-100 dark:bg-gray-900 min-w-56">
+        <template #header>
+          <UButton
+            class="rounded-full bg-stone-300 dark:bg-stone-700 border-2
+            hover:bg-stone-400 dark:hover:bg-stone-600 mr-3"
+            :class="theme.ui.gray === 'stone' ?
+              selectedStyle : 'border-transparent'"
+            @click="() => theme.ui.gray = 'stone'"
+          />
+          <UButton
+            class="rounded-full bg-neutral-300 dark:bg-neutral-700 border-2
+            hover:bg-neutral-400 dark:hover:bg-neutral-600 mx-3"
+            :class="theme.ui.gray === 'neutral' ?
+              selectedStyle : 'border-transparent'"
+            @click="() => theme.ui.gray = 'neutral'"
+          />
+          <UButton
+            class="rounded-full bg-zinc-300 dark:bg-zinc-700 border-2
+            hover:bg-zinc-400 dark:hover:bg-zinc-600 mx-3"
+            :class="theme.ui.gray === 'zinc' ?
+              selectedStyle : 'border-transparent'"
+            @click="() => theme.ui.gray = 'zinc'"
+          />
+          <UButton
+            class="rounded-full bg-gray-300 dark:bg-gray-700 border-2
+            hover:bg-cool-400 dark:hover:bg-cool-600 mx-3"
+            :class="theme.ui.gray === 'cool' ?
+              selectedStyle : 'border-transparent'"
+            @click="() => theme.ui.gray = 'cool'"
+          />
+          <UButton
+            class="rounded-full bg-slate-300 dark:bg-slate-700 border-2
+              hover:bg-slate-400 dark:hover:bg-slate-600 ml-3"
+            :class="theme.ui.gray === 'slate' ?
+              selectedStyle : 'border-transparent'"
+            @click="() => theme.ui.gray = 'slate'"
+          />
+        </template>
+        <div class="mb-3 -mt-2">
+          <UButton
+            class="rounded-full bg-stone-700 dark:bg-stone-300 border-2
+            hover:bg-stone-600 dark:hover:bg-stone-400 mr-3"
+            :class="theme.ui.primary === 'stone' ?
+              selectedStyle2 : 'border-transparent'"
+            @click="() => theme.ui.primary = 'stone'"
+          />
+          <UButton
+            class="rounded-full bg-neutral-700 dark:bg-neutral-300 border-2
+            hover:bg-neutral-600 dark:hover:bg-neutral-400 mx-3"
+            :class="theme.ui.primary === 'neutral' ?
+              selectedStyle2 : 'border-transparent'"
+            @click="() => theme.ui.primary = 'neutral'"
+          />
+          <UButton
+            class="rounded-full bg-zinc-700 dark:bg-zinc-300 border-2
+            hover:bg-zinc-600 dark:hover:bg-zinc-400 mx-3"
+            :class="theme.ui.primary === 'zinc' ?
+              selectedStyle2 : 'border-transparent'"
+            @click="() => theme.ui.primary = 'zinc'"
+          />
+          <UButton
+            class="rounded-full bg-gray-700 dark:bg-gray-300 border-2
+            hover:bg-cool-600 dark:hover:bg-cool-400 mx-3"
+            :class="theme.ui.primary === 'cool' ?
+              selectedStyle2 : 'border-transparent'"
+            @click="() => theme.ui.primary = 'cool'"
+          />
+          <UButton
+            class="rounded-full bg-slate-700 dark:bg-slate-300 border-2
+              hover:bg-slate-600 dark:hover:bg-slate-400 ml-3"
+            :class="theme.ui.primary === 'slate' ?
+              selectedStyle2 : 'border-transparent'"
+            @click="() => theme.ui.primary = 'slate'"
+          />
+        </div>
         <div class="mb-3">
           <UButton
             class="rounded-full bg-orange-500 dark:bg-orange-400
@@ -131,43 +205,6 @@
             @click="() => theme.ui.primary = 'amber'"
           />
         </div>
-        <template #footer>
-          <UButton
-            class="rounded-full bg-stone-300 dark:bg-stone-700 border-2
-            hover:bg-stone-400 dark:hover:bg-stone-600 mr-3"
-            :class="theme.ui.gray === 'stone' ?
-              selectedStyle : 'border-transparent'"
-            @click="() => theme.ui.gray = 'stone'"
-          />
-          <UButton
-            class="rounded-full bg-neutral-300 dark:bg-neutral-700 border-2
-            hover:bg-neutral-400 dark:hover:bg-neutral-600 mx-3"
-            :class="theme.ui.gray === 'neutral' ?
-              selectedStyle : 'border-transparent'"
-            @click="() => theme.ui.gray = 'neutral'"
-          />
-          <UButton
-            class="rounded-full bg-zinc-300 dark:bg-zinc-700 border-2
-            hover:bg-zinc-400 dark:hover:bg-zinc-600 mx-3"
-            :class="theme.ui.gray === 'zinc' ?
-              selectedStyle : 'border-transparent'"
-            @click="() => theme.ui.gray = 'zinc'"
-          />
-          <UButton
-            class="rounded-full bg-gray-300 dark:bg-gray-700 border-2
-            hover:bg-cool-400 dark:hover:bg-cool-600 mx-3"
-            :class="theme.ui.gray === 'cool' ?
-              selectedStyle : 'border-transparent'"
-            @click="() => theme.ui.gray = 'cool'"
-          />
-          <UButton
-            class="rounded-full bg-slate-300 dark:bg-slate-700 border-2
-              hover:bg-slate-400 dark:hover:bg-slate-600 ml-3"
-            :class="theme.ui.gray === 'slate' ?
-              selectedStyle : 'border-transparent'"
-            @click="() => theme.ui.gray = 'slate'"
-          />
-        </template>
       </UCard>
     </template>
   </UPopover>
@@ -189,5 +226,6 @@ watch(() => theme.ui.gray, () => {
 });
 
 const selectedStyle = 'border-gray-900 dark:border-gray-100';
+const selectedStyle2 = 'border-gray-950 dark:border-gray-50';
 
 </script>

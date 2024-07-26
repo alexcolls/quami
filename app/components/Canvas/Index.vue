@@ -22,6 +22,7 @@
 </template>
 
 <script setup lang="ts">
+
 const { q } = useStore();
 
 const isMounted = ref(false);
@@ -67,4 +68,5 @@ onMounted(() => {
   q.init(canvas.value);
   isMounted.value = true;
 });
+
 </script>

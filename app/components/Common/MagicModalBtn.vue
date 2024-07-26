@@ -31,7 +31,10 @@
             {{ title }}
           </h1>
         </div>
-        <div class="flex rounded-b-xl mb-1">
+        <div
+          class="flex rounded-b-xl mb-1"
+          :class="isOpen ? ' ml-2' : ''"
+        >
           <CommonBtnModal
             :is-open="isOpen"
             :title="title"
@@ -44,7 +47,7 @@
       <div
         v-if="isOpen"
         class="shadow-inner hover:shadow-primary-500 p-2 overflow-visible
-          rounded-b-xl"
+          rounded-b-xl flex justify-center"
       >
         <slot />
       </div>
@@ -60,7 +63,6 @@ defineProps<{
 }>();
 
 const isOpen = ref(false);
-const isBlocked = ref(true);
 
 const modalRef = ref<HTMLElement>();
 let isDragging = false;
