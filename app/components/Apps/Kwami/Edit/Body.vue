@@ -1,117 +1,137 @@
 <template>
-  <CommonMagicModalBtn
-    icon="i-icon-park-solid-ghost"
-    :title="$t('body')"
-    class="h-fit"
-  >
-    <div class="p-2 w-[500px]">
-      <div class="flex justify-start">
-        <UButton
-          icon="i-heroicons-cube-transparent-16-solid"
-          class="ml-4"
-          :label="$t('randomADN')"
-          @click="getRandomQuami"
-        />
-        <div class="ml-4">
-          {{ 0.022 }}
+  <div class="p-2 w-[500px]">
+    <div class="flex justify-start">
+      <UButton
+        icon="i-heroicons-cube-transparent-16-solid"
+        class="ml-4"
+        :label="$t('randomADN')"
+        @click="getRandomQuami"
+      />
+      <div class="ml-4">
+        {{ 0.022 }}
+      </div>
+    </div>
+    <div class="mt-5 sm:mt-6 space-y-3">
+      <div class="">
+        <h1 class="font-extrabold">
+          SKIN
+        </h1>
+        <!-- <USelect
+            v-model="q.body.selected.skin"
+            :options="q.body.selected.skins"
+            :label="$t('skin')"
+          /> -->
+        <div class="flex">
+          <div class="rounded-full overflow-hidden -p-6">
+            <input
+              v-model="colorX"
+              type="color"
+              class="!rounded-full relative w-8 bg-transparent border-0"
+            >
+          </div>
+          <input
+            v-model="colorY"
+            type="color"
+            class="rounded-xl w-8 bg-transparent border-0"
+          >
+          <input
+            v-model="colorZ"
+            type="color"
+            class="rounded-xl w-8 bg-transparent border-0"
+          >
+          <UButton
+            icon="i-heroicons-cube-transparent-16-solid"
+            class="ml-4"
+            @click="getRandomXYZColor"
+          />
+          <UToggle
+            v-model="wireframe"
+            name="syncColors"
+            label="Syncronize"
+          />
         </div>
       </div>
-      <div class="mt-5 sm:mt-6 space-y-3 grid-cols-2">
-        <div class="">
-          <h1 class="font-extrabold">
-            SKIN
-          </h1>
-          <div class="flex">
-            <div class="rounded-full overflow-hidden -p-6">
-              <input
-                v-model="colorX"
-                type="color"
-                class="!rounded-full relative w-8 bg-transparent border-0"
-              >
-            </div>
-            <input
-              v-model="colorY"
-              type="color"
-              class="rounded-xl w-8 bg-transparent border-0"
-            >
-            <input
-              v-model="colorZ"
-              type="color"
-              class="rounded-xl w-8 bg-transparent border-0"
-            >
-            <UButton
-              icon="i-heroicons-cube-transparent-16-solid"
-              class="ml-4"
-              @click="getRandomXYZColor"
-            />
-            <UToggle
-              v-model="wireframe"
-              name="syncColors"
-              label="Syncronize"
-            />
-          </div>
-        </div>
-        <div class="w-full">
-          <div class="flex w-full">
-            <h1 class="font-extrabold mr-2">
-              SIZE
-            </h1>
-            <span class="text-primary-800/50 dark:text-primary-200/90">
-              {{ size }} px
-            </span>
-          </div>
-          <div class="w-full mt-2">
-            <URange
-              v-model="size"
-              :step="1"
-              :min="1"
-              :max="300"
-              :ui="{
-                progress: {
-                  base: 'opacity-50',
-                },
-              }"
-            />
-          </div>
-        </div>
-        <div class="w-full">
-          <div class="flex w-full">
-            <h1 class="font-extrabold mr-2">
-              RESOLUTION
-            </h1>
-            <span class="text-primary-800/50 dark:text-primary-200/90">
-              {{ resolution }}
-            </span>
-            px
-          </div>
-          <div class="w-full mt-2">
-            <URange
-              v-model="resolution"
-              :step="1"
-              :min="1"
-              :max="300"
-              :ui="{
-                progress: {
-                  base: 'opacity-50',
-                },
-              }"
-            />
-          </div>
-        </div>
+      <div class="w-full">
         <div class="flex w-full">
-          <h1 class="font-extrabold px-3">
-            VECTOR
+          <h1 class="font-extrabold mr-2">
+            SIZE
           </h1>
-          <h2>
-            {{ Math.round(vecs * 100 + 1) }}
-          </h2>
-          <div class="pt-1 ml-4 mr-2 w-full">
+          <span class="text-primary-800/50 dark:text-primary-200/90">
+            {{ size }} px
+          </span>
+        </div>
+        <div class="w-full mt-2">
+          <URange
+            v-model="size"
+            :step="1"
+            :min="1"
+            :max="300"
+            :ui="{
+              progress: {
+                base: 'opacity-50',
+              },
+            }"
+          />
+        </div>
+      </div>
+      <div class="w-full">
+        <div class="flex w-full">
+          <h1 class="font-extrabold mr-2">
+            RESOLUTION
+          </h1>
+          <span class="text-primary-800/50 dark:text-primary-200/90">
+            {{ resolution }}
+          </span>
+          px
+        </div>
+        <div class="w-full mt-2">
+          <URange
+            v-model="resolution"
+            :step="1"
+            :min="1"
+            :max="300"
+            :ui="{
+              progress: {
+                base: 'opacity-50',
+              },
+            }"
+          />
+        </div>
+      </div>
+      <div class="flex w-full">
+        <h1 class="font-extrabold px-3">
+          VECTOR
+        </h1>
+        <h2>
+          {{ Math.round(vecs * 100 + 1) }}
+        </h2>
+        <div class="pt-1 ml-4 mr-2 w-full">
+          <URange
+            v-model="vecs"
+            :step="0.01"
+            :min="0"
+            :max="20"
+            size="md"
+            :ui="{
+              progress: {
+                base: 'opacity-50',
+              },
+            }"
+          />
+        </div>
+      </div>
+      <div>
+        <div class="flex w-full">
+          <div class="px-4 w-32">
+            X {{ q.body.selected.vec.x }}
+          </div>
+          <div class="px-2 py-2 w-full">
             <URange
-              v-model="vecs"
-              :step="0.01"
+              v-model="q.body.selected.vec.x"
+              :step="0.1"
               :min="0"
               :max="20"
-              size="md"
+              size="sm"
               :ui="{
                 progress: {
                   base: 'opacity-50',
@@ -120,79 +140,73 @@
             />
           </div>
         </div>
-        <div>
-          <div class="flex w-full">
-            <div class="px-4 w-32">
-              X {{ q.body.selected.vec.x }}
-            </div>
-            <div class="px-2 py-2 w-full">
-              <URange
-                v-model="q.body.selected.vec.x"
-                :step="0.1"
-                :min="0"
-                :max="20"
-                size="sm"
-                :ui="{
-                  progress: {
-                    base: 'opacity-50',
-                  },
-                }"
-              />
-            </div>
+        <div class="flex w-full">
+          <div class="px-4 w-32">
+            Y {{ q.body.selected.vec.y }}
           </div>
-          <div class="flex w-full">
-            <div class="px-4 w-32">
-              Y {{ q.body.selected.vec.y }}
-            </div>
-            <div class="px-2 py-2 w-full">
-              <URange
-                v-model="q.body.selected.vec.y"
-                :step="0.1"
-                :min="0"
-                :max="20"
-                size="sm"
-                :ui="{
-                  progress: {
-                    base: 'opacity-50',
-                  },
-                }"
-              />
-            </div>
-          </div>
-          <div class="flex w-full">
-            <div class="px-4 w-32">
-              Z {{ q.body.selected.vec.z }}
-            </div>
-            <div class="px-2 py-2 w-full">
-              <URange
-                v-model="q.body.selected.vec.z"
-                :step="0.1"
-                :min="0"
-                :max="20"
-                size="sm"
-                :ui="{
-                  progress: {
-                    base: 'opacity-50',
-                  },
-                }"
-              />
-            </div>
+          <div class="px-2 py-2 w-full">
+            <CommonRange
+              v-model="q.body.selected.vec.y"
+              :step="0.1"
+              :min="0"
+              :max="20"
+            />
           </div>
         </div>
         <div class="flex w-full">
-          <h1 class="font-extrabold px-3">
-            TIME
-          </h1>
-          <h2>
-            {{ time }}
-          </h2>
-          <div class="pt-1 ml-4 mr-2 w-full">
+          <div class="px-4 w-32">
+            Z {{ q.body.selected.vec.z }}
+          </div>
+          <div class="px-2 py-2 w-full">
             <URange
-              v-model="time"
-              :step="0.01"
+              v-model="q.body.selected.vec.z"
+              :step="0.1"
+              :min="0"
+              :max="20"
+              size="sm"
+              :ui="{
+                progress: {
+                  base: 'opacity-50',
+                },
+              }"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="flex w-full">
+        <h1 class="font-extrabold px-3">
+          TIME
+        </h1>
+        <h2>
+          {{ time }}
+        </h2>
+        <div class="pt-1 ml-4 mr-2 w-full">
+          <URange
+            v-model="time"
+            :step="0.01"
+            :min="0"
+            :max="100"
+            size="md"
+            :ui="{
+              progress: {
+                base: 'opacity-50',
+              },
+            }"
+          />
+        </div>
+      </div>
+      <div>
+        <div class="flex w-full">
+          <div class="px-4 w-32">
+            X {{ q.body.selected.time.x }}
+          </div>
+          <div class="px-2 py-2 w-full">
+            <URange
+              v-model="q.body.selected.time.x"
+              :step="0.1"
               :min="0"
               :max="100"
-              size="md"
+              size="sm"
               :ui="{
                 progress: {
                   base: 'opacity-50',
@@ -201,82 +215,82 @@
             />
           </div>
         </div>
-        <div>
-          <div class="flex w-full">
-            <div class="px-4 w-32">
-              X {{ q.body.selected.time.x }}
-            </div>
-            <div class="px-2 py-2 w-full">
-              <URange
-                v-model="q.body.selected.time.x"
-                :step="0.1"
-                :min="0"
-                :max="100"
-                size="sm"
-                :ui="{
-                  progress: {
-                    base: 'opacity-50',
-                  },
-                }"
-              />
-            </div>
+        <div class="flex w-full">
+          <div class="px-4 w-32">
+            Y {{ q.body.selected.time.y }}
           </div>
-          <div class="flex w-full">
-            <div class="px-4 w-32">
-              Y {{ q.body.selected.time.y }}
-            </div>
-            <div class="px-2 py-2 w-full">
-              <URange
-                v-model="q.body.selected.time.y"
-                :step="0.1"
-                :min="0"
-                :max="100"
-                size="sm"
-                :ui="{
-                  progress: {
-                    base: 'opacity-50',
-                  },
-                }"
-              />
-            </div>
-          </div>
-          <div class="flex w-full">
-            <div class="px-4 w-32">
-              Z {{ q.body.selected.time.z }}
-            </div>
-            <div class="px-2 py-2 w-full">
-              <URange
-                v-model="q.body.selected.time.z"
-                :step="0.1"
-                :min="0"
-                :max="100"
-                size="sm"
-                :ui="{
-                  progress: {
-                    base: 'opacity-50',
-                  },
-                }"
-              />
-            </div>
+          <div class="px-2 py-2 w-full">
+            <URange
+              v-model="q.body.selected.time.y"
+              :step="0.1"
+              :min="0"
+              :max="100"
+              size="sm"
+              :ui="{
+                progress: {
+                  base: 'opacity-50',
+                },
+              }"
+            />
           </div>
         </div>
         <div class="flex w-full">
-          <h1 class="font-extrabold px-3">
-            ROTATION
-          </h1>
-          <UToggle
-            v-model="isRotation"
-            name="rotation"
-            label="Rotation"
-            @change="switchRotation"
-          />
-          <div class="pt-1 ml-4 mr-2 w-full">
+          <div class="px-4 w-32">
+            Z {{ q.body.selected.time.z }}
+          </div>
+          <div class="px-2 py-2 w-full">
             <URange
-              v-model="rotation"
+              v-model="q.body.selected.time.z"
+              :step="0.1"
+              :min="0"
+              :max="100"
+              size="sm"
+              :ui="{
+                progress: {
+                  base: 'opacity-50',
+                },
+              }"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="flex w-full">
+        <h1 class="font-extrabold px-3">
+          ROTATION
+        </h1>
+        <UToggle
+          v-model="isRotation"
+          name="rotation"
+          label="Rotation"
+          @change="switchRotation"
+        />
+        <div class="pt-1 ml-4 mr-2 w-full">
+          <URange
+            v-model="rotation"
+            :step="0.0001"
+            :min="0"
+            :max="0.1"
+            size="md"
+            :ui="{
+              progress: {
+                base: 'opacity-50',
+              },
+            }"
+          />
+        </div>
+      </div>
+      <div v-if="isRotation">
+        <div class="flex w-full">
+          <div class="px-4 w-32">
+            X {{ q.body.selected.rotation.x }}
+          </div>
+          <div class="px-2 py-2 w-full">
+            <URange
+              v-model="q.body.selected.rotation.x"
               :step="0.0001"
               :min="0"
               :max="0.1"
-              size="md"
+              size="sm"
               :ui="{
                 progress: {
                   base: 'opacity-50',
@@ -285,68 +299,47 @@
             />
           </div>
         </div>
-        <div v-if="isRotation">
-          <div class="flex w-full">
-            <div class="px-4 w-32">
-              X {{ q.body.selected.rotation.x }}
-            </div>
-            <div class="px-2 py-2 w-full">
-              <URange
-                v-model="q.body.selected.rotation.x"
-                :step="0.0001"
-                :min="0"
-                :max="0.1"
-                size="sm"
-                :ui="{
-                  progress: {
-                    base: 'opacity-50',
-                  },
-                }"
-              />
-            </div>
+        <div class="flex w-full">
+          <div class="px-4 w-32">
+            Y {{ q.body.selected.rotation.y }}
           </div>
-          <div class="flex w-full">
-            <div class="px-4 w-32">
-              Y {{ q.body.selected.rotation.y }}
-            </div>
-            <div class="px-2 py-2 w-full">
-              <URange
-                v-model="q.body.selected.rotation.y"
-                :step="0.0001"
-                :min="0"
-                :max="0.1"
-                size="sm"
-                :ui="{
-                  progress: {
-                    base: 'opacity-50',
-                  },
-                }"
-              />
-            </div>
+          <div class="px-2 py-2 w-full">
+            <URange
+              v-model="q.body.selected.rotation.y"
+              :step="0.0001"
+              :min="0"
+              :max="0.1"
+              size="sm"
+              :ui="{
+                progress: {
+                  base: 'opacity-50',
+                },
+              }"
+            />
           </div>
-          <div class="flex w-full">
-            <div class="px-4 w-32">
-              Z {{ q.body.selected.rotation.z }}
-            </div>
-            <div class="px-2 py-2 w-full">
-              <URange
-                v-model="q.body.selected.rotation.z"
-                :step="0.0001"
-                :min="0"
-                :max="0.1"
-                size="sm"
-                :ui="{
-                  progress: {
-                    base: 'opacity-50',
-                  },
-                }"
-              />
-            </div>
+        </div>
+        <div class="flex w-full">
+          <div class="px-4 w-32">
+            Z {{ q.body.selected.rotation.z }}
+          </div>
+          <div class="px-2 py-2 w-full">
+            <URange
+              v-model="q.body.selected.rotation.z"
+              :step="0.0001"
+              :min="0"
+              :max="0.1"
+              size="sm"
+              :ui="{
+                progress: {
+                  base: 'opacity-50',
+                },
+              }"
+            />
           </div>
         </div>
       </div>
     </div>
-  </CommonMagicModalBtn>
+  </div>
 </template>
 
 <script setup lang="ts">

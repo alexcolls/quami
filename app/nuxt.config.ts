@@ -76,7 +76,8 @@ export default defineNuxtConfig({
     icons: [
       'heroicons',
       'icon-park-solid',
-      'material-symbols'
+      'material-symbols',
+      'mdi'
     ]
   },
   colorMode: {

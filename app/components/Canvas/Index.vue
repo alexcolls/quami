@@ -10,17 +10,13 @@
       @mousemove="handleMouseMove"
       @dblclick="ui.showVideo ? switchVideo() : () => {}"
     />
-    <!-- <button @click="toggleAudio" class="z-50 relative p-4 bg-red-400">
-    {{ q.audio.audioInstance.paused ? 'Play' : 'Pause' }}
-  </button> -->
-    <AppsKwamiEditBody v-if="isMounted" />
-    <AppsKwamiMusic
+    <Apps
+      :is-mounted="isMounted"
       :playing="playing"
-      :play-audio="toggleAudio"
+      :toggle-audio="toggleAudio"
       :next-audio="nextAudio"
-      :prev-audio="previousAudio"
+      :previous-audio="previousAudio"
     />
-    <AppsTheme v-if="isMounted" />
   </div>
 </template>
 
