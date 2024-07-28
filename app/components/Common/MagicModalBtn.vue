@@ -32,8 +32,9 @@
           </h1>
         </div>
         <div
-          v-if="isOpen && tabs && tabs.length > 1"
-          class="flex -ml-8"
+          v-if="isOpen && tabs && tabs.length > 1 && selectedTab"
+          class="flex"
+          :class="`-ml-${menuToLeft || 0}`"
         >
           <div
             v-for="tab in tabs"
@@ -44,12 +45,15 @@
               class="h-6 border-r border-gray-600/30
                 dark:border-gray-400/30 mx-1"
             />
-            <UButton
-              variant="ghost"
-              color="gray"
+            <CommonMagicTab
               :label="tab.title"
               :icon="tab.icon"
-              class="h-7 -mt-0.5"
+              class="-mt-0.5"
+              :class="selectedTab.title === tab.title ?
+                `!border !border-gray-600/30 !shadow-inner !shadow-gray-600/20
+                  py-[14px] dark:!border-gray-300/30 dark:!shadow-gray-300/20`
+                : ''"
+              @click="emit('tab-click', tab)"
             />
           </div>
           <div
@@ -87,14 +91,16 @@ defineProps<{
   title: string;
   icon: string;
   tabs?: Tab[];
+  selectedTab?: Tab;
+  menuToLeft?: number;
 }>();
+
+const emit = defineEmits(['tab-click']);
 
 const isOpen = ref(false);
 
 const modalRef = ref<HTMLElement>();
 let isDragging = false;
-// const isResizing = false;
-// const resizeDirection = '';
 let offsetX: number, offsetY: number;
 const originalX = 0;
 const originalY = 0;
@@ -146,4 +152,5 @@ onUnmounted(() => {
   window.removeEventListener('mousemove', doDrag);
   window.removeEventListener('mouseup', endDrag);
 });
+
 </script>

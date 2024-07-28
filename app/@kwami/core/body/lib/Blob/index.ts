@@ -12,8 +12,8 @@ import {
 } from '../../../../utils/randoms';
 import type KwamiAudio from '../../audio';
 import { type Skins } from './skins/interface';
-import setupSkins from './skins';
-import setupGeometry from './geometry';
+import setSkins from './skins';
+import setGeometry from './geometry';
 import params from './params';
 import events from './events';
 import blobAnimation from './animation';
@@ -23,8 +23,10 @@ type State = 'normal' | 'speak' | 'listen' | 'think' | 'click';
 export default class Blob {
   events = events;
   params = params;
-  skins = setupSkins(params.skins);
-  geometry = setupGeometry(params.body.resolution.default);
+  skins = setSkins(params.skins);
+  skinOptions = ['tricolor', 'zebra'];
+  skin = 'tricolor';
+  geometry = setGeometry(params.body.resolution.default);
   renderer: WebGLRenderer;
   mesh: Mesh;
   scene: Scene;
@@ -71,6 +73,7 @@ export default class Blob {
     audio: KwamiAudio
   ) {
     this.state = state;
+    this.skinOptions = Object.keys(this.skins);
     this.mesh = new Mesh(this.geometry, this.skins[skin]);
     this.renderer = renderer;
     this.scene = scene;
@@ -114,6 +117,11 @@ export default class Blob {
     }
   }
 
+  setSkin (skin: string) {
+    this.skin = skin;
+    this.mesh.material = this.skins[this.skin];
+  }
+
   color (vec: string, value: number) {
     switch (vec.toLowerCase()) {
       case 'x':
@@ -136,7 +144,7 @@ export default class Blob {
 
   resolution (value: number) {
     this.params.body.resolution.default = value;
-    this.geometry = setupGeometry(value);
+    this.geometry = setGeometry(value);
     this.mesh.geometry = this.geometry;
   }
 

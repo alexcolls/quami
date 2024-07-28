@@ -9,11 +9,11 @@ import {
 import type { Camera } from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls';
 
-export default function setupScene (canvas: HTMLCanvasElement) {
-  const renderer = setupRenderer(canvas);
-  const camera = setupCamera(canvas);
-  const controls = setupControls(camera, renderer);
-  const lights = setupLights(0.7, 0.40, 1);
+export default function setScene (canvas: HTMLCanvasElement) {
+  const renderer = setRenderer(canvas);
+  const camera = setCamera(canvas);
+  const controls = setControls(camera, renderer);
+  const lights = setLights(0.7, 0.40, 1);
   const scene = new Scene();
   scene.add(lights.top);
   scene.add(lights.bottom);
@@ -21,7 +21,7 @@ export default function setupScene (canvas: HTMLCanvasElement) {
   return { renderer, camera, controls, lights, scene };
 }
 
-function setupRenderer (canvas: HTMLCanvasElement) {
+export function setRenderer (canvas: HTMLCanvasElement) {
   const renderer = new WebGLRenderer({
     canvas,
     context: canvas.getContext('webgl2')!,
@@ -35,12 +35,16 @@ function setupRenderer (canvas: HTMLCanvasElement) {
   return renderer;
 }
 
-function setupCamera (canvas: HTMLCanvasElement) {
+export function setCamera (canvas: HTMLCanvasElement,
+  fov = 100,
+  near = 0.1,
+  far = 1000
+) {
   const camera = new PerspectiveCamera(
-    55,
+    fov,
     canvas.width / canvas.height,
-    0.1,
-    1000
+    near,
+    far
   );
   camera.position.x = 0;
   camera.position.y = 6;
@@ -48,7 +52,7 @@ function setupCamera (canvas: HTMLCanvasElement) {
   return camera;
 }
 
-function setupControls (camera: Camera, renderer: WebGLRenderer) {
+export function setControls (camera: Camera, renderer: WebGLRenderer) {
   const controls = new OrbitControls(camera, renderer.domElement);
   controls.enableDamping = true;
   controls.dampingFactor = 0.05;
@@ -59,7 +63,7 @@ function setupControls (camera: Camera, renderer: WebGLRenderer) {
   return controls;
 }
 
-function setupLights (
+export function setLights (
   topIntensity: number,
   bottomIntensity: number,
   ambientIntensity: number

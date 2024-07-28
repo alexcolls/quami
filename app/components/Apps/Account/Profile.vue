@@ -1,3 +1,5 @@
 <template>
-  PROFILE
+  <div class="min-h-[300px] min-w-96">
+    Account
+  </div>
 </template>

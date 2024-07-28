@@ -6,11 +6,17 @@ import type {
   Scene
 } from 'three';
 import audioFiles from '../../assets/audio';
-import setupScene from './scene';
+import setScene, {
+  setRenderer,
+  setCamera,
+  setControls,
+  setLights
+} from './scene';
 import KwamiAudio from './audio';
 import Blob from './lib/Blob';
 
 export default class KwamiBody {
+  canvas: HTMLCanvasElement;
   renderer: WebGLRenderer;
   camera: PerspectiveCamera;
   controls: any;
@@ -25,7 +31,8 @@ export default class KwamiBody {
   public audio: KwamiAudio;
 
   constructor (canvas: HTMLCanvasElement) {
-    const { renderer, camera, controls, lights, scene } = setupScene(canvas);
+    this.canvas = canvas;
+    const { renderer, camera, controls, lights, scene } = setScene(this.canvas);
     lights.top.position.set(0, 1000, 0);
     this.renderer = renderer;
     this.camera = camera;
@@ -73,5 +80,7 @@ export default class KwamiBody {
     }
   }
 
-  setup () {}
+  setCamera () {
+    setCamera(this.canvas, 2, 5, 5);
+  }
 }

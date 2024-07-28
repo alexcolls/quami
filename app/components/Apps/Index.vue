@@ -1,13 +1,13 @@
 <template>
   <div>
-    <AppsKwamiEdit v-if="props.isMounted" />
+    <AppsKwamiEditor v-if="props.isMounted" />
     <AppsKwamiMusic
       :playing="props.playing"
       :play-audio="props.toggleAudio"
       :next-audio="props.nextAudio"
       :prev-audio="props.previousAudio"
     />
-    <AppsAccountTheme v-if="props.isMounted" />
+    <AppsAccount v-if="props.isMounted" />
   </div>
 </template>
 

@@ -1,17 +1,12 @@
 <template>
-  <CommonMagicModalBtn
-    title="Theme"
-    icon="i-icon-park-solid-eyes"
-  >
-    <div class="flex">
-      <LayoutBtnTheme />
-      <LayoutBtnLight />
-      <LayoutBtnVideo />
-      <UToggle
-        v-model="ui.showVideo"
-      />
-    </div>
-  </CommonMagicModalBtn>
+  <div class="flex !min-w-96">
+    <LayoutBtnTheme />
+    <LayoutBtnLight />
+    <LayoutBtnVideo />
+    <UToggle
+      v-model="ui.showVideo"
+    />
+  </div>
 </template>
 
 <script setup lang="ts">

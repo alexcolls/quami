@@ -3,9 +3,14 @@
     icon="i-icon-park-solid-ghost"
     :title="$t('quami')"
     class="h-fit"
+    :menu-to-left="8"
     :tabs="tabs"
+    :selected-tab="selectedTab"
+    @tab-click="selectedTab = $event"
   >
-    <AppsKwamiEditBody />
+    <AppsKwamiEditorBody v-if="selectedTab.title.toUpperCase() === 'BODY'" />
+    <AppsKwamiEditorMind v-if="selectedTab.title.toUpperCase() === 'MIND'" />
+    <AppsKwamiEditorSoul v-if="selectedTab.title.toUpperCase() === 'SOUL'" />
   </CommonMagicModalBtn>
 </template>
 
@@ -25,5 +30,7 @@ const tabs = [
     icon: 'i-mdi-cards-heart-outline'
   }
 ];
+
+const selectedTab = ref(tabs[0]);
 
 </script>
