@@ -95,4 +95,39 @@ onUnmounted(() => {
   window.removeEventListener('mouseup', endDrag);
 });
 
+// const startResize = (dir: string) => () => {
+//   isResizing = true;
+//   resizeDirection = dir;
+//   window.addEventListener('mousemove', doResize);
+//   window.addEventListener('mouseup', endResize);
+// };
+
+// const doResize = (e: MouseEvent) => {
+//   if (!isResizing) { return; }
+//   requestAnimationFrame(() => {
+//     const modalRect = modalRef.value!.getBoundingClientRect();
+
+//     if (resizeDirection.includes('right')) {
+//       modalRef.value!.style.width = `${e.clientX - modalRect.left}px`;
+//     }
+//     if (resizeDirection.includes('left')) {
+//       modalRef.value!.style.width = `${modalRect.right - e.clientX}px`;
+//       modalRef.value!.style.left = `${e.clientX}px`;
+//     }
+//     if (resizeDirection.includes('bottom')) {
+//       modalRef.value!.style.height = `${e.clientY - modalRect.top}px`;
+//     }
+//     if (resizeDirection.includes('top')) {
+//       modalRef.value!.style.height = `${modalRect.bottom - e.clientY}px`;
+//       modalRef.value!.style.top = `${e.clientY}px`;
+//     }
+//   });
+// };
+
+// const endResize = () => {
+//   isResizing = false;
+//   window.removeEventListener('mousemove', doResize);
+//   window.removeEventListener('mouseup', endResize);
+// };
+
 </script>

@@ -32,6 +32,32 @@
           </h1>
         </div>
         <div
+          v-if="isOpen && tabs && tabs.length > 1"
+          class="flex -ml-8"
+        >
+          <div
+            v-for="tab in tabs"
+            :key="tab.title + tab.icon"
+            class="flex"
+          >
+            <div
+              class="h-6 border-r border-gray-600/30
+                dark:border-gray-400/30 mx-1"
+            />
+            <UButton
+              variant="ghost"
+              color="gray"
+              :label="tab.title"
+              :icon="tab.icon"
+              class="h-7 -mt-0.5"
+            />
+          </div>
+          <div
+            class="h-6 border-r border-gray-600/30
+                dark:border-gray-400/30 mx-1"
+          />
+        </div>
+        <div
           class="flex rounded-b-xl mb-1"
           :class="isOpen ? ' ml-2' : ''"
         >
@@ -60,6 +86,7 @@
 defineProps<{
   title: string;
   icon: string;
+  tabs?: Tab[];
 }>();
 
 const isOpen = ref(false);
@@ -109,41 +136,6 @@ const endDrag = () => {
 const resetPosition = () => {
   modalRef.value!.style.transform = `translate(${originalX}px, ${originalY}px)`;
 };
-
-// const startResize = (dir: string) => () => {
-//   isResizing = true;
-//   resizeDirection = dir;
-//   window.addEventListener('mousemove', doResize);
-//   window.addEventListener('mouseup', endResize);
-// };
-
-// const doResize = (e: MouseEvent) => {
-//   if (!isResizing) { return; }
-//   requestAnimationFrame(() => {
-//     const modalRect = modalRef.value!.getBoundingClientRect();
-
-//     if (resizeDirection.includes('right')) {
-//       modalRef.value!.style.width = `${e.clientX - modalRect.left}px`;
-//     }
-//     if (resizeDirection.includes('left')) {
-//       modalRef.value!.style.width = `${modalRect.right - e.clientX}px`;
-//       modalRef.value!.style.left = `${e.clientX}px`;
-//     }
-//     if (resizeDirection.includes('bottom')) {
-//       modalRef.value!.style.height = `${e.clientY - modalRect.top}px`;
-//     }
-//     if (resizeDirection.includes('top')) {
-//       modalRef.value!.style.height = `${modalRect.bottom - e.clientY}px`;
-//       modalRef.value!.style.top = `${e.clientY}px`;
-//     }
-//   });
-// };
-
-// const endResize = () => {
-//   isResizing = false;
-//   window.removeEventListener('mousemove', doResize);
-//   window.removeEventListener('mouseup', endResize);
-// };
 
 onMounted(() => {
   window.addEventListener('mousemove', doDrag);
