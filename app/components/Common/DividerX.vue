@@ -1,6 +1,6 @@
 <template>
   <UDivider
-    :class="ui.showVideo ? 'opacity-30' : 'opacity-80'"
+    :class="ui.showVideo ? 'opacity-30' : 'opacity-30'"
     :ui="{
       border: {
         base: 'border-gray-600 dark:border-gray-400'

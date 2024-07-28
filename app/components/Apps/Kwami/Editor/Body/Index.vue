@@ -17,11 +17,9 @@
       <CommonDividerX />
       <AppsKwamiEditorBodySkin />
       <CommonDividerX />
-      <AppsKwamiEditorBodySize />
+      <AppsKwamiEditorBodyOptions />
       <CommonDividerX />
-      <AppsKwamiEditorBodyForm />
-      <CommonDividerX />
-      <AppsKwamiEditorBodyCamera />
+      <div class="h-2" />
     </div>
   </div>
 </template>

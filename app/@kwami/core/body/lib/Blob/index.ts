@@ -120,6 +120,11 @@ export default class Blob {
   setSkin (skin: string) {
     this.skin = skin;
     this.mesh.material = this.skins[this.skin];
+    this.mesh.material.needsUpdate = true;
+  }
+
+  shininess (value: number) {
+    this.skins.tricolor.uniforms.shininess.value = value;
   }
 
   color (vec: string, value: number) {

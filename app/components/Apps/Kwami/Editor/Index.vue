@@ -8,9 +8,23 @@
     :selected-tab="selectedTab"
     @tab-click="selectedTab = $event"
   >
-    <AppsKwamiEditorBody v-if="selectedTab.title.toUpperCase() === 'BODY'" />
-    <AppsKwamiEditorMind v-if="selectedTab.title.toUpperCase() === 'MIND'" />
-    <AppsKwamiEditorSoul v-if="selectedTab.title.toUpperCase() === 'SOUL'" />
+    <div class="relative">
+      <AppsKwamiEditorBody
+        :class="selectedTab.title.toUpperCase() === 'BODY' ?
+          'opacity-100' : 'opacity-0 hidden delay-200'"
+        class="transition-opacity duration-300"
+      />
+      <AppsKwamiEditorMind
+        :class="selectedTab.title.toUpperCase() === 'MIND' ?
+          'opacity-100' : 'opacity-0'"
+        class="transition-opacity duration-300"
+      />
+      <AppsKwamiEditorSoul
+        :class="selectedTab.title.toUpperCase() === 'SOUL' ?
+          'opacity-100 delay-500' : 'opacity-0 hidden'"
+        class="transition-opacity duration-300"
+      />
+    </div>
   </CommonMagicModalBtn>
 </template>
 

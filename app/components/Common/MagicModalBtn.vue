@@ -7,11 +7,11 @@
       ref="modalRef"
       class="fixed inset-5 overflow-visible inline-block
         align-middle rounded-xl rounded-b-xl text-left shadow-lg transform
-        transition-all sm:align-middle sm:max-w-lg sm:w-fit bg-opacity-60
+        sm:align-middle sm:max-w-lg sm:w-fit bg-opacity-60
         backdrop-blur-md border z-50 lg:-mt-5 lg:-ml-5 h-fit
         hover:border-primary-500/80 dark:hover:border-primary-400 select-none
         hover:shadow-primary-500/50 hover:dark:shadow-primary-400
-        border-gray-500/20"
+        border-gray-500/20 transition-transform duration-500"
     >
       <div
         class="flex justify-between w-full cursor-move draggable-handle
@@ -27,7 +27,7 @@
             :name="icon"
             class="w-4 h-4 ml-1 mt-1.5 opacity-80"
           />
-          <h1 class="ml-2 mt-1">
+          <h1 class="ml-1.5 mt-1 uppercase text-sm">
             {{ title }}
           </h1>
         </div>
@@ -51,7 +51,9 @@
               class="-mt-0.5"
               :class="selectedTab.title === tab.title ?
                 `!border !border-gray-600/30 !shadow-inner !shadow-gray-600/20
-                  py-[14px] dark:!border-gray-300/30 dark:!shadow-gray-300/20`
+                  py-[14px] dark:!border-gray-300/30 dark:!shadow-gray-300/20
+                  text-primary-500 dark:text-primary-400 hover:text-primary-500
+                  dark:hover:text-primary-400`
                 : ''"
               @click="emit('tab-click', tab)"
             />
@@ -76,8 +78,10 @@
       </div>
       <div
         v-if="isOpen"
-        class="shadow-inner hover:shadow-primary-500 p-2 overflow-visible
-          rounded-b-xl flex justify-center"
+        class="shadow-inner hover:shadow-primary-500 p-2 max-h-[500px]
+          rounded-b-xl flex justify-center sm:max-h-[900px]
+          overflow-x-scroll transition-transform duration-500"
+        @dblclick="resetPosition"
       >
         <slot />
       </div>
