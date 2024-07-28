@@ -15,6 +15,11 @@ const useQStore = defineStore('q', {
       }
       this.body = new Kwami(canvas);
       this.kwamiBackup = { ...this.body };
+    },
+    save (kwami: Kwami): void {
+      if (kwami) {
+        this.kwamiBackup = { ...kwami };
+      }
     }
   }
 });

@@ -1,34 +1,48 @@
 <template>
   <div>
+    <CommonBackgroundVideos
+      v-if="ui.showVideo"
+      :class="opacity"
+    />
     <canvas
       ref="canvas"
       class="fixed h-screen w-screen !bg-transparent"
       @mousemove="handleMouseMove"
-      @dblclick="handleDoubleClick"
+      @dblclick="ui.showVideo ? switchVideo() : () => {}"
     />
-    <!-- <CommonBackgroundVideos /> -->
     <!-- <button @click="toggleAudio" class="z-50 relative p-4 bg-red-400">
     {{ q.audio.audioInstance.paused ? 'Play' : 'Pause' }}
   </button> -->
-    <ModalMusic
+    <AppsKwamiEditBody v-if="isMounted" />
+    <AppsKwamiMusic
       :playing="playing"
       :play-audio="toggleAudio"
       :next-audio="nextAudio"
       :prev-audio="previousAudio"
     />
-    <ModalBody v-if="isMounted" />
-    <ModalTheme v-if="isMounted" />
+    <AppsTheme v-if="isMounted" />
   </div>
 </template>
 
 <script setup lang="ts">
 
-const { q } = useStore();
+const { q, ui } = useStore();
 
 const isMounted = ref(false);
 const canvas = ref<HTMLCanvasElement>();
 
 const playing = ref(false);
+const opacity = ref('opacity-50');
+watch(() => ui.opacityVideo, (v) => {
+  opacity.value = `opacity-${v}`;
+  const x = `opacity-${v}`;
+  console.log('ui.opacityVideo', x);
+  opacity.value = x;
+});
+
+const switchVideo = () => {
+  ui.keyVideo++;
+};
 
 const toggleAudio = () => {
   if (q.body.audio.instance.paused) {
@@ -57,10 +71,6 @@ const handleMouseMove = () => {
   if (isMouseDown.value) {
     mouseMoved.value = true;
   }
-};
-
-const handleDoubleClick = () => {
-  toggleAudio();
 };
 
 onMounted(() => {

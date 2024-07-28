@@ -6,11 +6,16 @@
     <div class="flex">
       <LayoutBtnTheme />
       <LayoutBtnLight />
-      <LayoutBtnLang class="" />
+      <LayoutBtnVideo />
+      <UToggle
+        v-model="ui.showVideo"
+      />
     </div>
   </CommonMagicModalBtn>
 </template>
 
 <script setup lang="ts">
+
+const { ui } = useStore();
 
 </script>

@@ -6,7 +6,7 @@
       muted
       loop
       class="fixed top-0 left-0 h-screen w-screen cursor-pointer
-        z-[-1] object-cover transition-opacity duration-500 ease-in-out"
+        z-0 object-cover transition-opacity duration-500 ease-in-out"
       :class="isBlurred ? 'blur' : 'no-blur'"
       :style="{ opacity: showFirstVideo ? 1 : 0 }"
       @click="getVideo"
@@ -21,7 +21,7 @@
       muted
       loop
       class="fixed top-0 left-0 h-screen w-screen cursor-pointer
-        z-[-1] object-cover transition-opacity duration-500 ease-in-out"
+        z-0 object-cover transition-opacity duration-500 ease-in-out"
       :class="isBlurred ? 'blur' : 'no-blur'"
       :style="{ opacity: showFirstVideo ? 0 : 1 }"
       @click="getVideo"
@@ -41,6 +41,7 @@ const NO_REPEAT = 40;
 const { ui } = useStore();
 
 const key = ref(0);
+
 const video1 = ref(videos[ui.iVideo]);
 const video2 = ref(videos[ui.iVideo]);
 const showFirstVideo = ref(true);
@@ -75,6 +76,10 @@ const handleVideoLoaded = () => {
     isBlurred.value = false;
   }, 300);
 };
+
+watch(() => ui.keyVideo, () => {
+  getVideo();
+});
 
 </script>
 

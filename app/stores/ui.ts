@@ -1,5 +1,5 @@
 const useUIStore = defineStore('ui', {
-  persist: false,
+  persist: true,
   state: () => ({
     isDark: false,
     size: 'md',
@@ -19,7 +19,9 @@ const useUIStore = defineStore('ui', {
     gray: 'stone',
     iLocale: 0,
     iVideo: 0,
-    key: 0
+    showVideo: false,
+    opacityVideo: 50,
+    keyVideo: 0
   })
 });
 

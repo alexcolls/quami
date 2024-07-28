@@ -5,38 +5,51 @@
     class="h-fit"
   >
     <div class="p-2 w-[500px]">
-      <div class="mt-5 sm:mt-6 space-y-3 ">
-        <h1 class="font-extrabold">
-          SKIN
-        </h1>
-        <div class="flex">
-          <div class="rounded-full overflow-hidden -p-6">
+      <div class="flex justify-start">
+        <UButton
+          icon="i-heroicons-cube-transparent-16-solid"
+          class="ml-4"
+          :label="$t('randomADN')"
+          @click="getRandomQuami"
+        />
+        <div class="ml-4">
+          {{ 0.022 }}
+        </div>
+      </div>
+      <div class="mt-5 sm:mt-6 space-y-3 grid-cols-2">
+        <div class="">
+          <h1 class="font-extrabold">
+            SKIN
+          </h1>
+          <div class="flex">
+            <div class="rounded-full overflow-hidden -p-6">
+              <input
+                v-model="colorX"
+                type="color"
+                class="!rounded-full relative w-8 bg-transparent border-0"
+              >
+            </div>
             <input
-              v-model="colorX"
+              v-model="colorY"
               type="color"
-              class="!rounded-full relative w-8 bg-transparent border-0"
+              class="rounded-xl w-8 bg-transparent border-0"
             >
+            <input
+              v-model="colorZ"
+              type="color"
+              class="rounded-xl w-8 bg-transparent border-0"
+            >
+            <UButton
+              icon="i-heroicons-cube-transparent-16-solid"
+              class="ml-4"
+              @click="getRandomXYZColor"
+            />
+            <UToggle
+              v-model="wireframe"
+              name="syncColors"
+              label="Syncronize"
+            />
           </div>
-          <input
-            v-model="colorY"
-            type="color"
-            class="rounded-xl w-8 bg-transparent border-0"
-          >
-          <input
-            v-model="colorZ"
-            type="color"
-            class="rounded-xl w-8 bg-transparent border-0"
-          >
-          <UButton
-            icon="i-heroicons-cube-transparent-16-solid"
-            class="ml-4"
-            @click="getRandomXYZColor"
-          />
-          <UToggle
-            v-model="wireframe"
-            name="syncColors"
-            label="Syncronize"
-          />
         </div>
         <div class="w-full">
           <div class="flex w-full">
@@ -332,14 +345,6 @@
           </div>
         </div>
       </div>
-      <div class="flex">
-        <UButton
-          icon="i-heroicons-cube-transparent-16-solid"
-          class="ml-4"
-          @click="getRandomQuami"
-        />
-      </div>
-      <!-- <RadarChart /> -->
     </div>
   </CommonMagicModalBtn>
 </template>
@@ -408,11 +413,13 @@ onMounted(() => {
     q.body.selected.vec.x = v;
     q.body.selected.vec.y = v;
     q.body.selected.vec.z = v;
+    q.save(q.body);
   });
   watch(time, (v) => {
     q.body.selected.time.x = v;
     q.body.selected.time.y = v;
     q.body.selected.time.z = v;
+    q.save(q.body);
   });
   watch(rotation, (v) => {
     if (v === 0) {

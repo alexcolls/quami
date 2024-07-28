@@ -5,5 +5,6 @@ export default {
   welcome: 'Welcome',
   body: 'Body',
   theme: 'Theme',
-  music: 'Music'
+  music: 'Music',
+  randomADN: 'Random ADN'
 };

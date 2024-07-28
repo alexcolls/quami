@@ -9,14 +9,14 @@
         align-middle rounded-xl rounded-b-xl text-left shadow-lg transform
         transition-all sm:align-middle sm:max-w-lg sm:w-fit bg-opacity-60
         backdrop-blur-md border z-50 lg:-mt-5 lg:-ml-5 h-fit
-        hover:border-primary-500 dark:hover:border-primary-400 select-none
-        hover:shadow-primary-500 hover:dark:shadow-primary-400
+        hover:border-primary-500/80 dark:hover:border-primary-400 select-none
+        hover:shadow-primary-500/50 hover:dark:shadow-primary-400
         border-gray-500/20"
     >
       <div
         class="flex justify-between w-full cursor-move draggable-handle
           border-b border-gray-800/20 rounded-t-xl pt-[10px] pb-[6px]
-          hover:border-primary-500 dark:hover:border-primary-400 px-[10px]
+          hover:border-primary-500/50 dark:hover:border-primary-400/50 px-[10px]
           bg-slate-500/10 select-none"
         :class="isOpen ? 'rounded-t-xl' : 'rounded-xl'"
         @mousedown="startDrag"

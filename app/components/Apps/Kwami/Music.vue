@@ -1,22 +1,18 @@
 <template>
-  <div
-    class="fixed bottom-10 left-1/2 transform
-  -translate-x-1/2 flex space-x-4"
+  <CommonMagicModalBtn
+    :title="$t('music')"
+    icon="i-icon-park-solid-music-one"
   >
-    <!-- <button class="m-5 p-4 bg-transparent" @click="toggleLeftPanel">
-      <img src="~/assets/icons/kwami.png" alt="Kwami" class="w-7 h-7">
-    </button> -->
-
     <UButton
       variant="ghost"
       color="gray"
-      icon="i-heroicons-play-circle-16-solid"
+      icon="i-material-symbols-skip-previous-rounded"
       @click="prevAudio()"
     />
     <UButton
       variant="ghost"
       color="gray"
-      :icon="props.playing
+      :icon="!props.playing
         ? 'i-heroicons-play-circle-16-solid'
         : 'i-heroicons-pause-circle-16-solid'"
       @click="play()"
@@ -24,10 +20,10 @@
     <UButton
       variant="ghost"
       color="gray"
-      icon="i-heroicons-play-circle-16-solid"
+      icon="i-material-symbols-skip-next-rounded"
       @click="nextAudio()"
     />
-  </div>
+  </CommonMagicModalBtn>
 </template>
 
 <script setup lang="ts">

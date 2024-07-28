@@ -14,7 +14,7 @@
         hover:border border-gray-300 dark:border-gray-700"
     >
       <UIcon
-        name="i-heroicons-light-bulb-solid"
+        name="i-heroicons-paint-brush-solid"
         class="h-5 w-5 text-primary-900 dark:text-primary-100"
       />
     </UButton>

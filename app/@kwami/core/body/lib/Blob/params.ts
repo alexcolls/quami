@@ -27,7 +27,7 @@ export default {
     tricolor: {
       wireframe: getRandomBoolean(0.1),
       lightPosition: { x: 1000, y: 2500, z: 200 },
-      shininess: 10000,
+      shininess: 100,
       color1: getRandomHexColor(),
       color2: getRandomHexColor(),
       color3: getRandomHexColor()
