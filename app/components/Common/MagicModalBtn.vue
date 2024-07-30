@@ -84,34 +84,21 @@
       >
         <slot />
       </div>
-      <div
-        v-if="footer"
-        class="flex justify-between w-full cursor-move draggable-handle
-          border-b border-gray-800/20 rounded-t-xl pt-[10px] pb-[6px]
-          hover:border-primary-500/50 dark:hover:border-primary-400/50 px-[10px]
-          bg-slate-500/10 select-none rounded-b-xl"
-        :class="isOpen ? 'flex' : 'hidden'"
-        @mousedown="startDrag"
-        @dblclick="resetPosition"
-      >
-        <slot name="footer" />
-      </div>
     </div>
   </div>
 </template>
-
 <script setup lang="ts">
 
-defineProps<{
+const { title } = defineProps<{
   title: string;
   icon: string;
   tabs?: Tab[];
   selectedTab?: Tab;
   menuToLeft?: number;
-  footer?: boolean;
 }>();
 
 const emit = defineEmits(['tab-click']);
+const { ui } = useStore();
 
 const isOpen = ref(false);
 
@@ -121,33 +108,38 @@ let offsetX: number, offsetY: number;
 const originalX = 0;
 const originalY = 0;
 
-const startDrag = (e: any) => {
+const moveWindow = (x: number, y: number) => {
+  modalRef.value!.style.transform = `translate(${x}px, ${y}px)`;
+  ui.windows[title] = { top: y, left: x };
+};
+
+onMounted(() => {
+  const savedPosition = ui.windows[title];
+  if (savedPosition && typeof savedPosition.top === 'number' &&
+  typeof savedPosition.left === 'number') {
+    moveWindow(savedPosition.left, savedPosition.top);
+  } else {
+    moveWindow(originalX, originalY);
+  }
+});
+
+const startDrag = (e: MouseEvent) => {
   isDragging = true;
   offsetX = e.clientX - modalRef.value!.getBoundingClientRect().left;
   offsetY = e.clientY - modalRef.value!.getBoundingClientRect().top;
 };
 
-const doDrag = (e: any) => {
+const doDrag = (e: MouseEvent) => {
   if (!isDragging) { return; }
   requestAnimationFrame(() => {
     const modalRect = modalRef.value!.getBoundingClientRect();
-
     let top = e.clientY - offsetY;
     let left = e.clientX - offsetX;
 
-    if (top < 0) {
-      top = 0;
-    } else if (top + modalRect.height > window.innerHeight) {
-      top = window.innerHeight - modalRect.height;
-    }
+    top = Math.max(0, Math.min(top, window.innerHeight - modalRect.height));
+    left = Math.max(0, Math.min(left, window.innerWidth - modalRect.width));
 
-    if (left < 0) {
-      left = 0;
-    } else if (left + modalRect.width > window.innerWidth) {
-      left = window.innerWidth - modalRect.width;
-    }
-
-    modalRef.value!.style.transform = `translate(${left}px, ${top}px)`;
+    moveWindow(left, top);
   });
 };
 
@@ -156,7 +148,7 @@ const endDrag = () => {
 };
 
 const resetPosition = () => {
-  modalRef.value!.style.transform = `translate(${originalX}px, ${originalY}px)`;
+  moveWindow(originalX, originalY);
 };
 
 onMounted(() => {

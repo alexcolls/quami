@@ -9,5 +9,5 @@ export default {
   body: 'Body',
   theme: 'Theme',
   music: 'Music',
-  randomADN: 'Random ADN'
+  randomDNA: 'Random DNA'
 };

@@ -4,7 +4,7 @@
       <UButton
         icon="i-mdi-dice-multiple"
         class="ml-4"
-        :label="$t('randomADN')"
+        :label="$t('randomDNA')"
         @click="getRandomQuami"
       />
       <div class="ml-4">
@@ -20,6 +20,11 @@
       <AppKwamiEditorBodyOptions />
       <CommonDividerX />
       <div class="h-2" />
+      <CommonMagicBtn
+        :label="$t('mint')"
+        icon="i-mdi-pickaxe"
+        class="p-2"
+      />
     </div>
   </div>
 </template>

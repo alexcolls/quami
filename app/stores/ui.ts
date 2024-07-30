@@ -21,7 +21,8 @@ const useUIStore = defineStore('ui', {
     iVideo: 0,
     showVideo: false,
     opacityVideo: 50,
-    keyVideo: 0
+    keyVideo: 0,
+    windows: {} as any
   })
 });
 
