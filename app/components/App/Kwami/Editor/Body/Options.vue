@@ -352,6 +352,14 @@ const size = ref(60);
 
 const audioResolution = ref(false);
 
+const switchRotation = () => {
+  if (!isRotation.value) {
+    rotation.value = 0;
+  } else {
+    rotation.value = 0.01;
+  }
+};
+
 watch(size, (v) => {
   q.body.camera.fov = 110 - v;
   q.body.camera.updateProjectionMatrix();

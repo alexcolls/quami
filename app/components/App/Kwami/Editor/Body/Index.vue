@@ -31,7 +31,7 @@ import {
   getRandomBoolean
 } from '~/@kwami/utils/randoms';
 
-const { q, ui } = useStore();
+const { q } = useStore();
 
 const vecs = ref(12);
 const time = ref(12);
@@ -39,7 +39,6 @@ const rotation = ref(0);
 const isRotation = ref(false);
 const wireframe = ref(false);
 const resolution = ref(20);
-const size = ref(100);
 
 const getRandomQuami = () => {
   q.body.selected.vec.x = getRandomBetween(0, 2, 2);
@@ -67,14 +66,6 @@ const getRandomQuami = () => {
     getRandomHexColor(),
     getRandomHexColor()
   );
-};
-
-const switchRotation = () => {
-  if (!isRotation.value) {
-    rotation.value = 0;
-  } else {
-    rotation.value = 0.01;
-  }
 };
 
 onMounted(() => {
