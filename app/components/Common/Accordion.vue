@@ -39,16 +39,17 @@
 
 <script setup lang="ts">
 
-const { title, subtitle } = defineProps<{
+const { title, subtitle, isOpen } = defineProps<{
   title: string;
   subtitle?: string;
+  isOpen?: boolean;
 }>();
 
 const items = [{
   title,
   subtitle,
   slot: 'content',
-  defaultOpen: true
+  defaultOpen: isOpen
 }];
 
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <CommonAccordion title="AVATAR" subtitle="0.">
+  <CommonAccordion title="AVATAR" subtitle="" :is-open="false">
     <div
       class="mt-2 h-28 w-full border border-gray-600/30
           dark:border-gray-400/30 rounded-lg shadow-inner flex"

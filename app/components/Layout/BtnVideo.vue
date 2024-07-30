@@ -19,14 +19,15 @@
       />
     </UButton>
     <template #panel>
-      <UCard class="bg-gray-100 dark:bg-gray-900 min-w-56">
+      <div class="bg-gray-100 dark:bg-gray-900 min-w-56">
         <URange
-          v-model="ui.opacityVideo"
-          :min="0"
-          :max="100"
-          :step="10"
+          v-model="opacity"
+          :steps="steps"
         />
-      </UCard>
+        <div>
+          {{ opacity }}
+        </div>
+      </div>
     </template>
   </UPopover>
 </template>
@@ -34,5 +35,16 @@
 <script setup lang="ts">
 
 const { ui } = useStore();
+
+const opacity = ref(0);
+
+const steps = [
+  0, 30, 50, 70, 100
+];
+
+watch(opacity, (v) => {
+  console.log('opacity', v);
+  ui.opacityVideo = v;
+});
 
 </script>

@@ -9,19 +9,19 @@
     @tab-click="selectedTab = $event"
   >
     <div class="relative">
-      <AppsKwamiEditorBody
+      <AppKwamiEditorBody
         :class="selectedTab.title.toUpperCase() === 'BODY' ?
           'opacity-100' : 'opacity-0 hidden delay-200'"
         class="transition-opacity duration-300"
       />
-      <AppsKwamiEditorMind
+      <AppKwamiEditorMind
         :class="selectedTab.title.toUpperCase() === 'MIND' ?
-          'opacity-100' : 'opacity-0'"
+          'opacity-100' : 'opacity-0 hidden delay-200'"
         class="transition-opacity duration-300"
       />
-      <AppsKwamiEditorSoul
+      <AppKwamiEditorSoul
         :class="selectedTab.title.toUpperCase() === 'SOUL' ?
-          'opacity-100 delay-500' : 'opacity-0 hidden'"
+          'opacity-100 ' : 'opacity-0 hidden delay-200'"
         class="transition-opacity duration-300"
       />
     </div>

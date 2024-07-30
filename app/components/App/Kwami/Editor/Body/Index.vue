@@ -13,11 +13,11 @@
     </div>
     <div class="mt-5 sm:mt-6 space-y-3">
       <CommonDividerX />
-      <AppsKwamiEditorBodyAvatar />
+      <AppKwamiEditorBodyAvatar />
       <CommonDividerX />
-      <AppsKwamiEditorBodySkin />
+      <AppKwamiEditorBodySkin />
       <CommonDividerX />
-      <AppsKwamiEditorBodyOptions />
+      <AppKwamiEditorBodyOptions />
       <CommonDividerX />
       <div class="h-2" />
     </div>

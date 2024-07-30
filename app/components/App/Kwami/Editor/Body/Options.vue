@@ -1,5 +1,5 @@
 <template>
-  <CommonAccordion title="OPTIONS">
+  <CommonAccordion title="OPTIONS" :is-open="false">
     <div class="flex w-full mt-2">
       <div class="ml-2 w-1/3 text-gray-950 dark:text-white font-semibold">
         Size

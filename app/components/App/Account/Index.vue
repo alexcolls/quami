@@ -8,8 +8,11 @@
     :selected-tab="selectedTab"
     @tab-click="selectedTab = $event"
   >
-    <AppsAccountProfile v-if="selectedTab.title.toUpperCase() === 'PROFILE'" />
-    <AppsAccountTheme v-if="selectedTab.title.toUpperCase() === 'THEME'" />
+    <AppAccountTheme
+      :class="selectedTab.title.toUpperCase() === 'THEME' ?
+        'block' : 'hidden'"
+    />
+    <AppAccountProfile v-if="selectedTab.title.toUpperCase() === 'PROFILE'" />
   </CommonMagicModalBtn>
 </template>
 

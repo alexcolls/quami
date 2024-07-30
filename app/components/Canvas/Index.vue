@@ -10,7 +10,7 @@
       @mousemove="handleMouseMove"
       @dblclick="ui.showVideo ? switchVideo() : () => {}"
     />
-    <Apps
+    <App
       :is-mounted="isMounted"
       :playing="playing"
       :toggle-audio="toggleAudio"

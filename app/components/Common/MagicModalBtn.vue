@@ -81,9 +81,20 @@
         class="shadow-inner hover:shadow-primary-500 p-2 max-h-[500px]
           rounded-b-xl flex justify-center sm:max-h-[900px]
           overflow-x-scroll transition-transform duration-500"
-        @dblclick="resetPosition"
       >
         <slot />
+      </div>
+      <div
+        v-if="footer"
+        class="flex justify-between w-full cursor-move draggable-handle
+          border-b border-gray-800/20 rounded-t-xl pt-[10px] pb-[6px]
+          hover:border-primary-500/50 dark:hover:border-primary-400/50 px-[10px]
+          bg-slate-500/10 select-none rounded-b-xl"
+        :class="isOpen ? 'flex' : 'hidden'"
+        @mousedown="startDrag"
+        @dblclick="resetPosition"
+      >
+        <slot name="footer" />
       </div>
     </div>
   </div>
@@ -97,6 +108,7 @@ defineProps<{
   tabs?: Tab[];
   selectedTab?: Tab;
   menuToLeft?: number;
+  footer?: boolean;
 }>();
 
 const emit = defineEmits(['tab-click']);

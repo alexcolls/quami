@@ -16,6 +16,16 @@
   </body>
 </template>
 
+<script setup lang="ts">
+
+const theme = useAppConfig();
+const { ui } = useStore();
+
+theme.ui.primary = ui.primary;
+theme.ui.gray = ui.gray;
+
+</script>
+
 <style>
 .page-enter-active,
 .page-leave-active {
