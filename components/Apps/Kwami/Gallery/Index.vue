@@ -1,28 +1,28 @@
 <template>
-  <CommonMagicModalBtn
-    icon="i-icon-park-solid-ghost"
-    :title="$t('quami')"
+  <CommonMagicWindow
+    icon="i-ion-wallet-outline"
+    :title="$t('wallet')"
     class="h-fit"
     :menu-to-left="8"
     :tabs="tabs"
     :selected-tab="selectedTab"
-    :default-position="{ x: 200, y: 100 }"
+    :default-position="{ x: 300, y: 300 }"
     @tab-click="selectedTab = $event"
   >
     <div v-for="x in data" :key="x.id">
       {{ x.id }}
     </div>
-  </CommonMagicModalBtn>
+  </CommonMagicWindow>
 </template>
 
 <script setup lang="ts">
 
 const { auth } = useStore();
-const client = useSupabaseClient();
+const SU = useSupabaseClient();
 
 const tabs = [
   {
-    title: 'Body',
+    title: 'Kwamis',
     icon: 'i-mdi-alien-outline'
   },
   {

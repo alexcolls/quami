@@ -20,7 +20,6 @@ const { q, ui } = useStore();
 const isMounted = ref(false);
 const canvas = ref<HTMLCanvasElement>();
 
-
 const opacity = ref('opacity-50');
 watch(() => ui.opacityVideo, (v) => {
   opacity.value = `opacity-${v}`;
@@ -32,7 +31,6 @@ watch(() => ui.opacityVideo, (v) => {
 const switchVideo = () => {
   ui.keyVideo++;
 };
-
 
 const isMouseDown = ref(false);
 const mouseMoved = ref(false);

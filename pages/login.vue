@@ -1,5 +1,8 @@
 <template>
-  <Auth />
+  <div>
+    <AuthLoginPage />
+    <AppsKwamiCanvas />
+  </div>
 </template>
 
 <script setup lang="ts">

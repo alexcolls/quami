@@ -3,8 +3,11 @@
     class="relative flex items-center justify-center
       overflow-hidden z-0 h-screen w-screen m-0 p-0"
   >
-    <CommonBackgroundVideos />
-    <CommonMagicModal
+    <CommonMagicWindow
+      :title="$t('login')"
+      :icon="'i-heroicons-user'"
+      :default-position="{ x: 50, y: 50 }"
+      :is-modal-open="true"
       :window-name="$t('login')"
       :class="isValid(state.email) ? '!h-[240px]' : '!h-[180px]'"
     >
@@ -46,7 +49,7 @@
           </transition>
         </UForm>
       </div>
-    </CommonMagicModal>
+    </CommonMagicWindow>
   </div>
 </template>
 

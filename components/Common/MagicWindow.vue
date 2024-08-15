@@ -22,7 +22,7 @@
         @mousedown="startDrag"
         @dblclick="resetPosition"
       >
-        <div v-if="isOpen" class="text-sm flex">
+        <div v-if="isOpen && !isHidden" class="text-sm flex">
           <UIcon
             :name="icon"
             class="w-4 h-4 ml-1 mt-1.5 opacity-80"
@@ -82,6 +82,8 @@
           rounded-b-xl flex justify-center sm:max-h-[900px]
           overflow-x-scroll transition-transform duration-500"
       >
+        <slot name="tabs" />
+        <slot name="header" />
         <slot />
       </div>
     </div>
@@ -90,22 +92,30 @@
 
 <script setup lang="ts">
 
-const { title, defaultPosition } = defineProps<{
+const { title, defaultPosition, isModalOpen, isHidden } = defineProps<{
   title: string;
   icon: string;
   tabs?: Tab[];
   selectedTab?: Tab;
   menuToLeft?: number;
-  defaultPosition: { x: number, y: number };
+  defaultPosition?: { x: number, y: number };
+  isModalOpen?: boolean;
+  isHidden?: boolean;
 }>();
 
 const emit = defineEmits(['tab-click']);
 const { ui } = useStore();
 
-const isOpen = ref(false);
+const isOpen = ref(isHidden ? true : !!isModalOpen);
 const modalRef = ref<HTMLElement>();
 let isDragging = false;
 let offsetX: number, offsetY: number;
+
+if (isModalOpen) {
+  onMounted(() => {
+    isOpen.value = true;
+  });
+}
 
 const moveWindow = (x: number, y: number) => {
   modalRef.value!.style.transform = `translate(${x}px, ${y}px)`;
@@ -115,9 +125,9 @@ const moveWindow = (x: number, y: number) => {
 onMounted(() => {
   const savedPosition = ui.windows[title];
   if (savedPosition && typeof savedPosition.top === 'number' &&
-  typeof savedPosition.left === 'number') {
+      typeof savedPosition.left === 'number') {
     moveWindow(savedPosition.left, savedPosition.top);
-  } else {
+  } else if (defaultPosition) {
     moveWindow(defaultPosition.x, defaultPosition.y);
   }
 });
@@ -145,6 +155,7 @@ const endDrag = () => {
 };
 
 const resetPosition = () => {
+  if (!defaultPosition) { return; }
   moveWindow(defaultPosition.x, defaultPosition.y);
 };
 

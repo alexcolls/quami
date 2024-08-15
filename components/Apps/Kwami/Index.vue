@@ -1,4 +1,4 @@
 <template>
   <AppsKwamiCanvas />
-  <ApssKwamiWindows />
+  <AppsKwamiWindows />
 </template>

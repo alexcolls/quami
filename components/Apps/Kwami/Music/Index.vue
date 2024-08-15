@@ -1,5 +1,5 @@
 <template>
-  <CommonMagicModalBtn
+  <CommonMagicWindow
     :title="$t('music')"
     icon="i-icon-park-solid-music-one"
     :default-position="{ x: 500, y: 500 }"
@@ -14,8 +14,8 @@
       variant="ghost"
       color="gray"
       :icon="playing
-        ? 'i-heroicons-play-circle-16-solid'
-        : 'i-heroicons-pause-circle-16-solid'"
+        ? 'i-heroicons-pause-circle-16-solid'
+        : 'i-heroicons-play-circle-16-solid'"
       @click="toggleAudio()"
     />
     <UButton
@@ -24,7 +24,7 @@
       icon="i-material-symbols-skip-next-rounded"
       @click="nextAudio()"
     />
-  </CommonMagicModalBtn>
+  </CommonMagicWindow>
 </template>
 
 <script setup lang="ts">

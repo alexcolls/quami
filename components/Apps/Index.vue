@@ -2,6 +2,6 @@
   <div>
     <AppsKwami />
     <AppsAccount />
-    <AppsCommunity />
+    <!-- <AppsCommunity /> -->
   </div>
 </template>

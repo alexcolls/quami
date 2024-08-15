@@ -2,6 +2,7 @@ export default {
   app: 'quami',
   quami: 'Quami',
   kwami: 'Kwami',
+  wallet: 'Wallet',
   account: 'Account',
   login: 'Login',
   email: 'Email',

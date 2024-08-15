@@ -5,7 +5,13 @@ const useAuthStore = defineStore('auth', {
     user: {
       id: ''
     }
-  })
+  }),
+  actions: {
+    logout () {
+      this.session = {};
+      this.user = { id: '' };
+    }
+  }
 });
 
 export default useAuthStore;

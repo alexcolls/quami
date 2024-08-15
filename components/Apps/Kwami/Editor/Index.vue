@@ -1,7 +1,7 @@
 <template>
-  <CommonMagicModalBtn
+  <CommonMagicWindow
     icon="i-icon-park-solid-ghost"
-    :title="$t('quami')"
+    :title="$t('kwami')"
     class="h-fit"
     :menu-to-left="8"
     :tabs="tabs"
@@ -9,24 +9,29 @@
     :default-position="{ x: 100, y: 100 }"
     @tab-click="selectedTab = $event"
   >
-    <div class="relative">
-      <AppKwamiEditorBody
-        :class="selectedTab.title.toUpperCase() === 'BODY' ?
-          'opacity-100' : 'opacity-0 hidden delay-200'"
-        class="transition-opacity duration-300"
-      />
-      <AppKwamiEditorMind
-        :class="selectedTab.title.toUpperCase() === 'MIND' ?
-          'opacity-100' : 'opacity-0 hidden delay-200'"
-        class="transition-opacity duration-300"
-      />
-      <AppKwamiEditorSoul
-        :class="selectedTab.title.toUpperCase() === 'SOUL' ?
-          'opacity-100 ' : 'opacity-0 hidden delay-200'"
-        class="transition-opacity duration-300"
-      />
-    </div>
-  </CommonMagicModalBtn>
+    <template #tabs>
+      <div class="relative">
+        <AppsKwamiEditorBody
+          :class="selectedTab.title.toUpperCase() === 'BODY' ?
+            'opacity-100' : 'opacity-0 hidden delay-200'"
+          class="transition-opacity duration-300"
+        />
+        <AppsKwamiEditorMind
+          :class="selectedTab.title.toUpperCase() === 'MIND' ?
+            'opacity-100' : 'opacity-0 hidden delay-200'"
+          class="transition-opacity duration-300"
+        />
+        <AppsKwamiEditorSoul
+          :class="selectedTab.title.toUpperCase() === 'SOUL' ?
+            'opacity-100 ' : 'opacity-0 hidden delay-200'"
+          class="transition-opacity duration-300"
+        />
+      </div>
+    </template>
+    <template #header>
+      test
+    </template>
+  </CommonMagicWindow>
 </template>
 
 <script setup lang="ts">

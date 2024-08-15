@@ -1,5 +1,5 @@
 <template>
-  <CommonMagicModalBtn
+  <CommonMagicWindow
     icon="i-icon-park-solid-user"
     :title="$t('account')"
     class="h-fit"
@@ -9,12 +9,12 @@
     :default-position="{ x: 900, y: 600 }"
     @tab-click="selectedTab = $event"
   >
-    <AppAccountTheme
+    <AppsAccountTheme
       :class="selectedTab.title.toUpperCase() === 'THEME' ?
         'block' : 'hidden'"
     />
-    <AppAccountProfile v-if="selectedTab.title.toUpperCase() === 'PROFILE'" />
-  </CommonMagicModalBtn>
+    <AppsAccountProfile v-if="selectedTab.title.toUpperCase() === 'PROFILE'" />
+  </CommonMagicWindow>
 </template>
 
 <script setup lang="ts">
