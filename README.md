@@ -6,7 +6,7 @@ Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introdu
 
 Install bun
 
-- linux, macos:
+- linux, macos, wsl:
 
 ```bash
 curl -fsSL https://bun.sh/install | bash
