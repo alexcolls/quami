@@ -11,11 +11,13 @@
         focus-visible:ring-inset focus-visible:ring-2
         focus-visible:ring-primary-500 align-middle h-[31px] w-[31px]
         dark:focus-visible:ring-primary-400 inline-flex items-center
-        hover:border border-gray-300 dark:border-gray-700"
+        hover:border border-gray-300 dark:border-gray-700
+        !shadow-gray-900/30 dark:!shadow-gray-100/30
+        hover:shadow-inner"
     >
       <UIcon
         name="i-heroicons-paint-brush-solid"
-        class="h-5 w-5 text-primary-900 dark:text-primary-100"
+        class="h-5 w-5"
       />
     </UButton>
     <template #panel>

@@ -24,7 +24,6 @@ const opacity = ref('opacity-50');
 watch(() => ui.opacityVideo, (v) => {
   opacity.value = `opacity-${v}`;
   const x = `opacity-${v}`;
-  console.log('ui.opacityVideo', x);
   opacity.value = x;
 });
 

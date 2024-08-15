@@ -1,7 +1,7 @@
 <template>
   <div
     class="flex justify-center items-center relative w-screen
-      bg-transparent border-none rounded-xl"
+      bg-transparent border-none rounded-xl transition-transform duration-500"
   >
     <div
       ref="modalRef"
@@ -103,7 +103,8 @@ const { title, defaultPosition, isModalOpen, isHidden } = defineProps<{
   isHidden?: boolean;
 }>();
 
-const emit = defineEmits(['tab-click']);
+const emit = defineEmits(['tab-click', 'width', 'height']);
+
 const { ui } = useStore();
 
 const isOpen = ref(isHidden ? true : !!isModalOpen);
@@ -167,6 +168,16 @@ onMounted(() => {
 onUnmounted(() => {
   window.removeEventListener('mousemove', doDrag);
   window.removeEventListener('mouseup', endDrag);
+});
+
+onMounted(() => {
+  const savedPosition = ui.windows[title];
+  if (savedPosition && typeof savedPosition.top === 'number' &&
+  typeof savedPosition.left === 'number') {
+    moveWindow(savedPosition.left, savedPosition.top);
+  } else if (defaultPosition) {
+    moveWindow(defaultPosition.x, defaultPosition.y);
+  }
 });
 
 </script>

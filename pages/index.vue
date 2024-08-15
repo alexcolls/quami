@@ -1,5 +1,7 @@
 <template>
-  <Apps />
+  <div>
+    <Apps />
+  </div>
 </template>
 
 <script setup lang="ts">

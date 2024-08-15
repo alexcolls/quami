@@ -3,8 +3,10 @@
     variant="ghost"
     color="black"
     class="mx-2 h-[31px] w-[31px] hover:bg-white dark:hover:bg-gray-900 p-1.5
-      hover:border border-gray-300 dark:border-gray-700 flex justify-center
-      text-gray-900 dark:text-gray-100 !z-50"
+      hover:border border-gray-400/60 dark:border-gray-700 flex justify-center
+      text-gray-900 dark:text-gray-100 !z-50 hover:shadow-sm
+      !shadow-gray-900/30 dark:!shadow-gray-100/30 !bg-transparent
+      active:shadow-inner"
     @click="isDark = !isDark"
   >
     <UIcon

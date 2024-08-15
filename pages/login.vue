@@ -1,7 +1,6 @@
 <template>
   <div>
     <AuthLoginPage />
-    <AppsKwamiCanvas />
   </div>
 </template>
 

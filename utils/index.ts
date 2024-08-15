@@ -1,4 +1,4 @@
-export function out (content: any, title = 'print'): void {
+export function out (content: any, title = 'OUT'): void {
   console.log(title, content);
 }
 

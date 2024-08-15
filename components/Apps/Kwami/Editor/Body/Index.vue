@@ -5,7 +5,7 @@
         icon="i-mdi-dice-multiple"
         class="ml-4"
         :label="$t('randomDNA')"
-        @click="getRandomQuami"
+        @click="getRandomKwami"
       />
       <div class="ml-4">
         {{ 0.022 }}
@@ -44,9 +44,8 @@ import {
   getRandomBoolean
 } from '~/@kwami/utils/randoms';
 
+const supabase = useSupabaseClient();
 const { q, auth } = useStore();
-
-const SU = useSupabaseClient();
 
 const isSaving = ref(false);
 const saveBlobParams = async () => {
@@ -56,7 +55,7 @@ const saveBlobParams = async () => {
     isSaving.value = false;
     return;
   }
-  const { data } = await client.from('kwami.body.blob').insert({
+  await supabase.from('kwami.body.blob').insert({
     user_id: auth.user.id,
     spike_x: q.body.selected.vec.x,
     spike_y: q.body.selected.vec.y,
@@ -79,8 +78,6 @@ const saveBlobParams = async () => {
     },
     resolution: q.body.selected._resolution
   }, { returning: 'minimal' });
-
-  console.log('data', data);
   isSaving.value = false;
 };
 
@@ -91,7 +88,7 @@ const isRotation = ref(false);
 const wireframe = ref(false);
 const resolution = ref(20);
 
-const getRandomQuami = () => {
+const getRandomKwami = () => {
   q.body.selected.vec.x = getRandomBetween(0, 2, 2);
   q.body.selected.vec.y = getRandomBetween(0, 2, 2);
   q.body.selected.vec.z = getRandomBetween(0, 2, 2);

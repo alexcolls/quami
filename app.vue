@@ -1,7 +1,7 @@
 <template>
   <body
     class="transition-all duration-500 ease-in-out
-      bg-gray-100 dark:bg-gray-900"
+      bg-gray-300 dark:bg-gray-900"
   >
     <div class="transition-colors duration-300 ease-in-out">
       <NuxtLayout>

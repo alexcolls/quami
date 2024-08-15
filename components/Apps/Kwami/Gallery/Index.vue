@@ -18,7 +18,7 @@
 <script setup lang="ts">
 
 const { auth } = useStore();
-const SU = useSupabaseClient();
+const supabase = useSupabaseClient();
 
 const tabs = [
   {
@@ -37,7 +37,7 @@ const tabs = [
 
 const selectedTab = ref(tabs[0]);
 
-const { data } = await client.from('kwami.body.blob')
+const { data } = await supabase.from('kwami.body.blob')
   .select('*')
   .eq('user_id', auth.user.id);
 

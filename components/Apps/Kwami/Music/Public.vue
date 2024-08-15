@@ -1,6 +1,6 @@
 <template>
   <CommonMagicWindow
-    :title="$t('music')"
+    :title="$t('audio')"
     icon="i-icon-park-solid-music-one"
     :default-position="{ x: 500, y: 500 }"
     :is-modal-open="isModalOpen"

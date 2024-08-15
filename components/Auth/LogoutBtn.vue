@@ -7,17 +7,17 @@
 
 <script setup lang="ts">
 
-const client = useSupabaseClient();
+const supabase = useSupabaseClient();
 const { auth } = useStore();
 
 const logout = async () => {
   try {
-    await client.auth.signOut();
+    await supabase.auth.signOut();
     auth.logout();
     navigateTo('login');
   } catch (error) {
     console.error(error);
   }
-  await client.auth.signOut();
+  await supabase.auth.signOut();
 };
 </script>
