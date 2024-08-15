@@ -4,38 +4,32 @@ Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introdu
 
 ## Setup
 
-Make sure to install the dependencies:
+Install bun
+
+- linux, macos:
 
 ```bash
-# npm
-npm install
+curl -fsSL https://bun.sh/install | bash
+```
 
-# pnpm
-pnpm install
+- windows:
 
-# yarn
-yarn install
+```cmd
+powershell -c "irm bun.sh/install.ps1|iex"
+```
 
-# bun
-bun install
+Install dependencies:
+
+```bash
+bun i 
 ```
 
 ## Development Server
 
-Start the development server on `http://localhost:3000`:
+Start dev server on `http://localhost:3000`:
 
 ```bash
-# npm
-npm run dev
-
-# pnpm
-pnpm run dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
+bun run dev --port 3000
 ```
 
 ## Production
@@ -43,32 +37,12 @@ bun run dev
 Build the application for production:
 
 ```bash
-# npm
-npm run build
-
-# pnpm
-pnpm run build
-
-# yarn
-yarn build
-
-# bun
 bun run build
 ```
 
 Locally preview production build:
 
 ```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm run preview
-
-# yarn
-yarn preview
-
-# bun
 bun run preview
 ```
 
