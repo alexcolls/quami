@@ -1,0 +1,49 @@
+<template>
+  <CommonMagicModalBtn
+    icon="i-icon-park-solid-ghost"
+    :title="$t('quami')"
+    class="h-fit"
+    :menu-to-left="8"
+    :tabs="tabs"
+    :selected-tab="selectedTab"
+    :default-position="{ x: 200, y: 100 }"
+    @tab-click="selectedTab = $event"
+  >
+    <div v-for="x in data" :key="x.id">
+      {{ x.id }}
+    </div>
+  </CommonMagicModalBtn>
+</template>
+
+<script setup lang="ts">
+
+const { auth } = useStore();
+const client = useSupabaseClient();
+
+const tabs = [
+  {
+    title: 'Body',
+    icon: 'i-mdi-alien-outline'
+  },
+  {
+    title: 'Mind',
+    icon: 'i-mdi-brain'
+  },
+  {
+    title: 'Soul',
+    icon: 'i-mdi-cards-heart-outline'
+  }
+];
+
+const selectedTab = ref(tabs[0]);
+
+const { data } = await client.from('kwami.body.blob')
+  .select('*')
+  .eq('user_id', auth.user.id);
+
+watch(() => data, () => {
+  console.log('data', data);
+});
+console.log('data', data);
+
+</script>
