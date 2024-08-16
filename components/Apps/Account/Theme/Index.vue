@@ -1,8 +1,8 @@
 <template>
   <div class="flex !min-w-96">
-    <LayoutBtnTheme />
-    <LayoutBtnLight />
-    <LayoutBtnVideo />
+    <AppsAccountThemeBtnLight />
+    <AppsAccountThemeBtnColors />
+    <AppsAccountThemeBtnVideo />
     <UToggle
       v-model="ui.showVideo"
     />
