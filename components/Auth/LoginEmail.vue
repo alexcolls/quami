@@ -24,8 +24,8 @@
             required
             type="email"
             autocomplete="username"
-            class="border border-primary rounded-md  shadow-black
-              dark:shadow-white "
+            class="border border-primary rounded-md shadow-black
+              dark:shadow-white !text-white"
             icon="i-heroicons-user"
           />
         </UFormGroup>
@@ -42,7 +42,7 @@
                 required
                 type="password"
                 autocomplete="password"
-                class="border border-primary rounded-md  shadow-black
+                class="border border-primary rounded-md shadow-black
                   dark:shadow-white "
                 icon="i-heroicons-key"
               />
@@ -61,7 +61,7 @@
                 class="group px-12 pr-14 py-2 shadow-black
                   dark:shadow-white mt-8"
                 icon="i-heroicons-rocket-launch-16-solid"
-                @click="signInUp"
+                @click="signInUp()"
               >
                 {{ $t('btn.go') }}
               </CommonBtnGradient>
@@ -77,6 +77,7 @@
 import { z } from 'zod';
 
 const supabase = useSupabaseClient();
+const { auth } = useStore();
 
 const isLoading = ref(false);
 
@@ -84,14 +85,40 @@ const signInUp = async () => {
   if (isLoading.value || !isEmailValid(state.email) ||
   !isPasswordValid(state.password)) { return; }
   isLoading.value = true;
-  const res = await supabase.from('global.emails').select('*');
-  out(res);
+  const { data: emails } = await supabase.from('global.emails').select('*');
+  if (emails && Array.isArray(emails)) {
+    const email = emails.find((e: { email: string}) => e.email === state.email);
+    log(email);
+    if (email) {
+      const { data: user } = await supabase.auth.signInWithPassword({
+        email: state.email,
+        password: state.password
+      });
+      if (user) {
+        log(user, 'user');
+        auth.setUser(user);
+        navigateTo('/');
+      }
+    } else {
+      const res = await supabase.auth.signUp({
+        email: state.email,
+        password: state.password
+      });
+      await supabase.from('global.emails').insert(
+        { email: state.email },
+        { returning: 'minimal' }
+      );
+      log(res, 'data');
+      if (res) {
+        navigateTo('/');
+      }
+    }
+  }
   isLoading.value = false;
-  return res;
 };
 
 const emailSchema = z.string().email();
-const passwordSchema = z.string().min(8);
+const passwordSchema = z.string().min(4);
 
 const isEmailValid = (email: string) => {
   return emailSchema.safeParse(email).success;
@@ -129,11 +156,8 @@ onMounted(() => {
     centerY.value = Math.max(0,
       (window.innerHeight - modalRect.value.height) / 2);
   };
-
   updateCenterPosition();
-
   window.addEventListener('resize', updateCenterPosition);
-
   onUnmounted(() => {
     window.removeEventListener('resize', updateCenterPosition);
   });

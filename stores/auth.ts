@@ -10,6 +10,9 @@ const useAuthStore = defineStore('auth', {
     logout () {
       this.session = {};
       this.user = { id: '' };
+    },
+    setUser (user: any) {
+      this.user = user;
     }
   }
 });

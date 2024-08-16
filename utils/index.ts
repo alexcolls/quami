@@ -1,4 +1,5 @@
-export function out (content: any, title = 'OUT'): void {
+export function logg (content: any, title = 'log'): void {
+  // eslint-disable-next-line no-console
   console.log(title, content);
 }
 
@@ -193,7 +194,9 @@ export function concatDate (
   return `${y}${separator}${m}${separator}${d}`;
 }
 
-export function splitDate (date: string, separator = '-'): YMD {
+export function splitDate (
+  date: string, separator = '-'
+): { year: string, month: string, day: string } {
   try {
     const [year, month, day] = date.split(separator);
     return { year, month, day };
