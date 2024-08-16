@@ -28,9 +28,6 @@
         />
       </div>
     </template>
-    <template #header>
-      test
-    </template>
   </CommonMagicWindow>
 </template>
 

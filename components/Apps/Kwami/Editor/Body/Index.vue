@@ -20,16 +20,11 @@
       <AppsKwamiEditorBodyOptions />
       <CommonDividerX />
       <div class="h-2" />
-      <CommonMagicBtn
-        :label="$t('mint')"
-        icon="i-mdi-pickaxe"
-        class="p-2"
-      />
       <CommonDividerX />
       <CommonBtnGradient
         :label="$t('save')"
         icon="i-mdi-content-save"
-        class="p-2"
+        class="p-2 ml-4"
         @click="saveBlobParams"
       />
     </div>
