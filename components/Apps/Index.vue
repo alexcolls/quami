@@ -1,7 +1,9 @@
 <template>
-  <div>
-    <AppsKwami />
-    <AppsAccount />
-    <!-- <AppsCommunity /> -->
+  <AppsKwamiCanvas />
+  <div class="?">
+    <AppsKwamiAccountIndex />
+    <AppsKwamiWallet />
+    <AppsKwamiEditor />
+    <AppsKwamiMusic />
   </div>
 </template>

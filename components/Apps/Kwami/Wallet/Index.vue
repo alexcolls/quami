@@ -9,6 +9,7 @@
     :default-position="{ x: 300, y: 300 }"
     @tab-click="selectedTab = $event"
   >
+    <AuthConnectWallet />
     <div v-for="x in data" :key="x.id">
       {{ x.id }}
     </div>

@@ -1,8 +1,11 @@
 <template>
+  <CommonDividerX class="mb-2" />
   <UAccordion
+    :key="title"
     variant="ghost"
     color="gray"
     :items="items"
+    :icon="icon"
   >
     <template #default="{ item, open }">
       <UButton
@@ -35,6 +38,7 @@
       </div>
     </template>
   </UAccordion>
+  <CommonDividerX class="mt-2" />
 </template>
 
 <script setup lang="ts">
@@ -43,6 +47,7 @@ const { title, subtitle, isOpen } = defineProps<{
   title: string;
   subtitle?: string;
   isOpen?: boolean;
+  icon?: string;
 }>();
 
 const items = [{

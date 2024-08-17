@@ -32,7 +32,8 @@ export default defineNuxtConfig({
     public: {
       VERSION: process.env.VERSION ?? '0.0.1',
       SUPABASE_URL: process.env.SUPABASE_URL,
-      SUPABASE_KEY: process.env.SUPABASE_KEY
+      SUPABASE_KEY: process.env.SUPABASE_KEY,
+      RPC_URL: process.env.RPC_URL
     }
   },
   modules: [
@@ -71,14 +72,6 @@ export default defineNuxtConfig({
   },
   piniaPersistedstate: {
     storage: 'localStorage'
-  },
-  ui: {
-    icons: [
-      'heroicons',
-      'icon-park-solid',
-      'material-symbols',
-      'mdi'
-    ]
   },
   colorMode: {
     preference: 'dark'

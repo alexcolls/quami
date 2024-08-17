@@ -12,15 +12,7 @@
       </div>
     </div>
     <div class="mt-5 sm:mt-6 space-y-3">
-      <CommonDividerX />
-      <AppsKwamiEditorBodyAvatar />
-      <CommonDividerX />
-      <AppsKwamiEditorBodySkin />
-      <CommonDividerX />
-      <AppsKwamiEditorBodyOptions />
-      <CommonDividerX />
-      <div class="h-2" />
-      <CommonDividerX />
+      <AppsKwamiEditorBodyBlob />
       <CommonBtnGradient
         :label="$t('save')"
         icon="i-mdi-content-save"

@@ -1,25 +1,25 @@
 <template>
   <CommonMagicWindow
-    :title="$t('login')"
+    :title="$t('loggin')"
     :icon="'i-heroicons-user'"
     :default-position="{ x: 50, y: 50 }"
     :is-modal-open="true"
-    :window-name="$t('login')"
-    :class="isEmailValid(state.email) ? '!h-[240px]' : '!h-[180px]'"
+    :window-name="$t('loggin')"
+    :class="isEmailValid(cred.email) ? '!h-[240px]' : '!h-[180px]'"
     @width="modalRect!.width = $event"
     @height="modalRect!.height = $event"
   >
     <div class="p-8">
       <UForm
         :schema="schema"
-        :state="state"
+        :state="cred"
         class="space-y-4"
       >
         <UFormGroup
           :label="$t('email')"
         >
           <UInput
-            v-model="state.email"
+            v-model="cred.email"
             variant="none"
             required
             type="email"
@@ -37,7 +37,7 @@
           >
             <UFormGroup :label="$t('password')">
               <UInput
-                v-model="state.password"
+                v-model="cred.password"
                 variant="none"
                 required
                 type="password"
@@ -78,41 +78,51 @@ import { z } from 'zod';
 
 const supabase = useSupabaseClient();
 const { auth } = useStore();
+const toast = useAlerts();
 
 const isLoading = ref(false);
+const confirmEmail = ref(false);
 
 const signInUp = async () => {
-  if (isLoading.value || !isEmailValid(state.email) ||
-  !isPasswordValid(state.password)) { return; }
-  isLoading.value = true;
-  const { data: emails } = await supabase.from('global.emails').select('*');
-  if (emails && Array.isArray(emails)) {
-    const email = emails.find((e: { email: string}) => e.email === state.email);
-    log(email);
-    if (email) {
-      const { data: user } = await supabase.auth.signInWithPassword({
-        email: state.email,
-        password: state.password
-      });
-      if (user) {
-        log(user, 'user');
-        auth.setUser(user);
-        navigateTo('/');
-      }
-    } else {
-      const res = await supabase.auth.signUp({
-        email: state.email,
-        password: state.password
-      });
-      await supabase.from('global.emails').insert(
-        { email: state.email },
-        { returning: 'minimal' }
-      );
-      log(res, 'data');
-      if (res) {
-        navigateTo('/');
+  if (isLoading.value || !isEmailValid(cred.email) ||
+  !isPasswordValid(cred.password)) { return; }
+  try {
+    const { data: emails } = await supabase.from('global.emails').select('*');
+    logg(emails);
+    if (emails && Array.isArray(emails)) {
+      const email = emails.find(
+        (e: { email: string}) => e.email === cred.email);
+      if (email) {
+        logg(email, 'signing in');
+        isLoading.value = true;
+        const res = await supabase.auth.signInWithPassword({
+          email: cred.email,
+          password: cred.password
+        });
+        logg(res, 'user');
+        if (res.data) {
+          auth.setUser(res.data);
+          navigateTo('/');
+        }
+      } else {
+        isLoading.value = true;
+        await supabase.auth.signUp({
+          email: cred.email,
+          password: cred.password
+        });
+        await supabase.from('global.emails').insert(
+          { email: cred.email },
+          { returning: 'minimal' }
+        );
+        confirmEmail.value = true;
+        isLoading.value = false;
+        logg('User signed up');
+        toast.login.confirmEmail();
+        await signInUp();
       }
     }
+  } catch (e) {
+    logg(e, 'error');
   }
   isLoading.value = false;
 };
@@ -129,14 +139,14 @@ const isPasswordValid = (password: string) => {
 };
 
 const isPassInputDisabled = computed(() => {
-  return isEmailValid(state.email);
+  return isEmailValid(cred.email);
 });
 
 const isBtnDisabled = computed(() => {
-  return isEmailValid(state.email) && isPasswordValid(state.password);
+  return isEmailValid(cred.email) && isPasswordValid(cred.password);
 });
 
-const state = reactive({
+const cred = reactive({
   email: '',
   password: ''
 });

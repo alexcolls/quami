@@ -12,5 +12,11 @@ export default {
   theme: 'Theme',
   music: 'Music',
   randomDNA: 'Random DNA',
-  go: 'Go'
+  go: 'Go',
+  toast: {
+    confirmEmail: {
+      title: 'Confirm Email',
+      desc: 'Please check your email to confirm your account'
+    }
+  }
 };

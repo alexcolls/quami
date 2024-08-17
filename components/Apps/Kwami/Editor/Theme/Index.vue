@@ -1,8 +1,9 @@
 <template>
   <div class="flex !min-w-96">
-    <AppsAccountThemeBtnLight />
-    <AppsAccountThemeBtnColors />
-    <AppsAccountThemeBtnVideo />
+    <AppsKwamiEditorThemeBtnLight />
+    <AppsKwamiEditorBtnColors />
+    <AppsKwamiEditorBtnLangs />
+    <AppsKwamiEditorBtnVideo />
     <UToggle
       v-model="ui.showVideo"
     />

@@ -1,5 +1,5 @@
 <template>
-  <div>
-    <AppsCommunityTradingView />
+  <div class="absolute">
+    <AppsCommunityYoutube />
   </div>
 </template>

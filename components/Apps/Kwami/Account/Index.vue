@@ -6,18 +6,18 @@
     :menu-to-left="4"
     :tabs="tabs"
     :selected-tab="selectedTab"
-    :default-position="{ x: 900, y: 600 }"
+    :default-position="{ x: position.x, y: position.y }"
     @tab-click="selectedTab = $event"
   >
-    <AppsAccountTheme
-      :class="selectedTab.title.toUpperCase() === 'THEME' ?
-        'block' : 'hidden'"
-    />
     <AppsAccountProfile v-if="selectedTab.title.toUpperCase() === 'PROFILE'" />
   </CommonMagicWindow>
 </template>
 
 <script setup lang="ts">
+
+defineProps<{
+  position: { x: number; y: number };
+}>();
 
 const tabs = [
   {

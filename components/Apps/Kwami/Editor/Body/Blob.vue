@@ -1,5 +1,49 @@
 <template>
-  <CommonAccordion title="OPTIONS" :is-open="false">
+  <CommonAccordion title="BLOB" :is-open="true" icon="i-heroicons-user">
+    <AppsKwamiEditorTheme />
+    <div class="rounded-full overflow-hidden -p-6">
+      <input
+        v-model="colorX"
+        type="color"
+        class="!rounded-full relative w-8 bg-transparent border-0"
+      >
+    </div>
+    <input
+      v-model="colorY"
+      type="color"
+      class="rounded-xl w-8 bg-transparent border-0"
+    >
+    <input
+      v-model="colorZ"
+      type="color"
+      class="rounded-xl w-8 bg-transparent border-0"
+    >
+    <CommonBtnRandom
+      @click="getRandomXYZColor"
+    />
+    <UToggle
+      v-model="wireframe"
+      name="syncColors"
+      label="Syncronize"
+    />
+    <div class="flex w-full mt-2">
+      <div class="w-1/3 text-gray-950 dark:text-white font-semibold">
+        Shininess
+      </div>
+      <CommonRange
+        v-model="shininess"
+        :step="0.001"
+        :min="0"
+        :max="1000"
+        class="mt-1"
+      />
+      <div
+        class="text-sm text-primary-800/50 dark:text-primary-200/90
+              w-16 ml-2"
+      >
+        {{ 1000 - shininess }}
+      </div>
+    </div>
     <div class="flex w-full mt-2">
       <div class="ml-2 w-1/3 text-gray-950 dark:text-white font-semibold">
         Size
@@ -335,11 +379,9 @@
 </template>
 
 <script setup lang="ts">
-// import {
-//   getRandomHexColor,
-//   getRandomBetween,
-//   getRandomBoolean
-// } from '~/@kwami/utils/randoms';
+import {
+  getRandomHexColor
+} from '~/@kwami/utils/randoms';
 
 const { q } = useStore();
 
@@ -349,8 +391,46 @@ const rotation = ref(0);
 const isRotation = ref(false);
 const resolution = ref(20);
 const size = ref(60);
+const colorX = ref('');
+const colorY = ref('');
+const colorZ = ref('');
+const shininess = ref(50);
+const wireframe = ref(false);
+const skin = ref(q.body.selected.skinOptions[0]);
 
-const audioResolution = ref(false);
+const getRandomXYZColor = () => {
+  colorX.value = getRandomHexColor();
+  colorY.value = getRandomHexColor();
+  colorZ.value = getRandomHexColor();
+};
+
+onMounted(() => {
+  watchEffect(() => {
+    q.body.selected.setColors(
+      colorX.value,
+      colorY.value,
+      colorZ.value
+    );
+  });
+
+  watchEffect(() => {
+    q.body.selected.skins.tricolor.wireframe = wireframe.value;
+  });
+
+  watchEffect(() => {
+    colorX.value = q.body.selected.skins.tricolor.uniforms._color1.value;
+    colorY.value = q.body.selected.skins.tricolor.uniforms._color2.value;
+    colorZ.value = q.body.selected.skins.tricolor.uniforms._color3.value;
+  });
+
+  watch(skin, (v) => {
+    q.body.selected.setSkin(v);
+  });
+
+  watch(shininess, (v) => {
+    q.body.selected.shininess(1000 - v);
+  });
+});
 
 const switchRotation = () => {
   if (!isRotation.value) {
