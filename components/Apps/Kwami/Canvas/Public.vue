@@ -27,26 +27,26 @@ const canvas = ref<HTMLCanvasElement>();
 
 const getRandomKwami = () => {
   const isRotation = getRandomBoolean();
-  q.body.selected.vec.x = getRandomBetween(0, 2, 2);
-  q.body.selected.vec.y = getRandomBetween(0, 2, 2);
-  q.body.selected.vec.z = getRandomBetween(0, 2, 2);
-  q.body.selected.time.x = getRandomBetween(0, 50, 1);
-  q.body.selected.time.y = getRandomBetween(0, 50, 1);
-  q.body.selected.time.z = getRandomBetween(0, 50, 1);
+  q.body.blob.vec.x = getRandomBetween(0, 2, 2);
+  q.body.blob.vec.y = getRandomBetween(0, 2, 2);
+  q.body.blob.vec.z = getRandomBetween(0, 2, 2);
+  q.body.blob.time.x = getRandomBetween(0, 50, 1);
+  q.body.blob.time.y = getRandomBetween(0, 50, 1);
+  q.body.blob.time.z = getRandomBetween(0, 50, 1);
   if (isRotation) {
-    q.body.selected.rotation.x = getRandomBetween(0, 0.01, 3);
-    q.body.selected.rotation.y = getRandomBetween(0, 0.01, 3);
-    q.body.selected.rotation.z = getRandomBetween(0, 0.01, 3);
+    q.body.blob.rotation.x = getRandomBetween(0, 0.01, 3);
+    q.body.blob.rotation.y = getRandomBetween(0, 0.01, 3);
+    q.body.blob.rotation.z = getRandomBetween(0, 0.01, 3);
   } else {
-    q.body.selected.rotation.x = 0;
-    q.body.selected.rotation.y = 0;
-    q.body.selected.rotation.z = 0;
+    q.body.blob.rotation.x = 0;
+    q.body.blob.rotation.y = 0;
+    q.body.blob.rotation.z = 0;
   }
   const resolution = getRandomBetween(30, 300, 1);
-  q.body.selected.setResolution(resolution);
+  q.body.blob.setResolution(resolution);
   const wireframe = getRandomBoolean();
-  q.body.selected.skins.tricolor.wireframe = wireframe;
-  q.body.selected.setColors(
+  q.body.blob.skins.tricolor.wireframe = wireframe;
+  q.body.blob.setColors(
     getRandomHexColor(),
     getRandomHexColor(),
     getRandomHexColor()

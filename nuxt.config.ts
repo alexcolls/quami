@@ -33,8 +33,10 @@ export default defineNuxtConfig({
       VERSION: process.env.VERSION ?? '0.0.1',
       SUPABASE_URL: process.env.SUPABASE_URL,
       SUPABASE_KEY: process.env.SUPABASE_KEY,
+      MASTER_WALLET: process.env.MASTER_WALLET,
       RPC_URL: process.env.RPC_URL
-    }
+    },
+    EDENAI_API_KEY: process.env.EDENAI_API_KEY
   },
   modules: [
     '@nuxtjs/eslint-module',
@@ -46,6 +48,7 @@ export default defineNuxtConfig({
     '@nuxt/image',
     '@nuxtjs/supabase'
   ],
+  extends: ['@nuxt/ui-pro'],
   googleFonts: {
     download: true,
     base64: true,

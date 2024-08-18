@@ -1,5 +1,5 @@
 <template>
-  <div class="flex !min-w-96">
+  <div class="flex w-full space-x-4">
     <AppsKwamiEditorThemeBtnLight />
     <AppsKwamiEditorBtnColors />
     <AppsKwamiEditorBtnLangs />

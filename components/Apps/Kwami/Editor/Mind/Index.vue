@@ -13,7 +13,7 @@
       </div>
     </div>
     <div class="mt-4">
-      <AppsKwamiEditorMindLang />
+      <AppsKwamiEditorMindModels />
       <AppsKwamiEditorMindVoice />
     </div>
   </div>

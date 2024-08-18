@@ -7,16 +7,15 @@ import type {
 } from 'three';
 import audioFiles from '../../assets/audio';
 import setScene, {
-  setRenderer,
-  setCamera,
-  setControls,
-  setLights
+  // setRenderer,
+  setCamera
+  // setControls,
+  // setLights
 } from './scene';
 import KwamiAudio from './audio';
 import Blob from './lib/Blob';
 
 export default class KwamiBody {
-  id: string;
   canvas: HTMLCanvasElement;
   renderer: WebGLRenderer;
   camera: PerspectiveCamera;
@@ -27,11 +26,11 @@ export default class KwamiBody {
     ambient: AmbientLight;
   };
 
-  public selected: Blob;
+  public blob: Blob;
   public scene: Scene;
   public audio: KwamiAudio;
 
-  constructor (canvas: HTMLCanvasElement, id: string) {
+  constructor (canvas: HTMLCanvasElement) {
     this.canvas = canvas;
     const { renderer, camera, controls, lights, scene } = setScene(this.canvas);
     lights.top.position.set(0, 1000, 0);
@@ -41,7 +40,7 @@ export default class KwamiBody {
     this.lights = lights;
     this.scene = scene;
     this.audio = new KwamiAudio(audioFiles);
-    this.selected = new Blob(
+    this.blob = new Blob(
       'tricolor',
       'normal',
       this.scene,
@@ -49,7 +48,7 @@ export default class KwamiBody {
       this.renderer,
       this.audio
     );
-    this.scene.add(this.selected.mesh);
+    this.scene.add(this.blob.mesh);
     this.resizeEvent();
   }
 

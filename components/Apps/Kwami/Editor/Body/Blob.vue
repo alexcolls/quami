@@ -1,31 +1,34 @@
 <template>
   <CommonAccordion title="BLOB" :is-open="true" icon="i-heroicons-user">
-    <AppsKwamiEditorTheme />
     <div class="rounded-full overflow-hidden -p-6">
-      <input
-        v-model="colorX"
-        type="color"
-        class="!rounded-full relative w-8 bg-transparent border-0"
-      >
+      <FormGroup>
+        <input
+          v-model="q.body.blob"
+          type="color"
+          class="!rounded-full relative w-8 bg-transparent border-0"
+        >
+      </FormGroup>
     </div>
-    <input
-      v-model="colorY"
-      type="color"
-      class="rounded-xl w-8 bg-transparent border-0"
-    >
-    <input
-      v-model="colorZ"
-      type="color"
-      class="rounded-xl w-8 bg-transparent border-0"
-    >
-    <CommonBtnRandom
-      @click="getRandomXYZColor"
-    />
-    <UToggle
-      v-model="wireframe"
-      name="syncColors"
-      label="Syncronize"
-    />
+    <div class="flex">
+      <input
+        v-model="colorY"
+        type="color"
+        class="rounded-xl w-8 bg-transparent border-0"
+      >
+      <input
+        v-model="colorZ"
+        type="color"
+        class="rounded-xl w-8 bg-transparent border-0"
+      >
+      <CommonBtnRandom
+        @click="getRandomXYZColor"
+      />
+      <UToggle
+        v-model="wireframe"
+        name="syncColors"
+        label="Syncronize"
+      />
+    </div>
     <div class="flex w-full mt-2">
       <div class="w-1/3 text-gray-950 dark:text-white font-semibold">
         Shininess
@@ -62,7 +65,7 @@
         {{ size }}
       </div>
       <UToggle
-        v-model="audioResolution"
+        v-model="audioEffects.size"
         on-icon="i-icon-park-solid-music-one"
         off-icon="i-icon-park-solid-music-one"
         name="wireframe"
@@ -88,7 +91,7 @@
         {{ resolution }}
       </div>
       <UToggle
-        v-model="audioResolution"
+        v-model="audioEffects.resolution"
         on-icon="i-icon-park-solid-music-one"
         off-icon="i-icon-park-solid-music-one"
         name="wireframe"
@@ -114,7 +117,7 @@
         {{ spikes }}
       </div>
       <UToggle
-        v-model="audioResolution"
+        v-model="audioEffects.spikes"
         on-icon="i-icon-park-solid-music-one"
         off-icon="i-icon-park-solid-music-one"
         name="wireframe"
@@ -130,7 +133,7 @@
         X
       </div>
       <CommonRange
-        v-model="q.body.selected.vec.x"
+        v-model="q.body.blob.vec.x"
         :step="0.1"
         :min="0"
         :max="20"
@@ -140,10 +143,10 @@
         class="text-sm text-primary-800/50 dark:text-primary-200/90
               w-16 ml-2"
       >
-        {{ q.body.selected.vec.x }}
+        {{ q.body.blob.vec.x }}
       </div>
       <UToggle
-        v-model="audioResolution"
+        v-model="audioEffects.vecX"
         on-icon="i-icon-park-solid-music-one"
         off-icon="i-icon-park-solid-music-one"
         name="wireframe"
@@ -159,7 +162,7 @@
         Y
       </div>
       <CommonRange
-        v-model="q.body.selected.vec.y"
+        v-model="q.body.blob.vec.y"
         :step="0.1"
         :min="0"
         :max="20"
@@ -169,10 +172,10 @@
         class="text-sm text-primary-800/50 dark:text-primary-200/90
               w-16 ml-2"
       >
-        {{ q.body.selected.vec.x }}
+        {{ q.body.blob.vec.x }}
       </div>
       <UToggle
-        v-model="audioResolution"
+        v-model="audioEffects.vecX"
         on-icon="i-icon-park-solid-music-one"
         off-icon="i-icon-park-solid-music-one"
         name="wireframe"
@@ -188,7 +191,7 @@
         Z
       </div>
       <CommonRange
-        v-model="q.body.selected.vec.z"
+        v-model="q.body.blob.vec.z"
         :step="0.1"
         :min="0"
         :max="20"
@@ -198,10 +201,10 @@
         class="text-sm text-primary-800/50 dark:text-primary-200/90
               w-16 ml-2"
       >
-        {{ q.body.selected.vec.z }}
+        {{ q.body.blob.vec.z }}
       </div>
       <UToggle
-        v-model="audioResolution"
+        v-model="audioEffects.vecZ"
         on-icon="i-icon-park-solid-music-one"
         off-icon="i-icon-park-solid-music-one"
         name="wireframe"
@@ -235,11 +238,11 @@
     <div>
       <div class="flex w-full">
         <div class="px-4 w-32">
-          X {{ q.body.selected.time.x }}
+          X {{ q.body.blob.time.x }}
         </div>
         <div class="px-2 py-2 w-full">
           <URange
-            v-model="q.body.selected.time.x"
+            v-model="q.body.blob.time.x"
             :step="0.1"
             :min="0"
             :max="100"
@@ -254,11 +257,11 @@
       </div>
       <div class="flex w-full">
         <div class="px-4 w-32">
-          Y {{ q.body.selected.time.y }}
+          Y {{ q.body.blob.time.y }}
         </div>
         <div class="px-2 py-2 w-full">
           <URange
-            v-model="q.body.selected.time.y"
+            v-model="q.body.blob.time.y"
             :step="0.1"
             :min="0"
             :max="100"
@@ -273,11 +276,11 @@
       </div>
       <div class="flex w-full">
         <div class="px-4 w-32">
-          Z {{ q.body.selected.time.z }}
+          Z {{ q.body.blob.time.z }}
         </div>
         <div class="px-2 py-2 w-full">
           <URange
-            v-model="q.body.selected.time.z"
+            v-model="q.body.blob.time.z"
             :step="0.1"
             :min="0"
             :max="100"
@@ -319,11 +322,11 @@
     <Common v-if="isRotation">
       <div class="flex w-full">
         <div class="px-4 w-32">
-          X {{ q.body.selected.rotation.x }}
+          X {{ q.body.blob.rotation.x }}
         </div>
         <div class="px-2 py-2 w-full">
           <URange
-            v-model="q.body.selected.rotation.x"
+            v-model="q.body.blob.rotation.x"
             :step="0.0001"
             :min="0"
             :max="0.1"
@@ -338,11 +341,11 @@
       </div>
       <div class="flex w-full">
         <div class="px-4 w-32">
-          Y {{ q.body.selected.rotation.y }}
+          Y {{ q.body.blob.rotation.y }}
         </div>
         <div class="px-2 py-2 w-full">
           <URange
-            v-model="q.body.selected.rotation.y"
+            v-model="q.body.blob.rotation.y"
             :step="0.0001"
             :min="0"
             :max="0.1"
@@ -357,11 +360,11 @@
       </div>
       <div class="flex w-full">
         <div class="px-4 w-32">
-          Z {{ q.body.selected.rotation.z }}
+          Z {{ q.body.blob.rotation.z }}
         </div>
         <div class="px-2 py-2 w-full">
           <URange
-            v-model="q.body.selected.rotation.z"
+            v-model="q.body.blob.rotation.z"
             :step="0.0001"
             :min="0"
             :max="0.1"
@@ -396,7 +399,22 @@ const colorY = ref('');
 const colorZ = ref('');
 const shininess = ref(50);
 const wireframe = ref(false);
-const skin = ref(q.body.selected.skinOptions[0]);
+const skin = ref(q.body.blob.skinOptions[0]);
+const audioEffects = ref({
+  resolution: false,
+  spikes: false,
+  vecs: false,
+  vecX: false,
+  vecY: false,
+  vecZ: false,
+  time: false,
+  rotation: false,
+  size: false,
+  color: false,
+  shininess: false,
+  wireframe: false,
+  skin: false
+});
 
 const getRandomXYZColor = () => {
   colorX.value = getRandomHexColor();
@@ -406,7 +424,7 @@ const getRandomXYZColor = () => {
 
 onMounted(() => {
   watchEffect(() => {
-    q.body.selected.setColors(
+    q.body.blob.setColors(
       colorX.value,
       colorY.value,
       colorZ.value
@@ -414,21 +432,21 @@ onMounted(() => {
   });
 
   watchEffect(() => {
-    q.body.selected.skins.tricolor.wireframe = wireframe.value;
+    q.body.blob.skins.tricolor.wireframe = wireframe.value;
   });
 
   watchEffect(() => {
-    colorX.value = q.body.selected.skins.tricolor.uniforms._color1.value;
-    colorY.value = q.body.selected.skins.tricolor.uniforms._color2.value;
-    colorZ.value = q.body.selected.skins.tricolor.uniforms._color3.value;
+    colorX.value = q.body.blob.skins.tricolor.uniforms._color1.value;
+    colorY.value = q.body.blob.skins.tricolor.uniforms._color2.value;
+    colorZ.value = q.body.blob.skins.tricolor.uniforms._color3.value;
   });
 
   watch(skin, (v) => {
-    q.body.selected.setSkin(v);
+    q.body.blob.setSkin(v);
   });
 
   watch(shininess, (v) => {
-    q.body.selected.shininess(1000 - v);
+    q.body.blob.shininess(1000 - v);
   });
 });
 
@@ -447,15 +465,15 @@ watch(size, (v) => {
 
 onMounted(() => {
   watch(spikes, (v) => {
-    q.body.selected.vec.x = v;
-    q.body.selected.vec.y = v;
-    q.body.selected.vec.z = v;
+    q.body.blob.vec.x = v;
+    q.body.blob.vec.y = v;
+    q.body.blob.vec.z = v;
     q.save(q.body);
   });
   watch(time, (v) => {
-    q.body.selected.time.x = v;
-    q.body.selected.time.y = v;
-    q.body.selected.time.z = v;
+    q.body.blob.time.x = v;
+    q.body.blob.time.y = v;
+    q.body.blob.time.z = v;
     q.save(q.body);
   });
   watch(rotation, (v) => {
@@ -466,18 +484,18 @@ onMounted(() => {
     }
     if (!isRotation.value) {
       rotation.value = 0;
-      q.body.selected.rotation.x = 0;
-      q.body.selected.rotation.y = 0;
-      q.body.selected.rotation.z = 0;
+      q.body.blob.rotation.x = 0;
+      q.body.blob.rotation.y = 0;
+      q.body.blob.rotation.z = 0;
       return;
     }
-    q.body.selected.rotation.x = v;
-    q.body.selected.rotation.y = v;
-    q.body.selected.rotation.z = v;
+    q.body.blob.rotation.x = v;
+    q.body.blob.rotation.y = v;
+    q.body.blob.rotation.z = v;
   });
 
   watchEffect(() => {
-    q.body.selected.setResolution(resolution.value);
+    q.body.blob.setResolution(resolution.value);
   });
 });
 

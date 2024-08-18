@@ -9,10 +9,13 @@
     :default-position="{ x: 300, y: 300 }"
     @tab-click="selectedTab = $event"
   >
+    <template #tabs>
+      <AppsKwamiWalletBalances />
+    </template>
     <AuthConnectWallet />
-    <div v-for="x in data" :key="x.id">
+    <!-- <div v-for="x in data" :key="x.id">
       {{ x.id }}
-    </div>
+    </div> -->
   </CommonMagicWindow>
 </template>
 
@@ -23,16 +26,16 @@ const supabase = useSupabaseClient();
 
 const tabs = [
   {
-    title: 'Kwamis',
-    icon: 'i-mdi-alien-outline'
+    title: 'Coins',
+    icon: 'i-ph-coins-light'
   },
   {
-    title: 'Mind',
+    title: 'NFTs',
     icon: 'i-mdi-brain'
   },
   {
-    title: 'Soul',
-    icon: 'i-mdi-cards-heart-outline'
+    title: 'History',
+    icon: 'i-mdi-history'
   }
 ];
 

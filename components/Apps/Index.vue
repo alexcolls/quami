@@ -1,9 +1,11 @@
 <template>
   <AppsKwamiCanvas />
+  <!-- <SharedGlobalSearch /> -->
   <div class="?">
     <AppsKwamiAccountIndex />
     <AppsKwamiWallet />
     <AppsKwamiEditor />
-    <AppsKwamiMusic />
+    <!-- <AppsKwamiMusic /> -->
+    <!-- <AppsCommunityYoutube /> -->
   </div>
 </template>

@@ -40,11 +40,11 @@ const playing = ref(false);
 const toggleAudio = () => {
   if (q.body.audio.instance.paused) {
     q.body.audio.playAudio();
-    q.body.selected.state = 'speak';
+    q.body.blob.state = 'speak';
     playing.value = true;
   } else {
     q.body.audio.pauseAudio();
-    q.body.selected.state = 'normal';
+    q.body.blob.state = 'normal';
     playing.value = false;
   }
 };

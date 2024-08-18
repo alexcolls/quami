@@ -52,7 +52,7 @@
               :class="selectedTab.title === tab.title ?
                 `!border !border-gray-600/30 !shadow-inner !shadow-gray-600/20
                   py-[14px] dark:!border-gray-300/30 dark:!shadow-gray-300/20
-                  text-primary-500 dark:text-primary-400 hover:text-primary-500
+                  text-primary-600 dark:text-primary-400 hover:text-primary-500
                   dark:hover:text-primary-400`
                 : ''"
               @click="emit('tab-click', tab)"

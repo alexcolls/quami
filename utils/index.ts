@@ -1,5 +1,4 @@
 export function logg (content: any, title = 'log'): void {
-  // eslint-disable-next-line no-console
   console.log(title, content);
 }
 

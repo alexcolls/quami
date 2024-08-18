@@ -20,6 +20,7 @@ module.exports = {
     'vue/multiline-html-element-content-newline': ['error', {
       ignoreWhenEmpty: true
     }],
-    'vue/require-default-prop': 'off'
+    'vue/require-default-prop': 'off',
+    'no-console': 'off'
   }
 };
