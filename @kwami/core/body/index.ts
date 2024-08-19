@@ -26,9 +26,10 @@ export default class KwamiBody {
     ambient: AmbientLight;
   };
 
-  public blob: Blob;
   public scene: Scene;
   public audio: KwamiAudio;
+
+  public blob: Blob;
 
   constructor (canvas: HTMLCanvasElement) {
     this.canvas = canvas;
@@ -66,7 +67,7 @@ export default class KwamiBody {
   select (body: string, skin: string) {
     switch (body.toLowerCase()) {
       case 'spikyblob':
-        this.selected = new Blob(
+        this.blob = new Blob(
           'tricolor',
           'normal',
           this.scene,

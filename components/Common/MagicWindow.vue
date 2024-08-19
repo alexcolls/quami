@@ -22,7 +22,7 @@
         @mousedown="startDrag"
         @dblclick="resetPosition"
       >
-        <div v-if="isOpen && !isHidden" class="text-sm flex">
+        <div v-if="isOpen" class="text-sm flex">
           <UIcon
             :name="icon"
             class="w-4 h-4 ml-1 mt-1.5 opacity-80"
@@ -77,7 +77,7 @@
         </div>
       </div>
       <div
-        v-if="isOpen"
+        :class="isOpen ? 'block' : 'hidden'"
         class="shadow-inner hover:shadow-primary-500 p-2 max-h-[500px]
           rounded-b-xl flex justify-center sm:max-h-[900px]
           overflow-x-scroll transition-transform duration-500"
@@ -85,6 +85,7 @@
         <slot name="tabs" />
         <slot name="header" />
         <slot />
+        <slot name="footer" class="w-full border-t" />
       </div>
     </div>
   </div>
@@ -92,7 +93,7 @@
 
 <script setup lang="ts">
 
-const { title, defaultPosition, isModalOpen, isHidden } = defineProps<{
+const { title, defaultPosition, isModalOpen } = defineProps<{
   title: string;
   icon: string;
   tabs?: Tab[];
@@ -100,14 +101,13 @@ const { title, defaultPosition, isModalOpen, isHidden } = defineProps<{
   menuToLeft?: number;
   defaultPosition?: { x: number, y: number };
   isModalOpen?: boolean;
-  isHidden?: boolean;
 }>();
 
 const emit = defineEmits(['tab-click', 'width', 'height']);
 
 const { ui } = useStore();
 
-const isOpen = ref(isHidden ? true : !!isModalOpen);
+const isOpen = ref(isModalOpen || false);
 const modalRef = ref<HTMLElement>();
 let isDragging = false;
 let offsetX: number, offsetY: number;

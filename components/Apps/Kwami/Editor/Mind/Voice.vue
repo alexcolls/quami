@@ -4,6 +4,12 @@
     :is-open="true"
     icon="i-heroicons-user"
   >
+    <CommonText>
+      Text-to-speech (TTS or voice generation) system is a technology that
+      enables the generation of high-quality audio from a written text while
+      offering the flexibility to choose the desired voice, including male or
+      female voices, and more.
+    </CommonText>
     <div
       class="text-center relative h-full sm:m-4
     my-8 flex flex-wrap justify-center align-center"

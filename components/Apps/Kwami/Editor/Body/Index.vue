@@ -5,7 +5,7 @@
         icon="i-mdi-dice-multiple"
         class="ml-4"
         :label="$t('randomDNA')"
-        @click="getRandomKwami"
+        @click="q.body.blob.setRandomBlob()"
       />
       <div class="ml-4">
         {{ 0.022 }}
@@ -26,10 +26,7 @@
 
 <script setup lang="ts">
 import {
-  getRandomUUID,
-  getRandomHexColor,
-  getRandomBetween,
-  getRandomBoolean
+  getRandomUUID
 } from '~/@kwami/utils/randoms';
 
 const supabase = useSupabaseClient();
@@ -75,33 +72,6 @@ const rotation = ref(0);
 const isRotation = ref(false);
 const wireframe = ref(false);
 const resolution = ref(20);
-
-const getRandomKwami = () => {
-  q.body.blob.vec.x = getRandomBetween(0, 2, 2);
-  q.body.blob.vec.y = getRandomBetween(0, 2, 2);
-  q.body.blob.vec.z = getRandomBetween(0, 2, 2);
-  q.body.blob.time.x = getRandomBetween(0, 50, 1);
-  q.body.blob.time.y = getRandomBetween(0, 50, 1);
-  q.body.blob.time.z = getRandomBetween(0, 50, 1);
-  if (isRotation.value) {
-    q.body.blob.rotation.x = getRandomBetween(0, 0.01, 3);
-    q.body.blob.rotation.y = getRandomBetween(0, 0.01, 3);
-    q.body.blob.rotation.z = getRandomBetween(0, 0.01, 3);
-  } else {
-    q.body.blob.rotation.x = 0;
-    q.body.blob.rotation.y = 0;
-    q.body.blob.rotation.z = 0;
-  }
-  resolution.value = getRandomBetween(30, 300, 1);
-  q.body.blob.setResolution(resolution.value);
-  wireframe.value = getRandomBoolean();
-  q.body.blob.skins.tricolor.wireframe = wireframe.value;
-  q.body.blob.setColors(
-    getRandomHexColor(),
-    getRandomHexColor(),
-    getRandomHexColor()
-  );
-};
 
 onMounted(() => {
   watch(vecs, (v) => {

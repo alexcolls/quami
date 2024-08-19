@@ -1,46 +1,49 @@
 <template>
-  <CommonAccordion title="AI CORE" :is-open="true" icon="i-heroicons-user">
-    <div>
-      <CommonText class="ml-4 opacity-80">
+  <CommonAccordion title="AI CORE" :is-open="true">
+    <div class="w-[350]">
+      <CommonText class="opacity-80">
         Kwamis can speak over 120 languages. Choose the default language for
         your Kwami, other languages will be translate automatically.
       </CommonText>
-      <div class="spaxe-y-4 mt-4">
-        <UFormGroup label="Language" class="m-2 ml-4">
+      <div class="space-y-4">
+        <UFormGroup label="Language" class="">
           <CommonSelector :options="optionsLang" :selected="selectedLang" />
         </UFormGroup>
-        <UFormGroup label="Model Workflows" class="m-2 ml-4">
+        <UFormGroup label="Model Workflows" class="">
           <CommonSelector
             :options="optionsModel"
             :selected="selectedModel"
-            class="w-[370px]"
+            class="w-[220px]"
           />
         </UFormGroup>
-        <UFormGroup label="Large Language Model (LLM)" class="m-2 ml-4">
-          <div class="flex justify-between">
+        <div class="flex justify-between">
+          <UFormGroup label="Large Language Model (LLM)" class="">
             <CommonSelector
               :options="optionsLLM"
               :selected="selectedLLM"
-              class="w-[370px]"
+              :search="true"
+              class="w-[340px]"
             />
+          </UFormGroup>
+          <UFormGroup label="Price" class="">
             <div
               class="w-[100px] mx-2 p-1.5 pl-4 ml-3 border-1
               rounded-lg bg-gray-100 dark:bg-gray-900
               dark:!border-gray-200 border-gray-200"
               placeholder="Price"
             >
-              {{ selectedLLM.price }}
+              {{ selectedPrice }}
             </div>
-          </div>
-        </UFormGroup>
-        <UFormGroup label="Speech To Text Model (STTM)" class="m-2">
+          </UFormGroup>
+        </div>
+        <UFormGroup label="Speech To Text Model (STTM)" class="">
           <CommonSelector
-            :options="optionsLLM"
-            :selected="selectedLLM"
+            :options="optionsTTS"
+            :selected="selectedTTS"
             class="w-[250px]"
           />
         </UFormGroup>
-        <UFormGroup label="Text To Speech Model (TTSM)" class="m-2">
+        <UFormGroup label="Text To Speech Model (TTSM)" class="">
           <CommonSelector
             :options="optionsTTS"
             :selected="selectedTTS"
@@ -175,11 +178,17 @@ const optionsLLM = [
   }
 ];
 const selectedLLM = ref(optionsLLM[0]);
+const selectedPrice = ref(0);
+
+watch(selectedLLM, (value) => {
+  console.log(value);
+  selectedPrice.value = 100;
+});
 
 const optionsTTS = [
   {
     icon: 'i-ri-openai-fill',
-    label: 'openai/gpt-4o'
+    label: 'openai'
   },
   {
     icon: 'i-ri-openai-fill',

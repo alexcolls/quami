@@ -8,13 +8,14 @@ import {
 import {
   getRandomBetween,
   getRandomBoolean,
-  getRandomHexColor
+  getRandomHexColor,
+  genDNA
 } from '../../../../utils/randoms';
 import type KwamiAudio from '../../audio';
-import { type Skins } from './skins/interface';
+import { type Skins } from './skins';
 import setSkins from './skins';
 import setGeometry from './geometry';
-import params from './params';
+import options from './options';
 import events from './events';
 import blobAnimation from './animation';
 
@@ -22,19 +23,22 @@ type State = 'normal' | 'speak' | 'listen' | 'think' | 'click';
 
 export default class Blob {
   events = events;
-  params = params;
-  skins = setSkins(params.skins);
+  options = options;
+  skins = setSkins(options.skins) as any;
   skinOptions = ['tricolor', 'zebra'];
   skin = 'tricolor';
-  geometry = setGeometry(params.body.resolution.default);
+  geometry = setGeometry(options.resolution.default);
   renderer: WebGLRenderer;
   mesh: Mesh;
   scene: Scene;
   camera: PerspectiveCamera;
   state: State;
   audio: KwamiAudio;
-  _resolution: number;
-  id: string;
+  resolution = 0;
+  colorX = '';
+  colorY = '';
+  colorZ = '';
+  dna = '';
 
   audioEffect = {
     splitFreq: true,
@@ -58,6 +62,7 @@ export default class Blob {
     z: 0
   };
 
+  isRotation = false;
   rotation = {
     x: 0,
     y: 0,
@@ -76,7 +81,8 @@ export default class Blob {
   ) {
     this.state = state;
     this.skinOptions = Object.keys(this.skins);
-    this.mesh = new Mesh(this.geometry, this.skins[skin]);
+    this.mesh = new Mesh(this.geometry,
+      this.skins[skin] ?? this.skins.tricolor);
     this.renderer = renderer;
     this.scene = scene;
     this.camera = camera;
@@ -119,13 +125,12 @@ export default class Blob {
     }
   }
 
-  setSkin (skin: string) {
+  setSkin (skin: Skins) {
     this.skin = skin;
     this.mesh.material = this.skins[this.skin];
-    this.mesh.material.needsUpdate = true;
   }
 
-  shininess (value: number) {
+  setShininess (value: number) {
     this.skins.tricolor.uniforms.shininess.value = value;
   }
 
@@ -145,16 +150,104 @@ export default class Blob {
 
   setColors (x: string, y: string, z: string) {
     this.skins.tricolor.uniforms._color1.value = new Color(x);
+    this.colorX = x;
     this.skins.tricolor.uniforms._color2.value = new Color(y);
+    this.colorY = y;
     this.skins.tricolor.uniforms._color3.value = new Color(z);
+    this.colorZ = z;
+  }
+
+  setColor (vec: string, color: string) {
+    switch (vec.toLowerCase()) {
+      case 'x':
+        this.colorX = color;
+        this.skins.tricolor.uniforms._color1.value = new Color(color);
+        break;
+      case 'y':
+        this.colorY = color;
+        this.skins.tricolor.uniforms._color2.value = new Color(color);
+        break;
+      case 'z':
+        this.colorZ = color;
+        this.skins.tricolor.uniforms._color3.value = new Color(color);
+        break;
+    }
+  }
+
+  setRandomXYZColor () {
+    this.colorX = getRandomHexColor();
+    this.colorY = getRandomHexColor();
+    this.colorZ = getRandomHexColor();
+    this.setColors(this.colorX, this.colorY, this.colorZ);
   }
 
   setResolution (value: number) {
-    this._resolution = value;
-    this.params.body.resolution.default = value;
+    this.resolution = value;
+    this.options.resolution.default = value;
     this.geometry = setGeometry(value);
     this.mesh.geometry = this.geometry;
   }
+
+  setRandomResolution () {
+    const resolution = getRandomBetween(
+      this.options.resolution.min,
+      this.options.resolution.max
+    );
+    this.setResolution(resolution);
+  }
+
+  switchRotation () {
+    if (!this.isRotation) {
+      this.rotation.x = 0;
+      this.rotation.y = 0;
+      this.rotation.z = 0;
+    } else {
+      this.rotation.x = 0.01;
+      this.rotation.y = 0.01;
+      this.rotation.z = 0.01;
+    }
+  }
+
+  setRotation (x: number, y: number, z: number) {
+    this.rotation.x = x;
+    this.rotation.y = y;
+    this.rotation.z = z;
+  }
+
+  setWireframe (value: boolean) {
+    this.skins.tricolor.wireframe = value;
+  }
+
+  setRandomDNA () {
+    this.dna = genDNA();
+  }
+
+  setRandomBlob = () => {
+    this.setRandomDNA();
+    this.vec.x = getRandomBetween(0, 2, 2);
+    this.vec.y = getRandomBetween(0, 2, 2);
+    this.vec.z = getRandomBetween(0, 2, 2);
+    this.time.x = getRandomBetween(0, 50, 1);
+    this.time.y = getRandomBetween(0, 50, 1);
+    this.time.z = getRandomBetween(0, 50, 1);
+    this.setWireframe(getRandomBoolean());
+    if (this.isRotation) {
+      this.rotation.x = getRandomBetween(0, 0.01, 3);
+      this.rotation.y = getRandomBetween(0, 0.01, 3);
+      this.rotation.z = getRandomBetween(0, 0.01, 3);
+    } else {
+      this.rotation.x = 0;
+      this.rotation.y = 0;
+      this.rotation.z = 0;
+    }
+    this.setResolution(getRandomBetween(30, 300, 1));
+    this.setShininess(getRandomBetween(0, 100000, 1));
+    this.setWireframe(getRandomBoolean());
+    this.colorX = getRandomHexColor();
+    this.colorY = getRandomHexColor();
+    this.colorZ = getRandomHexColor();
+    this.setColors(this.colorX, this.colorY, this.colorZ);
+  };
 
   on (event: string, callback?: () => boolean): void {
     if (callback) {
@@ -164,21 +257,21 @@ export default class Blob {
     }
     switch (event.toLowerCase()) {
       case 'click':
-        this.params.body.spikes.default = getRandomBetween(
-          this.params.body.spikes.min,
-          this.params.body.spikes.max
+        this.options.spikes.default = getRandomBetween(
+          this.options.spikes.min,
+          this.options.spikes.max
         );
-        this.params.body.speed.default = getRandomBetween(
-          this.params.body.speed.min,
-          this.params.body.speed.max
+        this.options.speed.default = getRandomBetween(
+          this.options.speed.min,
+          this.options.speed.max
         );
-        this.params.body.processing.default = getRandomBetween(
-          this.params.body.processing.min,
-          this.params.body.processing.max
+        this.options.processing.default = getRandomBetween(
+          this.options.processing.min,
+          this.options.processing.max
         );
-        this.params.body.resolution.default = getRandomBetween(
-          this.params.body.resolution.min,
-          this.params.body.resolution.max
+        this.options.resolution.default = getRandomBetween(
+          this.options.resolution.min,
+          this.options.resolution.max
         );
         this.skins.tricolor.uniforms._color1.value = new Color(
           getRandomHexColor()

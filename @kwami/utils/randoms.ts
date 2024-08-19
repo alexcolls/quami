@@ -17,3 +17,14 @@ export function getRandomHexColor (): string {
 export function getRandomBoolean (trueProbability = 0.5): boolean {
   return Math.random() < trueProbability;
 }
+
+export function randomNumber (length: number): string {
+  return Math.random().toString().slice(2, length + 2);
+}
+
+export function genDNA (): string {
+  const part1 = randomNumber(13);
+  const part2 = randomNumber(9);
+  const part3 = randomNumber(14);
+  return `${part1}-${part2}-${part3}`;
+}

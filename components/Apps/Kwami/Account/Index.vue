@@ -21,12 +21,12 @@ defineProps<{
 
 const tabs = [
   {
-    title: 'Profile',
-    icon: 'i-mdi-alien-outline'
+    title: 'Auth',
+    icon: 'i-mdi-account-outline'
   },
   {
-    title: 'Theme',
-    icon: 'i-mdi-brain'
+    title: 'Security',
+    icon: 'i-mdi-lock-outline'
   }
 ];
 

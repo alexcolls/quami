@@ -13,10 +13,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
-import { useYoutube } from 'vue-youtube-embed';
+// import { ref } from 'vue';
+// import { useYoutube } from 'vue-youtube-embed';
 
-useYoutube();
+// useYoutube();
 
 // Reactive properties
 const youtubeUrl = ref('');
@@ -36,7 +36,7 @@ const youtubePlayer = ref(null);
 function extractVideoId (url: string): string | null {
   const regex =
     // eslint-disable-next-line max-len
-    /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^&\n?#]+)/;
+    /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^&\n?#]+)/;
   const match = url.match(regex);
   return match ? match[1] : null;
 }

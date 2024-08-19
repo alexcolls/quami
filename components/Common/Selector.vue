@@ -4,7 +4,7 @@
     v-model="selectedState"
     :options="options"
     :icon="selectedState.icon"
-    :searchable="true"
+    :searchable="search"
     :searchable-placeholder="$t('search')"
     :clear-search-on-close="true"
     :class="width ? width : 'w-40'"
@@ -21,6 +21,7 @@ const { selected } = defineProps<{
   options: { icon: string; label: string }[];
   selected: { icon: string; label: string };
   width?: string;
+  search?: boolean;
 }>();
 
 const selectedState = ref(selected || selected[0]);

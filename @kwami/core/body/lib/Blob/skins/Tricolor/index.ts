@@ -2,6 +2,15 @@ import { ShaderMaterial, Color } from 'three';
 import vertexShader from './vertex.glsl?raw';
 import fragmentShader from './shader.glsl?raw';
 
+export interface TricolorSkinArgs {
+  wireframe: boolean;
+  lightPosition: string | {};
+  shininess: number;
+  color1: string;
+  color2: string;
+  color3: string;
+}
+
 export default function tricolorSkin (args: TricolorSkinArgs) {
   return new ShaderMaterial({
     vertexShader,

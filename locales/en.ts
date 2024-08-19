@@ -12,6 +12,7 @@ export default {
   theme: 'Theme',
   music: 'Music',
   randomDNA: 'Random DNA',
+  search: 'Search',
   go: 'Go',
   toast: {
     confirmEmail: {

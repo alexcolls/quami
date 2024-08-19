@@ -1,16 +1,14 @@
 <template>
-  <div>
-    <CommonBackgroundVideos
-      v-if="ui.showVideo"
-      :class="opacity"
-    />
-    <canvas
-      ref="canvas"
-      class="fixed h-screen w-screen !bg-transparent"
-      @mousemove="handleMouseMove"
-      @dblclick="ui.showVideo ? switchVideo() : () => {}"
-    />
-  </div>
+  <CommonBackgroundVideos
+    v-if="ui.showVideo"
+    :class="opacity"
+  />
+  <canvas
+    ref="canvas"
+    class="fixed h-screen w-screen !bg-transparent"
+    @mousemove="handleMouseMove"
+    @dblclick="ui.showVideo ? switchVideo() : () => {}"
+  />
 </template>
 
 <script setup lang="ts">
@@ -43,6 +41,7 @@ const handleMouseMove = () => {
 onMounted(() => {
   if (!canvas.value) { return; }
   q.init(canvas.value);
+  q.body.blob.setRandomBlob();
   isMounted.value = true;
 });
 
