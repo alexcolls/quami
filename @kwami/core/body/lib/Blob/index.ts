@@ -17,7 +17,7 @@ import setSkins from './skins';
 import setGeometry from './geometry';
 import options from './options';
 import events from './events';
-import blobAnimation from './animation';
+import animation from './animation';
 
 type State = 'normal' | 'speak' | 'listen' | 'think' | 'click';
 
@@ -50,7 +50,7 @@ export default class Blob {
     z: 0
   };
 
-  vec = {
+  spikes = {
     x: 0,
     y: 0,
     z: 0
@@ -89,13 +89,13 @@ export default class Blob {
     this.audio = audio;
     if (this.audio && this.audio.analyser) {
       const animate = () => {
-        blobAnimation(
+        animation(
           this.mesh,
           this.audio.frequencyData,
           this.audio.analyser!,
-          this.vec.x,
-          this.vec.y,
-          this.vec.z,
+          this.spikes.x,
+          this.spikes.y,
+          this.spikes.z,
           this.time.x,
           this.time.y,
           this.time.z
@@ -114,13 +114,13 @@ export default class Blob {
   vector (vec: string, value: number) {
     switch (vec.toLowerCase()) {
       case 'x':
-        this.vec.x = value;
+        this.spikes.x = value;
         break;
       case 'y':
-        this.vec.y = value;
+        this.spikes.y = value;
         break;
       case 'z':
-        this.vec.z = value;
+        this.spikes.z = value;
         break;
     }
   }
@@ -224,9 +224,13 @@ export default class Blob {
 
   setRandomBlob = () => {
     this.setRandomDNA();
-    this.vec.x = getRandomBetween(0, 2, 2);
-    this.vec.y = getRandomBetween(0, 2, 2);
-    this.vec.z = getRandomBetween(0, 2, 2);
+    this.spikes.x = getRandomBetween(
+      this.options.spikes.min,
+      this.options.spikes.max,
+      2
+    );
+    this.spikes.y = getRandomBetween(0, 2, 2);
+    this.spikes.z = getRandomBetween(0, 2, 2);
     this.time.x = getRandomBetween(0, 50, 1);
     this.time.y = getRandomBetween(0, 50, 1);
     this.time.z = getRandomBetween(0, 50, 1);

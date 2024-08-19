@@ -5,7 +5,7 @@
     <AppsKwamiAccountIndex />
     <AppsKwamiWallet />
     <AppsKwamiEditor />
-    <AppsKwamiMusicIndex />
+    <AppsKwamiMusic />
     <!-- <AppsCommunityYoutube /> -->
   </div>
 </template>

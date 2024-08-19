@@ -13,13 +13,13 @@ export type NormalStateArgs = {
   // audioEffectFactor: number;
 };
 
-export default function blobAnimation (
+export default function animation (
   mesh: Mesh,
   frequencyData: Uint8Array,
   analyser: AnalyserNode,
-  vectorX: number,
-  vectorY: number,
-  vectorZ: number,
+  spikeX: number,
+  spikeY: number,
+  spikeZ: number,
   timeX: number,
   timeY: number,
   timeZ: number
@@ -53,7 +53,7 @@ export default function blobAnimation (
   const averageFrequency =
     frequencyData.reduce((sum, val) => sum + val, 0) / frequencyData.length;
 
-  const scaleFactor = 1 + averageFrequency / 900;
+  const scaleFactor = 1 + averageFrequency * 2 / 900;
 
   mesh.scale.set(scaleFactor, scaleFactor, scaleFactor);
 
@@ -65,9 +65,9 @@ export default function blobAnimation (
         1 +
           0.3 *
             noise3D(
-              vertex.x * vectorX + tX + lowFrequencyAvg / 100,
-              vertex.y * vectorY + tY + highFrequencyAvg / 100,
-              vertex.z * vectorZ + tZ + averageFrequency / 100
+              vertex.x * (spikeX + tX + lowFrequencyAvg / 50),
+              vertex.y * (spikeY + tY + lowFrequencyAvg / 50),
+              vertex.z * (spikeZ + tZ + highFrequencyAvg / 50)
             )
       );
 

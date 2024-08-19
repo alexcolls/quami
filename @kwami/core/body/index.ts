@@ -28,7 +28,6 @@ export default class KwamiBody {
 
   public scene: Scene;
   public audio: KwamiAudio;
-
   public blob: Blob;
 
   constructor (canvas: HTMLCanvasElement) {

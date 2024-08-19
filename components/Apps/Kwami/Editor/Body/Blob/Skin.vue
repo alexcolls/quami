@@ -230,24 +230,24 @@ onMounted(() => {
     q.body.blob.setResolution(v);
   });
   watch(vecX, (v) => {
-    q.body.blob.vec.x = v;
+    q.body.blob.spikes.x = v;
   });
   watch(vecY, (v) => {
-    q.body.blob.vec.y = v;
+    q.body.blob.spikes.y = v;
   });
   watch(vecZ, (v) => {
-    q.body.blob.vec.z = v;
+    q.body.blob.spikes.z = v;
   });
 
-  watch(() => q.body.blob.vec.x, (v) => {
-    vecX.value = v;
-  });
-  watch(() => q.body.blob.vec.y, (v) => {
-    vecY.value = v;
-  });
-  watch(() => q.body.blob.vec.z, (v) => {
-    vecZ.value = v;
-  });
+  // watch(() => q.body.blob.spikes.x, (v) => {
+  //   vecX.value = v;
+  // });
+  // watch(() => q.body.blob.spikes.y, (v) => {
+  //   vecY.value = v;
+  // });
+  // watch(() => q.body.blob.spike.z, (v) => {
+  //   vecZ.value = v;
+  // });
 });
 
 onMounted(() => {
@@ -260,9 +260,9 @@ onMounted(() => {
     q.body.camera.updateProjectionMatrix();
   }, { immediate: true });
   watch(spikes, (v) => {
-    q.body.blob.vec.x = v;
-    q.body.blob.vec.y = v;
-    q.body.blob.vec.z = v;
+    q.body.blob.spikes.x = v;
+    q.body.blob.spikes.y = v;
+    q.body.blob.spikes.z = v;
     q.save(q.body);
   });
   watch(time, (v) => {

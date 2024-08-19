@@ -7,7 +7,8 @@ export default {
   spikes: {
     min: 0.2,
     max: 6,
-    default: 1
+    default: 1,
+    step: 0.1
   },
   speed: {
     min: 20,
