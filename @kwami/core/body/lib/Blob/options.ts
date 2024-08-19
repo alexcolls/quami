@@ -5,10 +5,13 @@ import {
 
 export default {
   spikes: {
-    min: 0.2,
-    max: 6,
-    default: 1,
-    step: 0.1
+    min: 0,
+    max: 20,
+    step: 0.1,
+    digits: 2,
+    rMin: 0,
+    rMax: 1,
+    default: 1
   },
   speed: {
     min: 20,

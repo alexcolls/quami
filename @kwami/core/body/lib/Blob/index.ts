@@ -5,6 +5,7 @@ import {
   Color,
   PerspectiveCamera
 } from 'three';
+import { GLTFExporter } from 'three/examples/jsm/exporters/GLTFExporter.js';
 import {
   getRandomBetween,
   getRandomBoolean,
@@ -12,8 +13,8 @@ import {
   genDNA
 } from '../../../../utils/randoms';
 import type KwamiAudio from '../../audio';
-import { type Skins } from './skins';
-import setSkins from './skins';
+import setSkins, { type Skins } from './skins';
+import { shaders } from './skins/Tricolor';
 import setGeometry from './geometry';
 import options from './options';
 import events from './events';
@@ -21,7 +22,7 @@ import animation from './animation';
 
 type State = 'normal' | 'speak' | 'listen' | 'think' | 'click';
 
-export default class Blob {
+export default class BodyBlob {
   events = events;
   options = options;
   skins = setSkins(options.skins) as any;
@@ -81,12 +82,13 @@ export default class Blob {
   ) {
     this.state = state;
     this.skinOptions = Object.keys(this.skins);
-    this.mesh = new Mesh(this.geometry,
-      this.skins[skin] ?? this.skins.tricolor);
+    this.mesh = new Mesh(
+      this.geometry, this.skins[skin] ?? this.skins.tricolor);
     this.renderer = renderer;
     this.scene = scene;
     this.camera = camera;
     this.audio = audio;
+
     if (this.audio && this.audio.analyser) {
       const animate = () => {
         animation(
@@ -109,6 +111,46 @@ export default class Blob {
       animate();
     }
     this.scene.add(this.mesh);
+  }
+
+  exportBlobGLTF () {
+    this.mesh.userData = {
+      vertexShader: shaders.vertexShader,
+      fragmentShader: shaders.fragmentShader,
+      uniforms: {
+        lightPosition: this.skins.tricolor.uniforms.lightPosition.value,
+        shininess: this.skins.tricolor.uniforms.shininess.value,
+        specular_color: this.skins.tricolor.uniforms
+          .specular_color.value.getHex(),
+        _color1: this.skins.tricolor.uniforms._color1.value.getHex(),
+        _color2: this.skins.tricolor.uniforms._color2.value.getHex(),
+        _color3: this.skins.tricolor.uniforms._color3.value.getHex()
+      }
+    };
+    const exporter = new GLTFExporter();
+    exporter.parse(
+      this.scene,
+      (result) => {
+        const json = this.scene.toJSON();
+        const blob = new Blob(
+          [JSON.stringify(json)], { type: 'application/json' });
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = 'bodyblob.json';
+        link.click();
+      },
+      (error) => {
+        console.error('An error occurred during the export:', error);
+      },
+      { binary: true }
+    );
+  }
+
+  downloadBlob (blob: Blob, filename: string) {
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = filename;
+    link.click();
   }
 
   vector (vec: string, value: number) {
@@ -225,12 +267,20 @@ export default class Blob {
   setRandomBlob = () => {
     this.setRandomDNA();
     this.spikes.x = getRandomBetween(
-      this.options.spikes.min,
-      this.options.spikes.max,
-      2
+      this.options.spikes.rMin,
+      this.options.spikes.rMax,
+      this.options.spikes.digits
     );
-    this.spikes.y = getRandomBetween(0, 2, 2);
-    this.spikes.z = getRandomBetween(0, 2, 2);
+    this.spikes.y = getRandomBetween(
+      this.options.spikes.rMin,
+      this.options.spikes.rMax,
+      this.options.spikes.digits
+    );
+    this.spikes.z = getRandomBetween(
+      this.options.spikes.rMin,
+      this.options.spikes.rMax,
+      this.options.spikes.digits
+    );
     this.time.x = getRandomBetween(0, 50, 1);
     this.time.y = getRandomBetween(0, 50, 1);
     this.time.z = getRandomBetween(0, 50, 1);

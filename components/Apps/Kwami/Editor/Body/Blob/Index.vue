@@ -11,12 +11,12 @@
         }"
       />
       <div>
-        <CommonText class="ml-4">
+        <CommonText class="ml-4 text-xs">
           {{ $t('dna') }}
         </CommonText>
-        <CommonText class="ml-4 text-sm mt-1">
+        <CommonTextGradient class="ml-4 text-xs mt-1">
           {{ dna }}
-        </CommonText>
+        </CommonTextGradient>
       </div>
     </div>
     <AppsKwamiEditorBodyBlobSkin />

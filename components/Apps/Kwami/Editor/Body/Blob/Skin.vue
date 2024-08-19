@@ -94,9 +94,9 @@
       </div>
       <CommonRange
         v-model="spikes"
-        :step="0.1"
-        :min="0"
-        :max="20"
+        :step="options.spikes.step"
+        :min="options.spikes.min"
+        :max="options.spikes.max"
         class="mt-1"
       />
       <div
@@ -114,17 +114,17 @@
         X
       </div>
       <CommonRange
-        v-model="vecX"
-        :step="0.1"
-        :min="0"
-        :max="20"
+        v-model="spikesX"
+        :step="options.spikes.step"
+        :min="options.spikes.min"
+        :max="options.spikes.max"
         class="mt-1"
       />
       <div
         class="text-sm text-primary-800/50 dark:text-primary-200/90
               w-16 ml-2"
       >
-        {{ vecX }}
+        {{ spikesX }}
       </div>
     </div>
     <div class="flex w-full pt-2 border-l ml-4">
@@ -135,17 +135,17 @@
         Y
       </div>
       <CommonRange
-        v-model="vecY"
-        :step="0.1"
-        :min="0"
-        :max="20"
+        v-model="spikesY"
+        :step="options.spikes.step"
+        :min="options.spikes.min"
+        :max="options.spikes.max"
         class="mt-1"
       />
       <div
         class="text-sm text-primary-800/50 dark:text-primary-200/90
               w-16 ml-2"
       >
-        {{ vecY }}
+        {{ spikesY }}
       </div>
     </div>
     <div class="flex w-full pt-2 border-l ml-4">
@@ -156,17 +156,17 @@
         Z
       </div>
       <CommonRange
-        v-model="vecZ"
-        :step="0.1"
-        :min="0"
-        :max="20"
+        v-model="spikesZ"
+        :step="options.spikes.step"
+        :min="options.spikes.min"
+        :max="options.spikes.max"
         class="mt-1"
       />
       <div
         class="text-sm text-primary-800/50 dark:text-primary-200/90
               w-16 ml-2"
       >
-        {{ vecZ }}
+        {{ spikesZ }}
       </div>
     </div>
   </div>
@@ -181,9 +181,9 @@ const { q } = useStore();
 const colorX = ref(getRandomHexColor());
 const colorY = ref(getRandomHexColor());
 const colorZ = ref(getRandomHexColor());
-const vecX = ref(12);
-const vecY = ref(12);
-const vecZ = ref(12);
+const spikesX = ref(12);
+const spikesY = ref(12);
+const spikesZ = ref(12);
 const spikes = ref(12);
 const time = ref(12);
 const rotation = ref(0);
@@ -229,24 +229,27 @@ onMounted(() => {
   watch(resolution, (v) => {
     q.body.blob.setResolution(v);
   });
-  watch(vecX, (v) => {
+  watch(spikesX, (v) => {
     q.body.blob.spikes.x = v;
+    console.log('spikesX', v);
   });
-  watch(vecY, (v) => {
+  watch(spikesY, (v) => {
     q.body.blob.spikes.y = v;
+    console.log('spikesY', v);
   });
-  watch(vecZ, (v) => {
+  watch(spikesZ, (v) => {
     q.body.blob.spikes.z = v;
+    console.log('spikesZ', v);
   });
 
   // watch(() => q.body.blob.spikes.x, (v) => {
-  //   vecX.value = v;
+  //   spikesX.value = v;
   // });
   // watch(() => q.body.blob.spikes.y, (v) => {
-  //   vecY.value = v;
+  //   spikesY.value = v;
   // });
   // watch(() => q.body.blob.spike.z, (v) => {
-  //   vecZ.value = v;
+  //   spikesZ.value = v;
   // });
 });
 

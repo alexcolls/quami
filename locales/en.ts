@@ -14,6 +14,7 @@ export default {
   randomDNA: 'Random DNA',
   search: 'Search',
   go: 'Go',
+  dna: 'DNA',
   toast: {
     confirmEmail: {
       title: 'Confirm Email',

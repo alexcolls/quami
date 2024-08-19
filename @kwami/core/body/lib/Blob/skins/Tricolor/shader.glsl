@@ -1,4 +1,3 @@
-
 varying vec3 vNormal;
 varying vec3 vPosition;
 uniform vec3 _color1;

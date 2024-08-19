@@ -3,8 +3,13 @@ import type {
   PerspectiveCamera,
   DirectionalLight,
   AmbientLight,
-  Scene
+  Scene,
+  ShaderMaterial,
+  MeshStandardMaterial
 } from 'three';
+import {
+  GLTFExporter
+} from 'three/examples/jsm/exporters/GLTFExporter.js';
 import audioFiles from '../../assets/audio';
 import setScene, {
   // setRenderer,
@@ -13,7 +18,7 @@ import setScene, {
   // setLights
 } from './scene';
 import KwamiAudio from './audio';
-import Blob from './lib/Blob';
+import BodyBlob from './lib/Blob';
 
 export default class KwamiBody {
   canvas: HTMLCanvasElement;
@@ -28,7 +33,7 @@ export default class KwamiBody {
 
   public scene: Scene;
   public audio: KwamiAudio;
-  public blob: Blob;
+  public blob: BodyBlob;
 
   constructor (canvas: HTMLCanvasElement) {
     this.canvas = canvas;
@@ -40,7 +45,7 @@ export default class KwamiBody {
     this.lights = lights;
     this.scene = scene;
     this.audio = new KwamiAudio(audioFiles);
-    this.blob = new Blob(
+    this.blob = new BodyBlob(
       'tricolor',
       'normal',
       this.scene,
@@ -66,7 +71,7 @@ export default class KwamiBody {
   select (body: string, skin: string) {
     switch (body.toLowerCase()) {
       case 'spikyblob':
-        this.blob = new Blob(
+        this.blob = new BodyBlob(
           'tricolor',
           'normal',
           this.scene,
@@ -82,5 +87,44 @@ export default class KwamiBody {
 
   setCamera () {
     setCamera(this.canvas, 2, 5, 5);
+  }
+
+  exportGLB () {
+    const exporter = new GLTFExporter();
+
+    const originalMaterial = this.blob.mesh.material;
+    // Save the original material
+
+    // // Check if the material is a custom ShaderMaterial
+    // if (originalMaterial instanceof ShaderMaterial) {
+    //   // Optionally: Convert to a MeshStandardMaterial for export
+    //   this.blob.mesh.material = new MeshStandardMaterial({
+    //     color: originalMaterial.uniforms._color1.value,
+    //     metalness: 0.5, // Customize as needed
+    //     roughness: 0.5 // Customize as needed
+    //   });
+    // }
+
+    // Export the scene
+    exporter.parse(
+      this.scene,
+      (gltf) => {
+        const blob = new Blob(
+          [gltf as ArrayBuffer], { type: 'model/gltf-binary' });
+        const link = document.createElement('a');
+        this.blob.mesh.material = originalMaterial;
+        link.href = URL.createObjectURL(blob);
+        link.download = 'scene.glb';
+        link.click();
+
+        // Restore the original material after export
+      },
+      (error) => {
+        console.error('An error occurred during the export:', error);
+        // Restore the original material even if there is an error
+        this.blob.mesh.material = originalMaterial;
+      },
+      { binary: true } // Export as GLB
+    );
   }
 }

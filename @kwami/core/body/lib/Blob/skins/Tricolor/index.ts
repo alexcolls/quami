@@ -2,6 +2,10 @@ import { ShaderMaterial, Color } from 'three';
 import vertexShader from './vertex.glsl?raw';
 import fragmentShader from './shader.glsl?raw';
 
+export const shaders = {
+  vertexShader,
+  fragmentShader
+};
 export interface TricolorSkinArgs {
   wireframe: boolean;
   lightPosition: string | {};

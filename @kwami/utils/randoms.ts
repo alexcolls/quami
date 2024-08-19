@@ -22,9 +22,9 @@ export function randomNumber (length: number): string {
   return Math.random().toString().slice(2, length + 2);
 }
 
-export function genDNA (): string {
-  const part1 = randomNumber(13);
-  const part2 = randomNumber(9);
-  const part3 = randomNumber(14);
-  return `${part1}-${part2}-${part3}`;
+export function genDNA (x = 12, y = 12, z = 12): string {
+  const X = randomNumber(x);
+  const Y = randomNumber(y);
+  const Z = randomNumber(z);
+  return `${X}-${Y}-${Z}`;
 }
