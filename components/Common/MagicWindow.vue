@@ -2,6 +2,7 @@
   <div
     class="flex justify-center items-center relative w-screen
       bg-transparent border-none rounded-xl transition-transform duration-500"
+    :class="isOpen ? '!z-[9999]' : ''"
   >
     <div
       ref="modalRef"

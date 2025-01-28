@@ -3,6 +3,11 @@ export function logg (content: any, title = 'log'): void {
   console.log(title, content);
 }
 
+export function log (content: any, title = 'log'): void {
+  // eslint-disable-next-line no-console
+  console.log(title, content);
+}
+
 export function genHash (n: number) {
   const chars =
   'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';

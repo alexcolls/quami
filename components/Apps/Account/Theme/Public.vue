@@ -9,7 +9,16 @@
   >
     <AppsAccountThemeBtnLight />
     <AppsAccountThemeBtnColors />
-    <AppsAccountThemeBtnLangs />
+    <UToggle
+      v-model="ui.showVideo"
+      class="mt-2 mx-2"
+    />
     <AppsAccountThemeBtnLangs />
   </CommonMagicWindow>
 </template>
+
+<script setup lang="ts">
+
+const { ui } = useStore();
+
+</script>

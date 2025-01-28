@@ -33,8 +33,8 @@ export default class Blob {
   camera: PerspectiveCamera;
   state: State;
   audio: KwamiAudio;
-  _resolution: number;
-  id: string;
+  resolution: number = 500;
+  // id: string;
 
   audioEffect = {
     splitFreq: true,
@@ -121,8 +121,8 @@ export default class Blob {
 
   setSkin (skin: string) {
     this.skin = skin;
-    this.mesh.material = this.skins[this.skin];
-    this.mesh.material.needsUpdate = true;
+    // this.mesh.material = this.skins[this.skin];
+    // this.mesh.material.needsUpdate = true;
   }
 
   shininess (value: number) {
@@ -132,25 +132,25 @@ export default class Blob {
   color (vec: string, value: number) {
     switch (vec.toLowerCase()) {
       case 'x':
-        this.skins.tricolor.uniforms._color1.value = new Color(value);
+        this.skins.tricolor.uniforms.color1.value = new Color(value);
         break;
       case 'y':
-        this.skins.tricolor.uniforms._color2.value = new Color(value);
+        this.skins.tricolor.uniforms.color2.value = new Color(value);
         break;
       case 'z':
-        this.skins.tricolor.uniforms._color3.value = new Color(value);
+        this.skins.tricolor.uniforms.color3.value = new Color(value);
         break;
     }
   }
 
   setColors (x: string, y: string, z: string) {
-    this.skins.tricolor.uniforms._color1.value = new Color(x);
-    this.skins.tricolor.uniforms._color2.value = new Color(y);
-    this.skins.tricolor.uniforms._color3.value = new Color(z);
+    this.skins.tricolor.uniforms.color1.value = new Color(x);
+    this.skins.tricolor.uniforms.color2.value = new Color(y);
+    this.skins.tricolor.uniforms.color3.value = new Color(z);
   }
 
   setResolution (value: number) {
-    this._resolution = value;
+    this.resolution = value;
     this.params.body.resolution.default = value;
     this.geometry = setGeometry(value);
     this.mesh.geometry = this.geometry;
@@ -180,13 +180,13 @@ export default class Blob {
           this.params.body.resolution.min,
           this.params.body.resolution.max
         );
-        this.skins.tricolor.uniforms._color1.value = new Color(
+        this.skins.tricolor.uniforms.color1.value = new Color(
           getRandomHexColor()
         );
-        this.skins.tricolor.uniforms._color2.value = new Color(
+        this.skins.tricolor.uniforms.color2.value = new Color(
           getRandomHexColor()
         );
-        this.skins.tricolor.uniforms._color3.value = new Color(
+        this.skins.tricolor.uniforms.color3.value = new Color(
           getRandomHexColor()
         );
         this.skins.tricolor.wireframe = getRandomBoolean(0.1);

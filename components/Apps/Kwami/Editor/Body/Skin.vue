@@ -59,8 +59,9 @@
         v-model="wireframe"
         name="syncColors"
         label="Syncronize"
+        class="mt-1 mx-2 mr-4"
       />
-      <div class="flex w-full mt-2">
+      <div class="flex w-full mt-1.5">
         <div class="w-1/3 text-gray-950 dark:text-white font-semibold">
           Shininess
         </div>
@@ -101,6 +102,14 @@ const colorX = ref('');
 const colorY = ref('');
 const colorZ = ref('');
 
+watchEffect(() => {
+  q.body.selected.setColors(
+    colorX.value,
+    colorY.value,
+    colorZ.value
+  );
+});
+
 const shininess = ref(50);
 
 const wireframe = ref(false);
@@ -112,32 +121,22 @@ const getRandomXYZColor = () => {
   colorZ.value = getRandomHexColor();
 };
 
-onMounted(() => {
-  watchEffect(() => {
-    q.body.selected.setColors(
-      colorX.value,
-      colorY.value,
-      colorZ.value
-    );
-  });
+watchEffect(() => {
+  q.body.selected.skins.tricolor.wireframe = wireframe.value;
+});
 
-  watchEffect(() => {
-    q.body.selected.skins.tricolor.wireframe = wireframe.value;
-  });
+// watchEffect(() => {
+//   colorX.value = q.body.selected.skins.tricolor.uniforms.color1.value;
+//   colorY.value = q.body.selected.skins.tricolor.uniforms.color2.value;
+//   colorZ.value = q.body.selected.skins.tricolor.uniforms.color3.value;
+// });
 
-  watchEffect(() => {
-    colorX.value = q.body.selected.skins.tricolor.uniforms._color1.value;
-    colorY.value = q.body.selected.skins.tricolor.uniforms._color2.value;
-    colorZ.value = q.body.selected.skins.tricolor.uniforms._color3.value;
-  });
+watch(skin, (v) => {
+  q.body.selected.setSkin(v);
+});
 
-  watch(skin, (v) => {
-    q.body.selected.setSkin(v);
-  });
-
-  watch(shininess, (v) => {
-    q.body.selected.shininess(1000 - v);
-  });
+watch(shininess, (v) => {
+  q.body.selected.shininess(1000 - v);
 });
 
 </script>

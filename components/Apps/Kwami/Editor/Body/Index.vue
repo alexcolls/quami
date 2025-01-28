@@ -33,13 +33,13 @@
 
 <script setup lang="ts">
 import {
-  getRandomUUID,
+  // getRandomUUID,
   getRandomHexColor,
   getRandomBetween,
   getRandomBoolean
 } from '~/@kwami/utils/randoms';
 
-const supabase = useSupabaseClient();
+// const supabase = useSupabaseClient();
 const { q, auth } = useStore();
 
 const isSaving = ref(false);
@@ -50,29 +50,30 @@ const saveBlobParams = async () => {
     isSaving.value = false;
     return;
   }
-  await supabase.from('kwami.body.blob').insert({
-    user_id: auth.user.id,
-    spike_x: q.body.selected.vec.x,
-    spike_y: q.body.selected.vec.y,
-    spike_z: q.body.selected.vec.z,
-    time_x: q.body.selected.time.x,
-    time_y: q.body.selected.time.y,
-    time_z: q.body.selected.time.z,
-    rotation_x: q.body.selected.rotation.x,
-    rotation_y: q.body.selected.rotation.y,
-    rotation_z: q.body.selected.rotation.z,
-    kwami_id: getRandomUUID(),
-    skin: 'tricolor',
-    skin_options: {
-      wireframe: wireframe.value,
-      colors: [
-        q.body.selected.skins.tricolor.uniforms._color1.value,
-        q.body.selected.skins.tricolor.uniforms._color2.value,
-        q.body.selected.skins.tricolor.uniforms._color3.value
-      ]
-    },
-    resolution: q.body.selected._resolution
-  }, { returning: 'minimal' });
+  await sleep(100);
+  // await supabase.from('kwami.body.blob').insert({
+  //   user_id: auth.user.id,
+  //   spike_x: q.body.selected.vec.x,
+  //   spike_y: q.body.selected.vec.y,
+  //   spike_z: q.body.selected.vec.z,
+  //   time_x: q.body.selected.time.x,
+  //   time_y: q.body.selected.time.y,
+  //   time_z: q.body.selected.time.z,
+  //   rotation_x: q.body.selected.rotation.x,
+  //   rotation_y: q.body.selected.rotation.y,
+  //   rotation_z: q.body.selected.rotation.z,
+  //   kwami_id: getRandomUUID(),
+  //   skin: 'tricolor',
+  //   skin_options: {
+  //     wireframe: wireframe.value,
+  //     colors: [
+  //       q.body.selected.skins.tricolor.uniforms.color1.value,
+  //       q.body.selected.skins.tricolor.uniforms.color2.value,
+  //       q.body.selected.skins.tricolor.uniforms.color3.value
+  //     ]
+  //   },
+  //   resolution: q.body.selected.resolution
+  // }, { returning: 'minimal' });
   isSaving.value = false;
 };
 

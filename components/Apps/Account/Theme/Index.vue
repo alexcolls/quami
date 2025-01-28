@@ -2,9 +2,9 @@
   <div class="flex !min-w-96">
     <AppsAccountThemeBtnLight />
     <AppsAccountThemeBtnColors />
-    <AppsAccountThemeBtnVideo />
     <UToggle
       v-model="ui.showVideo"
+      class="mt-2 mx-2"
     />
   </div>
 </template>

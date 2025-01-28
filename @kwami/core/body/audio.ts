@@ -13,6 +13,22 @@ export default class KwamiAudio {
     this.initializeAudio();
   }
 
+  initializeAudio (): void {
+    if (!this.instance || this.analyser) {
+      return;
+    }
+    const audioContext = new window.AudioContext();
+    if (audioContext.state === 'suspended') {
+      audioContext.resume();
+    }
+    const sourceNode = audioContext.createMediaElementSource(this.instance);
+    const analyser = audioContext.createAnalyser();
+    sourceNode.connect(analyser);
+    analyser.connect(audioContext.destination);
+    this.analyser = analyser;
+    this.frequencyData = new Uint8Array(analyser.frequencyBinCount);
+  }
+
   nextAudio (): void {
     this.file++;
     if (this.file >= this.files.length) {
@@ -63,22 +79,6 @@ export default class KwamiAudio {
     if (this.instance) {
       this.instance.src = audioURL;
     }
-  }
-
-  initializeAudio (): void {
-    if (!this.instance || this.analyser) {
-      return;
-    }
-    const audioContext = new window.AudioContext();
-    if (audioContext.state === 'suspended') {
-      audioContext.resume();
-    }
-    const sourceNode = audioContext.createMediaElementSource(this.instance);
-    const analyser = audioContext.createAnalyser();
-    sourceNode.connect(analyser);
-    analyser.connect(audioContext.destination);
-    this.analyser = analyser;
-    this.frequencyData = new Uint8Array(analyser.frequencyBinCount);
   }
 
   playAudio (): void {

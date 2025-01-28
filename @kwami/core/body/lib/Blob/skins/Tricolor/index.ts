@@ -17,13 +17,13 @@ export default function tricolorSkin (args: TricolorSkinArgs) {
       specular_color: {
         value: new Color(0xFFFFFF)
       },
-      _color1: {
+      color1: {
         value: new Color(args.color1)
       },
-      _color2: {
+      color2: {
         value: new Color(args.color2)
       },
-      _color3: {
+      color3: {
         value: new Color(args.color3)
       }
     }
