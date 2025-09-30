@@ -6,7 +6,7 @@
     :menu-to-left="8"
     :tabs="tabs"
     :selected-tab="selectedTab"
-    :default-position="{ x: 10, y: 90 }
+    :default-position="{ x: 10, y: 90 }"
     @tab-click="selectedTab = $event"
   >
     <template #tabs>
@@ -20,23 +20,22 @@
 </template>
 
 <script setup lang="ts">
-
 const { auth } = useStore();
 const supabase = useSupabaseClient();
 
 const tabs = [
   {
     title: 'Coins',
-    icon: 'i-ph-coins-light'
+    icon: 'i-ph-coins-light',
   },
   {
     title: 'NFTs',
-    icon: 'i-mdi-brain'
+    icon: 'i-mdi-brain',
   },
   {
     title: 'History',
-    icon: 'i-mdi-history'
-  }
+    icon: 'i-mdi-history',
+  },
 ];
 
 const selectedTab = ref(tabs[0]);
@@ -49,5 +48,4 @@ watch(() => data, () => {
   console.log('data', data);
 });
 console.log('data', data);
-
 </script>
