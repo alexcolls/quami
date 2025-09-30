@@ -2,7 +2,7 @@
   <AppsKwamiCanvas />
   <!-- <SharedGlobalSearch /> -->
   <div class="?">
-    <AppsKwamiAccountIndex />
+    <AppsKwamiAccount />
     <AppsKwamiWallet />
     <AppsKwamiEditor />
     <AppsKwamiMusic />

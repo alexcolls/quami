@@ -12,7 +12,7 @@
     <template #tabs>
       <AppsKwamiWalletBalances />
     </template>
-    <AuthConnectWallet />
+    <AppsKwamiAccountAuthConnectWallet />
     <!-- <div v-for="x in data" :key="x.id">
       {{ x.id }}
     </div> -->

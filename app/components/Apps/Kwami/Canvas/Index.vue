@@ -3,12 +3,12 @@
     v-if="ui.showVideo"
     :class="opacity"
   />
-  <button
+  <!-- <button
     class="bg-red-500 !z-50 !cursor-pointer"
     @click="q.body.blob.exportBlobGLTF()"
   >
     Download
-  </button>
+  </button> -->
   <canvas
     ref="canvas"
     class="fixed h-screen w-screen !bg-transparent"

@@ -11,7 +11,7 @@ export default {
     digits: 2,
     rMin: 0,
     rMax: 1,
-    default: 1
+    default: 2
   },
   speed: {
     min: 20,
