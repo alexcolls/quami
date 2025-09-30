@@ -1,7 +1,0 @@
-{
-  "recommendations": [
-    "Nuxtr.nuxt-vscode-extentions", 
-    "PKief.material-icon-theme", 
-    "dbaeumer.vscode-eslint"
-  ],
-}
