@@ -114,9 +114,9 @@ export default defineNuxtConfig({
       redirectOn: 'root',
       fallbackLocale: 'en',
     },
-    bundle: {
-      optimizeTranslationDirective: false,
-    },
+    // bundle: {
+    //   optimizeTranslationDirective: false,
+    // },
   },
   icon: {
     serverBundle: 'remote',
