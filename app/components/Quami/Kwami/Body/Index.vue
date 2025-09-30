@@ -17,7 +17,6 @@
         :label="$t('save')"
         icon="i-mdi-content-save"
         class="p-2 ml-4"
-        @click="saveBlobParams"
       />
     </div>
   </div>
@@ -28,10 +27,10 @@
 //   getRandomUUID,
 // } from '~/@kwami/utils/randoms';
 
-const supabase = useSupabaseClient();
-const { q, auth } = useStore();
+// const supabase = useSupabaseClient();
+const { q } = useStore();
 
-const isSaving = ref(false);
+// const isSaving = ref(false);
 // const saveBlobParams = async () => {
 //   if (isSaving.value) { return; }
 //   isSaving.value = true;
@@ -69,7 +68,7 @@ const vecs = ref(12);
 const time = ref(12);
 const rotation = ref(0);
 const isRotation = ref(false);
-const wireframe = ref(false);
+// const wireframe = ref(false);
 const resolution = ref(20);
 
 onMounted(() => {
