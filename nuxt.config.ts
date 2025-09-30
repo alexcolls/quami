@@ -42,6 +42,7 @@ export default defineNuxtConfig({
     '@nuxt/image',
     '@nuxtjs/supabase'
   ],
+  css: ['~/assets/css/main.css'],
   // Configure @nuxtjs/supabase to read from env
   supabase: {
     url: process.env.NUXT_PUBLIC_SUPABASE_URL || process.env.NUXT_SB_URL,

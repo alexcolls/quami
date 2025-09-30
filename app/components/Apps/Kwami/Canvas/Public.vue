@@ -27,9 +27,9 @@ const canvas = ref<HTMLCanvasElement>();
 
 const getRandomKwami = () => {
   const isRotation = getRandomBoolean();
-  q.body.blob.spikes.x = getRandomBetween(0, 2, 2);
-  q.body.blob.spikes.y = getRandomBetween(0, 2, 2);
-  q.body.blob.spikes.z = getRandomBetween(0, 2, 2);
+  q.body.blob.spikes.x = getRandomBetween(0, 1, 2);
+  q.body.blob.spikes.y = getRandomBetween(0, 1, 2);
+  q.body.blob.spikes.z = getRandomBetween(0, 1, 2);
   q.body.blob.time.x = getRandomBetween(0, 50, 1);
   q.body.blob.time.y = getRandomBetween(0, 50, 1);
   q.body.blob.time.z = getRandomBetween(0, 50, 1);

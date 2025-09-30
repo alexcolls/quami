@@ -1,3 +1,6 @@
+@import "tailwindcss";
+@import "@nuxt/ui";
+
 @import "~/assets/themes/dark.css";
 @import "~/assets/themes/light.css";
 
