@@ -1,5 +1,5 @@
 <template>
-  <BackgroundVideos
+  <CommonBackgroundVideos
     v-if="ui.showVideo"
     :class="opacity"
   />
