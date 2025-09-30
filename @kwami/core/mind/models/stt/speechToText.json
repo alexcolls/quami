@@ -1,0 +1,30 @@
+[
+  {
+    "id": "stt",
+    "name": "Speech to Text",
+    "description": "Converts spoken language into text",
+    "methods": [
+      {
+        "id": "recognize",
+        "name": "Recognize",
+        "description": "Converts spoken language into text",
+        "parameters": [
+          {
+            "id": "audio",
+            "name": "Audio",
+            "description": "The audio to be converted into text",
+            "type": "audio"
+          }
+        ],
+        "results": [
+          {
+            "id": "text",
+            "name": "Text",
+            "description": "The text that was recognized from the audio",
+            "type": "text"
+          }
+        ]
+      }
+    ]
+  }
+]

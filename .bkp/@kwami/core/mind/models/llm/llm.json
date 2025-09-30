@@ -1,0 +1,5 @@
+{
+  "name": "large-language-models",
+  "symbol": "llm",
+  "models": ["google"]
+}
