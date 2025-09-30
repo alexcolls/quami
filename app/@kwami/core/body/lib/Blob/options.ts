@@ -9,9 +9,10 @@ export default {
     max: 20,
     step: 0.1,
     digits: 2,
-    rMin: 0,
-    rMax: 1,
-    default: 2
+    // Reduced random frequency range for smoother default blobs
+    rMin: 0.02,
+    rMax: 0.35,
+    default: 0.2
   },
   speed: {
     min: 20,

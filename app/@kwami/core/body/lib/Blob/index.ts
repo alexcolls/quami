@@ -281,9 +281,10 @@ export default class BodyBlob {
       this.options.spikes.rMax,
       this.options.spikes.digits
     );
-    this.time.x = getRandomBetween(0, 50, 1);
-    this.time.y = getRandomBetween(0, 50, 1);
-    this.time.z = getRandomBetween(0, 50, 1);
+    // Narrower time ranges to reduce effective noise frequency
+    this.time.x = getRandomBetween(0, 5, 1);
+    this.time.y = getRandomBetween(0, 5, 1);
+    this.time.z = getRandomBetween(0, 5, 1);
     this.setWireframe(getRandomBoolean());
     if (this.isRotation) {
       this.rotation.x = getRandomBetween(0, 0.01, 3);
@@ -294,7 +295,8 @@ export default class BodyBlob {
       this.rotation.y = 0;
       this.rotation.z = 0;
     }
-    this.setResolution(getRandomBetween(30, 300, 1));
+    // Respect configured resolution bounds for randomness
+    this.setRandomResolution();
     this.setShininess(getRandomBetween(0, 100000, 1));
     this.setWireframe(getRandomBoolean());
     this.colorX = getRandomHexColor();
