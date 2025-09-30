@@ -46,7 +46,7 @@
           />
           <UButton
             class="rounded-full bg-gray-300 dark:bg-gray-700 border-2
-            hover:bg-cool-400 dark:hover:bg-cool-600 mx-3"
+              hover:bg-cool-400 dark:hover:bg-cool-600 mx-3"
             :class="theme.ui.gray === 'cool' ?
               selectedStyle : 'border-transparent'"
             @click="() => theme.ui.gray = 'cool'"

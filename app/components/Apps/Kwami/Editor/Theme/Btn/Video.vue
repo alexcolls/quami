@@ -19,12 +19,14 @@
       />
     </UButton>
     <template #panel>
-      <div class="bg-gray-100 dark:bg-gray-900 min-w-56">
-        <URange
+      <div class="bg-gray-100 dark:bg-gray-900 min-w-56 p-3">
+        <CommonRange
           v-model="opacity"
-          :steps="steps"
+          :step="1"
+          :min="0"
+          :max="100"
         />
-        <div>
+        <div class="text-center text-sm mt-2">
           {{ opacity }}
         </div>
       </div>
@@ -38,12 +40,7 @@ const { ui } = useStore();
 
 const opacity = ref(0);
 
-const steps = [
-  0, 30, 50, 70, 100
-];
-
 watch(opacity, (v) => {
-  console.log('opacity', v);
   ui.opacityVideo = v;
 });
 
