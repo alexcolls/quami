@@ -5,9 +5,15 @@
       class="fixed inset-0 z-0 pointer-events-none select-none bg-black"
       aria-hidden="true"
     >
-      <div ref="host" class="absolute inset-0"></div>
+      <div
+        ref="host"
+        class="absolute inset-0"
+      />
       <!-- subtle vignette to match screenshot -->
-      <div class="absolute inset-0" :style="vignetteStyle" />
+      <div
+        class="absolute inset-0"
+        :style="vignetteStyle"
+      />
       <slot />
     </div>
   </ClientOnly>
@@ -48,7 +54,7 @@ const host = ref<HTMLDivElement | null>(null);
 
 // Style overlay
 const vignetteStyle = computed(() => ({
-  background: `radial-gradient(ellipse at center, rgba(0,0,0,0) 40%, rgba(0,0,0,0.35) 70%, rgba(0,0,0,0.7) 100%)`,
+  background: 'radial-gradient(ellipse at center, rgba(0,0,0,0) 40%, rgba(0,0,0,0.35) 70%, rgba(0,0,0,0.7) 100%)',
   mixBlendMode: 'normal',
 }));
 
@@ -121,7 +127,7 @@ const computeLayout = (assets: BackendVideo[]) => {
   borderWidth = Math.max(0, ui.videoGrid.borderWidth || 1);
 
   tileW = Math.round(
-    Math.max(120, Math.min(220, vw / (numCols + 3)))
+    Math.max(120, Math.min(220, vw / (numCols + 3))),
   );
   tileH = Math.round(tileW * ratio);
 
@@ -170,7 +176,7 @@ const drawAtlas = (now: number) => {
   for (const t of tiles) {
     const asset = allVideos.value![t.idx];
 
-    // Background mask
+    // CommonBackground mask
     roundRect(atlasCtx, t.x, t.y, t.w, t.h, borderRadius);
     atlasCtx.save();
     atlasCtx.clip();
