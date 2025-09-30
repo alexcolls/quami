@@ -27,15 +27,14 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       VERSION: process.env.NUXT_APP_VERSION || 'io',
-      
+      SUPABASE_PUBLISHABLE_KEY: process.env.NUXT_SB_PUBLIC,
+      SUPABASE_URL: process.env.NUXT_SB_URL,
+      SUPABASE_KEY: process.env.NUXT_SB_KEY,
     },
-    SUPABASE_URL: process.env.NUXT_SB_URL,
-    SUPABASE_KEY: process.env.NUXT_SB_KEY,
     ELABAI_API_KEY: process.env.NUXT_ELEVEN_LABS_KEY
   },
   modules: [
-    '@nuxtjs/eslint-module',
-    '@nuxtjs/google-fonts',
+    '@nuxt/eslint',
     '@nuxtjs/i18n',
     '@pinia/nuxt',
     '@pinia-plugin-persistedstate/nuxt',
@@ -43,24 +42,29 @@ export default defineNuxtConfig({
     '@nuxt/image',
     '@nuxtjs/supabase'
   ],
-  googleFonts: {
-    download: true,
-    base64: true,
-    families: {
-      Roboto: true,
-      'Josefin+Sans': true,
-      Lato: [100, 300],
-      Raleway: {
-        wght: [100, 400],
-        ital: [100]
-      },
-      Inter: '200..700',
-      'Crimson Pro': {
-        wght: '200..900',
-        ital: '200..700'
-      }
-    }
+  // Configure @nuxtjs/supabase to read from env
+  supabase: {
+    url: process.env.NUXT_PUBLIC_SUPABASE_URL || process.env.NUXT_SB_URL,
+    key: process.env.NUXT_PUBLIC_SUPABASE_ANON_KEY || process.env.NUXT_SB_PUBLIC,
   },
+  // googleFonts: {
+  //   download: true,
+  //   base64: true,
+  //   families: {
+  //     Roboto: true,
+  //     'Josefin+Sans': true,
+  //     Lato: [100, 300],
+  //     Raleway: {
+  //       wght: [100, 400],
+  //       ital: [100]
+  //     },
+  //     Inter: '200..700',
+  //     'Crimson Pro': {
+  //       wght: '200..900',
+  //       ital: '200..700'
+  //     }
+  //   }
+  // },
   imports: {
     dirs: [
       'utils',
