@@ -29,9 +29,9 @@
 </template>
 
 <script setup lang="ts">
-defineProps<{
-  isModalOpen: boolean;
-}>();
+const props = withDefaults(defineProps<{
+  isModalOpen?: boolean;
+}>(), { isModalOpen: false });
 
 const { q } = useStore();
 const playing = ref(false);
