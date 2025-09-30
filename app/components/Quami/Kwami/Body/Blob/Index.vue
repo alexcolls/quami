@@ -45,7 +45,7 @@
         >
           {{ spikes }}
         </div>
-        <UToggle
+        <USwitch
           v-model="audioEffects.spikes"
           on-icon="i-icon-park-solid-music-one"
           off-icon="i-icon-park-solid-music-one"
@@ -74,7 +74,7 @@
         >
           {{ q.body.blob.spikes.x }}
         </div>
-        <UToggle
+        <USwitch
           v-model="audioEffects.vecX"
           on-icon="i-icon-park-solid-music-one"
           off-icon="i-icon-park-solid-music-one"
@@ -103,7 +103,7 @@
         >
           {{ q.body.blob.spikes.y }}
         </div>
-        <UToggle
+        <USwitch
           v-model="audioEffects.vecX"
           on-icon="i-icon-park-solid-music-one"
           off-icon="i-icon-park-solid-music-one"
@@ -132,7 +132,7 @@
         >
           {{ q.body.blob.spikes.z }}
         </div>
-        <UToggle
+        <USwitch
           v-model="audioEffects.vecZ"
           on-icon="i-icon-park-solid-music-one"
           off-icon="i-icon-park-solid-music-one"
@@ -227,7 +227,7 @@
         <h1 class="font-extrabold px-3">
           ROTATION
         </h1>
-        <UToggle
+        <USwitch
           v-model="isRotation"
           name="rotation"
           label="Rotation"

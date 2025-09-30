@@ -1,5 +1,5 @@
 <template>
-  <UToggle
+  <USwitch
     v-model="isDark"
     variant="ghost"
     on-color="gray"

@@ -45,7 +45,7 @@
         <CommonText class="pl-2 pt-0.5">
           Wireframe
         </CommonText>
-        <UToggle
+        <USwitch
           v-model="wireframe"
           name="syncColors"
           label="Syncronize"
@@ -279,9 +279,9 @@ onMounted(() => {
     isRotation.value = v !== 0;
     if (!isRotation.value) {
       if (
-        q.body.blob.rotation.x !== 0 ||
-        q.body.blob.rotation.y !== 0 ||
-        q.body.blob.rotation.z !== 0
+        q.body.blob.rotation.x !== 0
+        || q.body.blob.rotation.y !== 0
+        || q.body.blob.rotation.z !== 0
       ) {
         q.body.blob.rotation.x = 0;
         q.body.blob.rotation.y = 0;
@@ -299,5 +299,4 @@ onMounted(() => {
     q.body.blob.setResolution(v);
   }, { immediate: true });
 });
-
 </script>

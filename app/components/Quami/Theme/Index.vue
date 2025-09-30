@@ -14,7 +14,7 @@
       <QuamiThemeBtnVideo />
       <QuamiThemeBtnBtnLang />
       <QuamiThemeBtnBtnTheme />
-      <UToggle
+      <USwitch
         v-model="ui.showVideo"
       />
     </div>
