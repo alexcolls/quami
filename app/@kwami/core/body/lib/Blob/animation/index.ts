@@ -59,12 +59,12 @@ export default function animation (
 
   // Decouple audio from noise frequency to reduce spikeiness.
   // Use small, stable base frequencies and let audio modulate amplitude only.
-  const baseFreqX = Math.max(0.02, spikeX);
-  const baseFreqY = Math.max(0.02, spikeY);
-  const baseFreqZ = Math.max(0.02, spikeZ);
+  const baseFreqX = Math.max(0.025, spikeX);
+  const baseFreqY = Math.max(0.025, spikeY);
+  const baseFreqZ = Math.max(0.025, spikeZ);
 
-  // Amplitude varies slightly with average audio energy
-  const amp = 0.15 + 0.15 * (averageFrequency / 255); // 0.15 .. 0.30
+  // Slightly stronger amplitude for a bit more detail
+  const amp = 0.18 + 0.18 * (averageFrequency / 255); // 0.18 .. 0.36
 
   for (let i = 0; i < positions.count; i++) {
     vertex.fromBufferAttribute(positions, i);
