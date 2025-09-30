@@ -87,39 +87,30 @@ const signInUp = async () => {
   if (isLoading.value || !isEmailValid(cred.email) ||
   !isPasswordValid(cred.password)) { return; }
   try {
-    const { data: emails } = await supabase.from('global.emails').select('*');
-    logg(emails);
-    if (emails && Array.isArray(emails)) {
-      const email = emails.find(
-        (e: { email: string}) => e.email === cred.email);
-      if (email) {
-        logg(email, 'signing in');
-        isLoading.value = true;
-        const res = await supabase.auth.signInWithPassword({
-          email: cred.email,
-          password: cred.password
-        });
-        logg(res, 'user');
-        if (res.data) {
-          auth.setUser(res.data);
-          navigateTo('/');
-        }
-      } else {
-        isLoading.value = true;
-        await supabase.auth.signUp({
-          email: cred.email,
-          password: cred.password
-        });
-        await supabase.from('global.emails').insert(
-          { email: cred.email },
-          { returning: 'minimal' }
-        );
-        confirmEmail.value = true;
-        isLoading.value = false;
-        logg('User signed up');
-        toast.login.confirmEmail();
-        await signInUp();
-      }
+    isLoading.value = true;
+    // Try to sign in directly. If it fails, fallback to sign up.
+    const res = await supabase.auth.signInWithPassword({
+      email: cred.email,
+      password: cred.password
+    });
+    logg(res, 'signin');
+    if (!res.error && res.data) {
+      auth.setUser(res.data);
+      isLoading.value = false;
+      return navigateTo('/');
+    }
+
+    // If sign-in failed, attempt to sign up
+    const signup = await supabase.auth.signUp({
+      email: cred.email,
+      password: cred.password
+    });
+    logg(signup, 'signup');
+    if (!signup.error) {
+      confirmEmail.value = true;
+      isLoading.value = false;
+      toast.login.confirmEmail();
+      return;
     }
   } catch (e) {
     logg(e, 'error');
