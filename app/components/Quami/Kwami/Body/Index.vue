@@ -12,7 +12,6 @@
       </div>
     </div>
     <div class="mt-5 sm:mt-6 space-y-3">
-      <QuamiKwamiTheme />
       <QuamiKwamiBodyBlob />
       <CommonBtnGradient
         :label="$t('save')"
@@ -25,46 +24,46 @@
 </template>
 
 <script setup lang="ts">
-import {
-  getRandomUUID,
-} from '~/@kwami/utils/randoms';
+// import {
+//   getRandomUUID,
+// } from '~/@kwami/utils/randoms';
 
 const supabase = useSupabaseClient();
 const { q, auth } = useStore();
 
 const isSaving = ref(false);
-const saveBlobParams = async () => {
-  if (isSaving.value) { return; }
-  isSaving.value = true;
-  if (!auth.user.id) {
-    isSaving.value = false;
-    return;
-  }
-  await supabase.from('kwami.body.blob').insert({
-    user_id: auth.user.id,
-    spike_x: q.body.blob.spikes.x,
-    spike_y: q.body.blob.spikes.y,
-    spike_z: q.body.blob.spikes.z,
-    time_x: q.body.blob.time.x,
-    time_y: q.body.blob.time.y,
-    time_z: q.body.blob.time.z,
-    rotation_x: q.body.blob.rotation.x,
-    rotation_y: q.body.blob.rotation.y,
-    rotation_z: q.body.blob.rotation.z,
-    kwami_id: getRandomUUID(),
-    skin: 'tricolor',
-    skin_options: {
-      wireframe: wireframe.value,
-      colors: [
-        q.body.blob.skins.tricolor.uniforms._color1.value,
-        q.body.blob.skins.tricolor.uniforms._color2.value,
-        q.body.blob.skins.tricolor.uniforms._color3.value,
-      ],
-    },
-    resolution: q.body.blob._resolution,
-  }, { returning: 'minimal' });
-  isSaving.value = false;
-};
+// const saveBlobParams = async () => {
+//   if (isSaving.value) { return; }
+//   isSaving.value = true;
+//   if (!auth.user.id) {
+//     isSaving.value = false;
+//     return;
+//   }
+//   await supabase.from('kwami.body.blob').insert({
+//     user_id: auth.user.id,
+//     spike_x: q.body.blob.spikes.x,
+//     spike_y: q.body.blob.spikes.y,
+//     spike_z: q.body.blob.spikes.z,
+//     time_x: q.body.blob.time.x,
+//     time_y: q.body.blob.time.y,
+//     time_z: q.body.blob.time.z,
+//     rotation_x: q.body.blob.rotation.x,
+//     rotation_y: q.body.blob.rotation.y,
+//     rotation_z: q.body.blob.rotation.z,
+//     kwami_id: getRandomUUID(),
+//     skin: 'tricolor',
+//     skin_options: {
+//       wireframe: wireframe.value,
+//       colors: [
+//         q.body.blob.skins.tricolor.uniforms._color1.value,
+//         q.body.blob.skins.tricolor.uniforms._color2.value,
+//         q.body.blob.skins.tricolor.uniforms._color3.value,
+//       ],
+//     },
+//     resolution: q.body.blob._resolution,
+//   }, { returning: 'minimal' });
+//   isSaving.value = false;
+// };
 
 const vecs = ref(12);
 const time = ref(12);
