@@ -275,26 +275,29 @@ onMounted(() => {
     q.save(q.body);
   });
   watch(rotation, (v) => {
-    if (v === 0) {
-      isRotation.value = false;
-    } else {
-      isRotation.value = true;
-    }
+    // Avoid writing to rotation.value here to prevent recursive updates
+    isRotation.value = v !== 0;
     if (!isRotation.value) {
-      rotation.value = 0;
-      q.body.blob.rotation.x = 0;
-      q.body.blob.rotation.y = 0;
-      q.body.blob.rotation.z = 0;
+      if (
+        q.body.blob.rotation.x !== 0 ||
+        q.body.blob.rotation.y !== 0 ||
+        q.body.blob.rotation.z !== 0
+      ) {
+        q.body.blob.rotation.x = 0;
+        q.body.blob.rotation.y = 0;
+        q.body.blob.rotation.z = 0;
+      }
       return;
     }
-    q.body.blob.rotation.x = v;
-    q.body.blob.rotation.y = v;
-    q.body.blob.rotation.z = v;
+    if (q.body.blob.rotation.x !== v) q.body.blob.rotation.x = v;
+    if (q.body.blob.rotation.y !== v) q.body.blob.rotation.y = v;
+    if (q.body.blob.rotation.z !== v) q.body.blob.rotation.z = v;
   });
 
-  watchEffect(() => {
-    q.body.blob.setResolution(resolution.value);
-  });
+  // Set resolution only when it changes
+  watch(resolution, (v) => {
+    q.body.blob.setResolution(v);
+  }, { immediate: true });
 });
 
 </script>
