@@ -1,6 +1,5 @@
 <template>
   <div class="w-full">
-    <CommonDividerX class="pb-2" />
     <UAccordion
       :key="title"
       variant="ghost"
@@ -38,12 +37,10 @@
         <slot />
       </template>
     </UAccordion>
-    <CommonDividerX class="pt-2" />
   </div>
 </template>
 
 <script setup lang="ts">
-
 const { title, subtitle, isOpen } = defineProps<{
   title: string;
   subtitle?: string;
@@ -55,7 +52,6 @@ const items = [{
   title,
   subtitle,
   slot: 'content',
-  defaultOpen: isOpen
+  defaultOpen: isOpen,
 }];
-
 </script>
