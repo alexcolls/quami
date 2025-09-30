@@ -18,7 +18,6 @@
 </template>
 
 <script setup lang="ts">
-
 const { q, ui } = useStore();
 
 const isMounted = ref(false);

@@ -1,14 +1,9 @@
 <template>
-  <QuamiCanvas />
-  <div class="quami-windows">
+  <div class="?">
     <QuamiAccount />
     <QuamiWallet />
-    <QuamiKwami />
+    <QuamiEditor />
     <QuamiMusic />
     <QuamiTheme />
   </div>
 </template>
-
-<script setup lang="ts">
-// Main Quami component that orchestrates all sub-components
-</script>
