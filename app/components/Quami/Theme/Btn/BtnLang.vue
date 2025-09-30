@@ -42,7 +42,7 @@ const { ui } = useStore();
 const langs = useLangs();
 
 const selectedLang = ref(
-  langs.find((lang: LangOption) => lang.value === ui.lang || 'en') || langs[0],
+  langs.find((lang: LangOption) => lang.value === (ui.lang || 'en')) || langs[0],
 );
 
 watch(selectedLang, (v) => {
@@ -51,8 +51,8 @@ watch(selectedLang, (v) => {
 }, { immediate: true });
 
 onMounted(() => {
-  setLocale(ui.lang as LangCode || 'en');
+  setLocale((ui.lang as LangCode) || 'en');
   selectedLang.value = langs.find(
-    (lang: LangOption) => lang.value === ui.lang || 'en') || langs[0];
+    (lang: LangOption) => lang.value === (ui.lang || 'en')) || langs[0];
 });
 </script>

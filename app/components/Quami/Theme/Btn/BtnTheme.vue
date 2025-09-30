@@ -56,9 +56,8 @@ const iconMoon = 'i-hugeicons-moon-02';
 const iconSystem = 'i-hugeicons-computer';
 const selectedClass = 'bg-black10 dark:bg-white10';
 
-const systemDarkMode = ref(
-  window.matchMedia('(prefers-color-scheme: dark)').matches,
-);
+// Avoid window access during setup for SSR/compat safety
+const systemDarkMode = ref(false);
 
 if (!colorMode.preference) {
   colorMode.preference = 'system';
@@ -77,8 +76,11 @@ const themeIcon = computed(() => {
 
 const setTheme = (mode: ThemeMode) => {
   colorMode.preference = mode;
-  systemDarkMode.value = window.matchMedia(
-    '(prefers-color-scheme: dark)').matches;
+  if (import.meta.client) {
+    systemDarkMode.value = window.matchMedia(
+      '(prefers-color-scheme: dark)'
+    ).matches;
+  }
   ui.isDark = mode === 'dark' || (mode === 'system' && systemDarkMode.value);
 };
 
@@ -92,6 +94,7 @@ const updateSystemTheme: MediaQueryListEventHandler = (event) => {
 onMounted(() => {
   if (import.meta.client) {
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    systemDarkMode.value = mediaQuery.matches;
     mediaQuery.addEventListener('change', updateSystemTheme);
   }
 });
