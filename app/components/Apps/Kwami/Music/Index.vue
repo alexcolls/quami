@@ -37,9 +37,9 @@ defineProps<{
 const { q } = useStore();
 const playing = ref(false);
 
-const toggleAudio = () => {
+const toggleAudio = async () => {
   if (q.body.audio.instance.paused) {
-    q.body.audio.playAudio();
+    await q.body.audio.playAudio();
     q.body.blob.state = 'speak';
     playing.value = true;
   } else {
