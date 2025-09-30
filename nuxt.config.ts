@@ -139,4 +139,22 @@ export default defineNuxtConfig({
   icon: {
     serverBundle: 'remote',
   },
+  vite: {
+    define: {
+      'global': 'globalThis',
+    },
+    resolve: {
+      alias: {
+        buffer: 'buffer/',
+      },
+    },
+    optimizeDeps: {
+      include: ['buffer'],
+      esbuildOptions: {
+        define: {
+          global: 'globalThis',
+        },
+      },
+    },
+  },
 });
