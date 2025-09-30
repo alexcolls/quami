@@ -58,7 +58,7 @@
           X
         </div>
         <CommonRange
-          v-model="q.body.blob.vec.x"
+          v-model="q.body.blob.spikes.x"
           :step="0.1"
           :min="0"
           :max="20"
@@ -68,7 +68,7 @@
           class="text-sm text-primary-800/50 dark:text-primary-200/90
               w-16 ml-2"
         >
-          {{ q.body.blob.vec.x }}
+          {{ q.body.blob.spikes.x }}
         </div>
         <UToggle
           v-model="audioEffects.vecX"
@@ -87,7 +87,7 @@
           Y
         </div>
         <CommonRange
-          v-model="q.body.blob.vec.y"
+          v-model="q.body.blob.spikes.y"
           :step="0.1"
           :min="0"
           :max="20"
@@ -97,7 +97,7 @@
           class="text-sm text-primary-800/50 dark:text-primary-200/90
               w-16 ml-2"
         >
-          {{ q.body.blob.vec.x }}
+          {{ q.body.blob.spikes.y }}
         </div>
         <UToggle
           v-model="audioEffects.vecX"
@@ -116,7 +116,7 @@
           Z
         </div>
         <CommonRange
-          v-model="q.body.blob.vec.z"
+          v-model="q.body.blob.spikes.z"
           :step="0.1"
           :min="0"
           :max="20"
@@ -126,7 +126,7 @@
           class="text-sm text-primary-800/50 dark:text-primary-200/90
               w-16 ml-2"
         >
-          {{ q.body.blob.vec.z }}
+          {{ q.body.blob.spikes.z }}
         </div>
         <UToggle
           v-model="audioEffects.vecZ"

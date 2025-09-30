@@ -9,7 +9,7 @@ import type {
 } from 'three';
 import {
   GLTFExporter
-} from 'three/examples/jsm/exporters/GLTFExporter.js';
+} from 'three/addons/exporters/GLTFExporter.js';
 import audioFiles from '../../assets/audio';
 import setScene, {
   // setRenderer,

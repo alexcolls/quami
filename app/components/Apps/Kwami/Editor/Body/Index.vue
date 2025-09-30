@@ -42,9 +42,9 @@ const saveBlobParams = async () => {
   }
   await supabase.from('kwami.body.blob').insert({
     user_id: auth.user.id,
-    spike_x: q.body.blob.vec.x,
-    spike_y: q.body.blob.vec.y,
-    spike_z: q.body.blob.vec.z,
+    spike_x: q.body.blob.spikes.x,
+    spike_y: q.body.blob.spikes.y,
+    spike_z: q.body.blob.spikes.z,
     time_x: q.body.blob.time.x,
     time_y: q.body.blob.time.y,
     time_z: q.body.blob.time.z,
@@ -75,9 +75,9 @@ const resolution = ref(20);
 
 onMounted(() => {
   watch(vecs, (v) => {
-    q.body.blob.vec.x = v;
-    q.body.blob.vec.y = v;
-    q.body.blob.vec.z = v;
+    q.body.blob.spikes.x = v;
+    q.body.blob.spikes.y = v;
+    q.body.blob.spikes.z = v;
     q.save(q.body);
   });
   watch(time, (v) => {
