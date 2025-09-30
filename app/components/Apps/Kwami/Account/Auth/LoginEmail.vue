@@ -1,14 +1,4 @@
 <template>
-  <CommonMagicWindow
-    :title="$t('loggin')"
-    :icon="'i-heroicons-user'"
-    :default-position="{ x: 50, y: 50 }"
-    :is-modal-open="true"
-    :window-name="$t('loggin')"
-    :class="isEmailValid(cred.email) ? '!h-[240px]' : '!h-[180px]'"
-    @width="modalRect!.width = $event"
-    @height="modalRect!.height = $event"
-  >
     <div class="p-8">
       <UForm
         :schema="schema"
@@ -70,7 +60,6 @@
         </transition>
       </UForm>
     </div>
-  </CommonMagicWindow>
 </template>
 
 <script setup lang="ts">

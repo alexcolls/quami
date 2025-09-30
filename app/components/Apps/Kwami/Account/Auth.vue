@@ -6,10 +6,9 @@
     :menu-to-left="4"
     :tabs="tabs"
     :selected-tab="selectedTab"
-    :default-position="{ x: 10, y: 10 }"
+    :default-position="{ x: 50, y: 10 }"
     @tab-click="selectedTab = $event"
   >
-    <AppsKwamiAccountProfile v-if="selectedTab.title.toUpperCase() === 'PROFILE'" />
     <AppsKwamiAccountAuthLoginEmail />
   </CommonMagicWindow>
 </template>
