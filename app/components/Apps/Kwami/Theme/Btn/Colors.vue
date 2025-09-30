@@ -217,14 +217,25 @@
 const theme = useAppConfig();
 const { ui } = useStore();
 
+// Initialize Nuxt UI palette from store
 theme.ui.primary = ui.primary;
 theme.ui.gray = ui.gray;
 
-watch(() => theme.ui.primary, () => {
-  ui.primary = theme.ui.primary;
+// Keep store legacy fields and new ui.color model in sync with app config
+watch(() => theme.ui.primary, (v) => {
+  ui.primary = v;
+  // Also reflect in new color model (shade 500 by default)
+  ui.color.light.primary = `${v}-500`;
+  ui.color.dark.primary = `${v}-500`;
 });
-watch(() => theme.ui.gray, () => {
-  ui.gray = theme.ui.gray;
+watch(() => theme.ui.gray, (v) => {
+  ui.gray = v;
+  // Optionally map gray choice to background/neutral families for consistency
+  // Keep backgrounds sensible for each mode
+  ui.color.light.background = v === 'stone' ? 'white' : `${v}-50`;
+  ui.color.dark.background = v === 'stone' ? 'stone-900' : `${v}-900`;
+  ui.color.light.neutral = `${v}-500`;
+  ui.color.dark.neutral = `${v}-500`;
 });
 
 const selectedStyle = 'border-gray-900 dark:border-gray-100';

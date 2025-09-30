@@ -42,6 +42,14 @@ export default defineNuxtConfig({
     '@nuxt/image',
     '@nuxtjs/supabase'
   ],
+  ui: {
+    safelistColors: [
+      'white','black',
+      'gray','zinc','neutral','stone','slate',
+      'red','orange','amber','yellow','lime','green','emerald','teal',
+      'cyan','sky','blue','indigo','violet','purple','fuchsia','pink','rose'
+    ]
+  },
   css: ['~/assets/css/main.css'],
   // Configure @nuxtjs/supabase to read from env
   supabase: {
