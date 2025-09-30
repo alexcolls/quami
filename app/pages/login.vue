@@ -5,9 +5,5 @@
 </template>
 
 <script setup lang="ts">
-
-definePageMeta({
-  middleware: ['auth']
-});
-
+// No route guards here; email login is optional
 </script>

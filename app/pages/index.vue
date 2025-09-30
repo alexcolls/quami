@@ -5,9 +5,5 @@
 </template>
 
 <script setup lang="ts">
-
-definePageMeta({
-  middleware: ['auth']
-});
-
+// Anonymous by default; no auth middleware needed
 </script>
