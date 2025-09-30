@@ -1,38 +1,5 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  compatibilityDate: '2025-07-15',
-  devtools: { enabled: true },
-  ssr: false,
-  app: {
-    baseURL: '/',
-    head: {
-      title: 'QUAMI',
-      meta: [
-        { charset: 'utf-8' },
-        {
-          name: 'viewport',
-          content: 'width=device-width, initial-scale=1'
-        },
-        {
-          name: 'description',
-          content: 'QUAMI is just what you want'
-        }
-      ],
-      link: [
-        { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
-      ]
-    },
-    pageTransition: { name: 'page', mode: 'out-in' }
-  },
-  runtimeConfig: {
-    public: {
-      VERSION: process.env.NUXT_APP_VERSION || 'io',
-      SUPABASE_PUBLISHABLE_KEY: process.env.NUXT_SB_PUBLIC,
-      SUPABASE_URL: process.env.NUXT_SB_URL,
-      SUPABASE_KEY: process.env.NUXT_SB_KEY,
-    },
-    ELABAI_API_KEY: process.env.NUXT_ELEVEN_LABS_KEY
-  },
   modules: [
     '@nuxt/eslint',
     '@nuxtjs/i18n',
@@ -40,27 +7,13 @@ export default defineNuxtConfig({
     '@pinia-plugin-persistedstate/nuxt',
     '@nuxt/ui',
     '@nuxt/image',
-    '@nuxtjs/supabase'
+    '@nuxtjs/supabase',
   ],
-  ui: {
-    safelistColors: [
-      'white','black',
-      'gray','zinc','neutral','stone','slate',
-      'red','orange','amber','yellow','lime','green','emerald','teal',
-      'cyan','sky','blue','indigo','violet','purple','fuchsia','pink','rose'
-    ]
-  },
-  components: [
-    { path: '~/app/components', pathPrefix: false },
-    { path: '~/components', pathPrefix: false },
-  ],
-  css: ['~/assets/css/main.css'],
-  // Configure @nuxtjs/supabase to read from env
-  supabase: {
-    url: process.env.NUXT_PUBLIC_SUPABASE_URL || process.env.NUXT_SB_URL,
-    key: process.env.NUXT_PUBLIC_SUPABASE_ANON_KEY || process.env.NUXT_SB_PUBLIC,
-    redirect: false,
-  },
+  ssr: false,
+  // components: [
+  //   { path: '~/app/components', pathPrefix: false },
+  //   { path: '~/components', pathPrefix: false },
+  // ],
   // googleFonts: {
   //   download: true,
   //   base64: true,
@@ -82,18 +35,56 @@ export default defineNuxtConfig({
   imports: {
     dirs: [
       'utils',
-      'stores'
-    ]
+      'stores',
+    ],
   },
-  piniaPersistedstate: {
-    storage: 'localStorage'
+  devtools: { enabled: true },
+  app: {
+    baseURL: '/',
+    head: {
+      title: 'QUAMI',
+      meta: [
+        { charset: 'utf-8' },
+        {
+          name: 'viewport',
+          content: 'width=device-width, initial-scale=1',
+        },
+        {
+          name: 'description',
+          content: 'QUAMI is just what you want',
+        },
+      ],
+      link: [
+        { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      ],
+    },
+    pageTransition: { name: 'page', mode: 'out-in' },
   },
+  css: ['~/assets/css/main.css'],
   colorMode: {
-    preference: 'system'
+    preference: 'system',
+  },
+  ui: {
+    // safelistColors: [
+    //   'white', 'black',
+    //   'gray', 'zinc', 'neutral', 'stone', 'slate',
+    //   'red', 'orange', 'amber', 'yellow', 'lime', 'green', 'emerald', 'teal',
+    //   'cyan', 'sky', 'blue', 'indigo', 'violet', 'purple', 'fuchsia', 'pink', 'rose',
+    // ],
+  },
+  runtimeConfig: {
+    public: {
+      VERSION: process.env.NUXT_APP_VERSION || 'io',
+      SUPABASE_PUBLISHABLE_KEY: process.env.NUXT_SB_PUBLIC,
+      SUPABASE_URL: process.env.NUXT_SB_URL,
+      SUPABASE_KEY: process.env.NUXT_SB_KEY,
+    },
+    ELABAI_API_KEY: process.env.NUXT_ELEVEN_LABS_KEY,
   },
   experimental: {
     viewTransition: true,
   },
+  compatibilityDate: '2025-07-15',
   nitro: {
     preset: 'bun',
     experimental: {
@@ -107,6 +98,24 @@ export default defineNuxtConfig({
           'Access-Control-Allow-Origin': '*',
           'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
           'Access-Control-Allow-Headers': 'Content-Type, Authorization, X-API-Key',
+        },
+      },
+    },
+  },
+  vite: {
+    define: {
+      global: 'globalThis',
+    },
+    resolve: {
+      alias: {
+        buffer: 'buffer/',
+      },
+    },
+    optimizeDeps: {
+      include: ['buffer'],
+      esbuildOptions: {
+        define: {
+          global: 'globalThis',
         },
       },
     },
@@ -139,22 +148,13 @@ export default defineNuxtConfig({
   icon: {
     serverBundle: 'remote',
   },
-  vite: {
-    define: {
-      'global': 'globalThis',
-    },
-    resolve: {
-      alias: {
-        buffer: 'buffer/',
-      },
-    },
-    optimizeDeps: {
-      include: ['buffer'],
-      esbuildOptions: {
-        define: {
-          global: 'globalThis',
-        },
-      },
-    },
+  piniaPersistedstate: {
+    storage: 'localStorage',
+  },
+  // Configure @nuxtjs/supabase to read from env
+  supabase: {
+    url: process.env.NUXT_PUBLIC_SUPABASE_URL || process.env.NUXT_SB_URL,
+    key: process.env.NUXT_PUBLIC_SUPABASE_ANON_KEY || process.env.NUXT_SB_PUBLIC,
+    redirect: false,
   },
 });
