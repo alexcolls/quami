@@ -53,9 +53,18 @@ export default function animation (
   const averageFrequency =
     frequencyData.reduce((sum, val) => sum + val, 0) / frequencyData.length;
 
-  const scaleFactor = 1 + averageFrequency * 2 / 900;
-
+  // Keep some overall breathing by scaling with audio
+  const scaleFactor = 1 + (averageFrequency * 2) / 900;
   mesh.scale.set(scaleFactor, scaleFactor, scaleFactor);
+
+  // Decouple audio from noise frequency to reduce spikeiness.
+  // Use small, stable base frequencies and let audio modulate amplitude only.
+  const baseFreqX = Math.max(0.02, spikeX);
+  const baseFreqY = Math.max(0.02, spikeY);
+  const baseFreqZ = Math.max(0.02, spikeZ);
+
+  // Amplitude varies slightly with average audio energy
+  const amp = 0.15 + 0.15 * (averageFrequency / 255); // 0.15 .. 0.30
 
   for (let i = 0; i < positions.count; i++) {
     vertex.fromBufferAttribute(positions, i);
@@ -63,11 +72,11 @@ export default function animation (
       .normalize()
       .multiplyScalar(
         1 +
-          0.3 *
+          amp *
             noise3D(
-              vertex.x * (spikeX + tX + lowFrequencyAvg / 50),
-              vertex.y * (spikeY + tY + lowFrequencyAvg / 50),
-              vertex.z * (spikeZ + tZ + highFrequencyAvg / 50)
+              vertex.x * baseFreqX + tX,
+              vertex.y * baseFreqY + tY,
+              vertex.z * baseFreqZ + tZ
             )
       );
 
