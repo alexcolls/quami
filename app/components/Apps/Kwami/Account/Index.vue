@@ -9,7 +9,8 @@
     :default-position="{ x: position.x, y: position.y }"
     @tab-click="selectedTab = $event"
   >
-    <AppsAccountProfile v-if="selectedTab.title.toUpperCase() === 'PROFILE'" />
+    <AppsKwamiAccountProfile v-if="selectedTab.title.toUpperCase() === 'PROFILE'" />
+    <AppsKwamiAccountAuthLoginEmail />
   </CommonMagicWindow>
 </template>
 
