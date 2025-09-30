@@ -1,5 +1,8 @@
 <template>
-  <UPopover mode="hover" class="z-50">
+  <UPopover
+    mode="hover"
+    class="z-50"
+  >
     <UButton
       variant="ghost"
       class="focus:outline-transparent focus-visible:outline-0
@@ -20,7 +23,7 @@
     </UButton>
     <template #panel>
       <div class="bg-gray-100 dark:bg-gray-900 min-w-56">
-        <URange
+        <USlider
           v-model="opacity"
           :steps="steps"
         />
@@ -33,18 +36,16 @@
 </template>
 
 <script setup lang="ts">
-
 const { ui } = useStore();
 
 const opacity = ref(0);
 
 const steps = [
-  0, 30, 50, 70, 100
+  0, 30, 50, 70, 100,
 ];
 
 watch(opacity, (v) => {
   console.log('opacity', v);
   ui.opacityVideo = v;
 });
-
 </script>

@@ -1,65 +1,65 @@
 <template>
-    <div class="p-8">
-      <UForm
-        :schema="schema"
-        :state="cred"
-        class="space-y-4"
+  <div class="p-8">
+    <UForm
+      :schema="schema"
+      :state="cred"
+      class="space-y-4"
+    >
+      <UFormField
+        :label="$t('email')"
       >
-        <UFormGroup
-          :label="$t('email')"
-        >
-          <UInput
-            v-model="cred.email"
-            variant="none"
-            required
-            type="email"
-            autocomplete="username"
-            class="border border-primary rounded-md shadow-black
+        <UInput
+          v-model="cred.email"
+          variant="none"
+          required
+          type="email"
+          autocomplete="username"
+          class="border border-primary rounded-md shadow-black
               dark:shadow-white !text-white"
-            icon="i-heroicons-user"
-          />
-        </UFormGroup>
-        <transition name="fade">
-          <div
-            v-if="isPassInputDisabled"
-            class="w-full justify-center pt-2.5 transition-all duration-300
+          icon="i-heroicons-user"
+        />
+      </UFormField>
+      <transition name="fade">
+        <div
+          v-if="isPassInputDisabled"
+          class="w-full justify-center pt-2.5 transition-all duration-300
                 ease-in-out rounded-full hover:shadow-lg"
-          >
-            <UFormGroup :label="$t('password')">
-              <UInput
-                v-model="cred.password"
-                variant="none"
-                required
-                type="password"
-                autocomplete="password"
-                class="border border-primary rounded-md shadow-black
+        >
+          <UFormField :label="$t('password')">
+            <UInput
+              v-model="cred.password"
+              variant="none"
+              required
+              type="password"
+              autocomplete="password"
+              class="border border-primary rounded-md shadow-black
                   dark:shadow-white "
-                icon="i-heroicons-key"
-              />
-            </UFormGroup>
-          </div>
-        </transition>
-        <transition name="fade">
-          <div
-            v-if="isBtnDisabled"
-            class="w-full justify-center pt-2.5 transition-all duration-300
+              icon="i-heroicons-key"
+            />
+          </UFormField>
+        </div>
+      </transition>
+      <transition name="fade">
+        <div
+          v-if="isBtnDisabled"
+          class="w-full justify-center pt-2.5 transition-all duration-300
                 ease-in-out rounded-full hover:shadow-lg"
-          >
-            <div class="flex justify-center">
-              <CommonBtnGradient
-                type="submit"
-                class="group px-12 pr-14 py-2 shadow-black
+        >
+          <div class="flex justify-center">
+            <CommonBtnGradient
+              type="submit"
+              class="group px-12 pr-14 py-2 shadow-black
                   dark:shadow-white mt-8"
-                icon="i-heroicons-rocket-launch-16-solid"
-                @click="signInUp()"
-              >
-                {{ $t('btn.go') }}
-              </CommonBtnGradient>
-            </div>
+              icon="i-heroicons-rocket-launch-16-solid"
+              @click="signInUp()"
+            >
+              {{ $t('btn.go') }}
+            </CommonBtnGradient>
           </div>
-        </transition>
-      </UForm>
-    </div>
+        </div>
+      </transition>
+    </UForm>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -73,14 +73,14 @@ const isLoading = ref(false);
 const confirmEmail = ref(false);
 
 const signInUp = async () => {
-  if (isLoading.value || !isEmailValid(cred.email) ||
-  !isPasswordValid(cred.password)) { return; }
+  if (isLoading.value || !isEmailValid(cred.email)
+    || !isPasswordValid(cred.password)) { return; }
   try {
     isLoading.value = true;
     // Try to sign in directly. If it fails, fallback to sign up.
     const res = await supabase.auth.signInWithPassword({
       email: cred.email,
-      password: cred.password
+      password: cred.password,
     });
     logg(res, 'signin');
     if (!res.error && res.data) {
@@ -92,7 +92,7 @@ const signInUp = async () => {
     // If sign-in failed, attempt to sign up
     const signup = await supabase.auth.signUp({
       email: cred.email,
-      password: cred.password
+      password: cred.password,
     });
     logg(signup, 'signup');
     if (!signup.error) {
@@ -128,11 +128,11 @@ const isBtnDisabled = computed(() => {
 
 const cred = reactive({
   email: '',
-  password: ''
+  password: '',
 });
 
 const schema = z.object({
-  email: z.string().email()
+  email: z.string().email(),
 });
 
 const centerX = ref(0);
@@ -152,5 +152,4 @@ onMounted(() => {
     window.removeEventListener('resize', updateCenterPosition);
   });
 });
-
 </script>

@@ -150,7 +150,7 @@
           {{ time }}
         </h2>
         <div class="pt-1 ml-4 mr-2 w-full">
-          <URange
+          <USlider
             v-model="time"
             :step="0.01"
             :min="0"
@@ -170,7 +170,7 @@
             X {{ q.body.blob.time.x }}
           </div>
           <div class="px-2 py-2 w-full">
-            <URange
+            <USlider
               v-model="q.body.blob.time.x"
               :step="0.1"
               :min="0"
@@ -189,7 +189,7 @@
             Y {{ q.body.blob.time.y }}
           </div>
           <div class="px-2 py-2 w-full">
-            <URange
+            <USlider
               v-model="q.body.blob.time.y"
               :step="0.1"
               :min="0"
@@ -208,7 +208,7 @@
             Z {{ q.body.blob.time.z }}
           </div>
           <div class="px-2 py-2 w-full">
-            <URange
+            <USlider
               v-model="q.body.blob.time.z"
               :step="0.1"
               :min="0"
@@ -234,7 +234,7 @@
           @change="switchRotation"
         />
         <div class="pt-1 ml-4 mr-2 w-full">
-          <URange
+          <USlider
             v-model="rotation"
             :step="0.0001"
             :min="0"
@@ -254,7 +254,7 @@
             X {{ q.body.blob.rotation.x }}
           </div>
           <div class="px-2 py-2 w-full">
-            <URange
+            <USlider
               v-model="q.body.blob.rotation.x"
               :step="0.0001"
               :min="0"
@@ -273,7 +273,7 @@
             Y {{ rotation }}
           </div>
           <div class="px-2 py-2 w-full">
-            <URange
+            <USlider
               v-model="rotation"
               :step="0.0001"
               :min="0"
@@ -292,7 +292,7 @@
             Z {{ q.body.blob.rotation.z }}
           </div>
           <div class="px-2 py-2 w-full">
-            <URange
+            <USlider
               v-model="q.body.blob.rotation.z"
               :step="0.0001"
               :min="0"
