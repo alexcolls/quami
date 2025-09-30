@@ -1,14 +1,13 @@
 import { defineEventHandler, readBody } from 'h3';
-import FormData from 'form-data';
 
 export default defineEventHandler(async (event) => {
   const body = await readBody(event);
   const config = useRuntimeConfig();
+
+  // Use built-in Web FormData/File (available in Bun/Nitro)
+  const file = new File([body.audio], 'recording.wav', { type: 'audio/wav' });
   const formData = new FormData();
-  formData.append('file', body.audio, {
-    filename: 'recording.wav',
-    contentType: 'audio/wav'
-  });
+  formData.append('file', file);
 
   const url = 'https://api.edenai.run/v2/audio/speech_to_text';
   try {
