@@ -1,5 +1,9 @@
 <template>
-  <CommonAccordion title="BLOB" :is-open="true" icon="i-heroicons-user">
+  <CommonAccordion
+    title="BLOB"
+    :is-open="true"
+    icon="i-heroicons-user"
+  >
     <div class="flex justify-start mb-2 -ml-2">
       <UButton
         icon="i-mdi-dice-multiple"
@@ -19,7 +23,7 @@
         </CommonTextGradient>
       </div>
     </div>
-    <AppsKwamiEditorBodyBlobSkin />
+    <QuamiKwamiBodyBlobSkin />
     <!-- <div>
 
       <div class="flex w-full mt-2">
@@ -325,7 +329,6 @@ onMounted(() => {
     dna.value = v;
   }, { immediate: true });
 });
-
 </script>
 
 <style scoped>

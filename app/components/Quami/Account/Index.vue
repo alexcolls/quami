@@ -6,27 +6,25 @@
     :menu-to-left="4"
     :tabs="tabs"
     :selected-tab="selectedTab"
-    :default-position="{ x: 50, y: 10 }"
+    :default-position="{ x: 10, y: 10 }"
     @tab-click="selectedTab = $event"
   >
-    <AppsKwamiAccountAuthLoginEmail />
+    <QuamiAccountProfile v-if="selectedTab.title.toUpperCase() === 'PROFILE'" />
+    <QuamiAccountAuthLoginEmail />
   </CommonMagicWindow>
 </template>
 
 <script setup lang="ts">
-
-
 const tabs = [
   {
     title: 'Auth',
-    icon: 'i-mdi-account-outline'
+    icon: 'i-mdi-account-outline',
   },
   {
     title: 'Security',
-    icon: 'i-mdi-lock-outline'
-  }
+    icon: 'i-mdi-lock-outline',
+  },
 ];
 
 const selectedTab = ref(tabs[0]);
-
 </script>

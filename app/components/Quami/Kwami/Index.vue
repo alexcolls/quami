@@ -11,17 +11,17 @@
   >
     <template #tabs>
       <div class="relative">
-        <AppsKwamiEditorBody
+        <QuamiKwamiBody
           :class="selectedTab.title.toUpperCase() === 'BODY'
             ? 'opacity-100' : 'opacity-0 hidden delay-200'"
           class="transition-opacity duration-300"
         />
-        <AppsKwamiEditorMind
+        <QuamiKwamiMind
           :class="selectedTab.title.toUpperCase() === 'MIND'
             ? 'opacity-100' : 'opacity-0 hidden delay-200'"
           class="transition-opacity duration-300"
         />
-        <AppsKwamiEditorSoul
+        <QuamiKwamiSoul
           :class="selectedTab.title.toUpperCase() === 'SOUL'
             ? 'opacity-100 ' : 'opacity-0 hidden delay-200'"
           class="transition-opacity duration-300"

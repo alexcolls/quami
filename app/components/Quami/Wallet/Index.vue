@@ -10,9 +10,9 @@
     @tab-click="selectedTab = $event"
   >
     <template #tabs>
-      <AppsKwamiWalletBalances />
+      <QuamiWalletBalances />
     </template>
-    <AppsKwamiAccountAuthConnectWallet />
+    <QuamiAccountAuthConnectWallet />
     <!-- <div v-for="x in data" :key="x.id">
       {{ x.id }}
     </div> -->

@@ -12,8 +12,8 @@
       </div>
     </div>
     <div class="mt-5 sm:mt-6 space-y-3">
-      <AppsKwamiEditorTheme />
-      <AppsKwamiEditorBodyBlob />
+      <QuamiKwamiTheme />
+      <QuamiKwamiBodyBlob />
       <CommonBtnGradient
         :label="$t('save')"
         icon="i-mdi-content-save"
@@ -26,7 +26,7 @@
 
 <script setup lang="ts">
 import {
-  getRandomUUID
+  getRandomUUID,
 } from '~/@kwami/utils/randoms';
 
 const supabase = useSupabaseClient();
@@ -58,10 +58,10 @@ const saveBlobParams = async () => {
       colors: [
         q.body.blob.skins.tricolor.uniforms._color1.value,
         q.body.blob.skins.tricolor.uniforms._color2.value,
-        q.body.blob.skins.tricolor.uniforms._color3.value
-      ]
+        q.body.blob.skins.tricolor.uniforms._color3.value,
+      ],
     },
-    resolution: q.body.blob._resolution
+    resolution: q.body.blob._resolution,
   }, { returning: 'minimal' });
   isSaving.value = false;
 };
@@ -91,9 +91,9 @@ onMounted(() => {
     isRotation.value = v !== 0;
     if (!isRotation.value) {
       if (
-        q.body.blob.rotation.x !== 0 ||
-        q.body.blob.rotation.y !== 0 ||
-        q.body.blob.rotation.z !== 0
+        q.body.blob.rotation.x !== 0
+        || q.body.blob.rotation.y !== 0
+        || q.body.blob.rotation.z !== 0
       ) {
         q.body.blob.rotation.x = 0;
         q.body.blob.rotation.y = 0;
@@ -111,5 +111,4 @@ onMounted(() => {
     q.body.blob.setResolution(v);
   }, { immediate: true });
 });
-
 </script>

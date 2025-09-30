@@ -1,12 +1,12 @@
 <template>
-  <AppsKwamiCanvas />
+  <QuamiCanvas />
   <!-- <SharedGlobalSearch /> -->
   <div class="?">
-    <AppsKwamiAccount />
-    <AppsKwamiWallet />
-    <AppsKwamiEditor />
-    <AppsKwamiMusic />
-    <AppsKwamiThemeIndex />
-    <!-- <AppsCommunityYoutube /> -->
+    <QuamiAccount />
+    <QuamiWallet />
+    <QuamiEditor />
+    <QuamiMusic />
+    <QuamiTheme />
+    <!-- <CommunityYoutube /> -->
   </div>
 </template>

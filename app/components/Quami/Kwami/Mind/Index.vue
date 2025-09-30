@@ -13,8 +13,8 @@
       </div>
     </div>
     <div class="mt-4">
-      <AppsKwamiEditorMindModels />
-      <AppsKwamiEditorMindVoice />
+      <QuamiKwamiMindModels />
+      <QuamiKwamiMindVoice />
     </div>
   </div>
 </template>
