@@ -6,7 +6,7 @@
     :menu-to-left="8"
     :tabs="tabs"
     :selected-tab="selectedTab"
-    :default-position="{ x: 300, y: 300 }"
+    :default-position="{ x: 10, y: 90 }
     @tab-click="selectedTab = $event"
   >
     <template #tabs>

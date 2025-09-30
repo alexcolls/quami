@@ -6,6 +6,7 @@
     <AppsKwamiWallet />
     <AppsKwamiEditor />
     <AppsKwamiMusic />
+    <AppsKwamiThemeIndex />
     <!-- <AppsCommunityYoutube /> -->
   </div>
 </template>

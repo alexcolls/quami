@@ -2,7 +2,7 @@
   <CommonMagicWindow
     :title="$t('music')"
     icon="i-icon-park-solid-music-one"
-    :default-position="{ x: 500, y: 500 }"
+    :default-position="{ x: 10, y: 130 }"
     :is-modal-open="isModalOpen"
   >
     <UButton
@@ -29,7 +29,6 @@
 </template>
 
 <script setup lang="ts">
-
 defineProps<{
   isModalOpen: boolean;
 }>();
@@ -56,5 +55,4 @@ const nextAudio = () => {
 const prevAudio = () => {
   q.body.audio.prevAudio();
 };
-
 </script>
