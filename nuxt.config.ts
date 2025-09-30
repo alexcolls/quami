@@ -50,6 +50,10 @@ export default defineNuxtConfig({
       'cyan','sky','blue','indigo','violet','purple','fuchsia','pink','rose'
     ]
   },
+  components: [
+    { path: '~/app/components', pathPrefix: false },
+    { path: '~/components', pathPrefix: false },
+  ],
   css: ['~/assets/css/main.css'],
   // Configure @nuxtjs/supabase to read from env
   supabase: {
