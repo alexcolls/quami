@@ -5,7 +5,7 @@
   />
   <!-- <button
     class="bg-red-500 !z-50 !cursor-pointer"
-    @click="q.body.blob.exportBlobGLTF()"
+    @click="q.body?.body.blob.exportGLTF()"
   >
     Download
   </button> -->
@@ -46,7 +46,9 @@ const handleMouseMove = () => {
 onMounted(() => {
   if (!canvas.value) { return; }
   q.init(canvas.value);
-  q.body.blob.setRandomBlob();
+  if (q.body) {
+    q.body.body.blob.setRandomBlob();
+  }
   isMounted.value = true;
 });
 </script>

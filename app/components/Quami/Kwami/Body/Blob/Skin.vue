@@ -173,8 +173,9 @@
 </template>
 
 <script setup lang="ts">
-import { getRandomHexColor } from '~/@kwami/utils/randoms';
-import options from '~/@kwami/core/body/lib/Blob/options';
+import { getRandomHexColor, defaultBlobConfig } from '~/@kwami';
+
+const options = defaultBlobConfig;
 
 const { q } = useStore();
 
@@ -208,95 +209,97 @@ const getRandomXYZColor = () => {
 
 onMounted(() => {
   watch(colorX, (v) => {
-    q.body.blob.setColor('x', v);
+    if (q.body) q.body.body.blob.setColor('x', v);
   });
-  watch(() => q.body.blob.colorX, (v) => {
-    console.log('colorX', v);
-    colorX.value = v;
+  watch(() => q.body?.body.blob.colors.x, (v) => {
+    if (v) {
+      console.log('colorX', v);
+      colorX.value = v;
+    }
   });
   watch(colorY, (v) => {
-    q.body.blob.setColor('y', v);
+    if (q.body) q.body.body.blob.setColor('y', v);
   });
   watch(colorZ, (v) => {
-    q.body.blob.setColor('z', v);
+    if (q.body) q.body.body.blob.setColor('z', v);
   });
   watch(wireframe, (v) => {
-    q.body.blob.setWireframe(v);
+    if (q.body) q.body.body.blob.setWireframe(v);
   });
-  // watch(() => q.body.blob.resolution, (v) => {
-  //   resolution.value = v;
-  // }, { immediate: true });
   watch(resolution, (v) => {
-    q.body.blob.setResolution(v);
+    if (q.body) q.body.body.blob.setResolution(v);
   });
   watch(spikesX, (v) => {
-    q.body.blob.spikes.x = v;
-    console.log('spikesX', v);
+    if (q.body) {
+      q.body.body.blob.spikes.x = v;
+      console.log('spikesX', v);
+    }
   });
   watch(spikesY, (v) => {
-    q.body.blob.spikes.y = v;
-    console.log('spikesY', v);
+    if (q.body) {
+      q.body.body.blob.spikes.y = v;
+      console.log('spikesY', v);
+    }
   });
   watch(spikesZ, (v) => {
-    q.body.blob.spikes.z = v;
-    console.log('spikesZ', v);
+    if (q.body) {
+      q.body.body.blob.spikes.z = v;
+      console.log('spikesZ', v);
+    }
   });
-
-  // watch(() => q.body.blob.spikes.x, (v) => {
-  //   spikesX.value = v;
-  // });
-  // watch(() => q.body.blob.spikes.y, (v) => {
-  //   spikesY.value = v;
-  // });
-  // watch(() => q.body.blob.spike.z, (v) => {
-  //   spikesZ.value = v;
-  // });
 });
 
 onMounted(() => {
   watchEffect(() => {
-    q.body.blob.skins.tricolor.wireframe = wireframe.value;
+    if (q.body) {
+      q.body.body.blob.setWireframe(wireframe.value);
+    }
   });
 
   watch(size, (v) => {
-    q.body.camera.fov = 110 - v;
-    q.body.camera.updateProjectionMatrix();
+    if (q.body) {
+      q.body.body.getCamera().fov = 110 - v;
+      q.body.body.getCamera().updateProjectionMatrix();
+    }
   }, { immediate: true });
   watch(spikes, (v) => {
-    q.body.blob.spikes.x = v;
-    q.body.blob.spikes.y = v;
-    q.body.blob.spikes.z = v;
+    if (!q.body) return;
+    q.body.body.blob.spikes.x = v;
+    q.body.body.blob.spikes.y = v;
+    q.body.body.blob.spikes.z = v;
     q.save(q.body);
   });
   watch(time, (v) => {
-    q.body.blob.time.x = v;
-    q.body.blob.time.y = v;
-    q.body.blob.time.z = v;
+    if (!q.body) return;
+    q.body.body.blob.time.x = v;
+    q.body.body.blob.time.y = v;
+    q.body.body.blob.time.z = v;
     q.save(q.body);
   });
   watch(rotation, (v) => {
+    if (!q.body) return;
     // Avoid writing to rotation.value here to prevent recursive updates
     isRotation.value = v !== 0;
     if (!isRotation.value) {
       if (
-        q.body.blob.rotation.x !== 0
-        || q.body.blob.rotation.y !== 0
-        || q.body.blob.rotation.z !== 0
+        q.body.body.blob.rotation.x !== 0
+        || q.body.body.blob.rotation.y !== 0
+        || q.body.body.blob.rotation.z !== 0
       ) {
-        q.body.blob.rotation.x = 0;
-        q.body.blob.rotation.y = 0;
-        q.body.blob.rotation.z = 0;
+        q.body.body.blob.rotation.x = 0;
+        q.body.body.blob.rotation.y = 0;
+        q.body.body.blob.rotation.z = 0;
       }
       return;
     }
-    if (q.body.blob.rotation.x !== v) q.body.blob.rotation.x = v;
-    if (q.body.blob.rotation.y !== v) q.body.blob.rotation.y = v;
-    if (q.body.blob.rotation.z !== v) q.body.blob.rotation.z = v;
+    if (q.body.body.blob.rotation.x !== v) q.body.body.blob.rotation.x = v;
+    if (q.body.body.blob.rotation.y !== v) q.body.body.blob.rotation.y = v;
+    if (q.body.body.blob.rotation.z !== v) q.body.body.blob.rotation.z = v;
   });
 
   // Set resolution only when it changes
   watch(resolution, (v) => {
-    q.body.blob.setResolution(v);
+    if (q.body) q.body.body.blob.setResolution(v);
   }, { immediate: true });
 });
 </script>

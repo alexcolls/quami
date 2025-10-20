@@ -37,22 +37,28 @@ const { q } = useStore();
 const playing = ref(false);
 
 const toggleAudio = async () => {
-  if (q.body.audio.instance.paused) {
-    await q.body.audio.playAudio();
-    q.body.blob.state = 'speak';
+  if (!q.body) return;
+
+  if (q.body.body.audio.getAudioElement().paused) {
+    await q.body.body.audio.play();
+    q.body.setState('speaking');
     playing.value = true;
   } else {
-    q.body.audio.pauseAudio();
-    q.body.blob.state = 'normal';
+    q.body.body.audio.pause();
+    q.body.setState('idle');
     playing.value = false;
   }
 };
 
 const nextAudio = () => {
-  q.body.audio.nextAudio();
+  if (q.body) {
+    q.body.body.audio.next();
+  }
 };
 
 const prevAudio = () => {
-  q.body.audio.prevAudio();
+  if (q.body) {
+    q.body.body.audio.previous();
+  }
 };
 </script>

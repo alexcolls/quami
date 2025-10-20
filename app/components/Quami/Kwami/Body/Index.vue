@@ -5,7 +5,7 @@
         icon="i-mdi-dice-multiple"
         class="ml-4"
         :label="$t('randomDNA')"
-        @click="q.body.blob.setRandomBlob()"
+        @click="q.body?.body.blob.setRandomBlob()"
       />
       <div class="ml-4">
         {{ 0.022 }}
@@ -73,40 +73,44 @@ const resolution = ref(20);
 
 onMounted(() => {
   watch(vecs, (v) => {
-    q.body.blob.spikes.x = v;
-    q.body.blob.spikes.y = v;
-    q.body.blob.spikes.z = v;
+    if (!q.body) return;
+    q.body.body.blob.spikes.x = v;
+    q.body.body.blob.spikes.y = v;
+    q.body.body.blob.spikes.z = v;
     q.save(q.body);
   });
   watch(time, (v) => {
-    q.body.blob.time.x = v;
-    q.body.blob.time.y = v;
-    q.body.blob.time.z = v;
+    if (!q.body) return;
+    q.body.body.blob.time.x = v;
+    q.body.body.blob.time.y = v;
+    q.body.body.blob.time.z = v;
     q.save(q.body);
   });
   watch(rotation, (v) => {
+    if (!q.body) return;
     // Do not write to rotation.value here to avoid recursive updates
     isRotation.value = v !== 0;
     if (!isRotation.value) {
       if (
-        q.body.blob.rotation.x !== 0
-        || q.body.blob.rotation.y !== 0
-        || q.body.blob.rotation.z !== 0
+        q.body.body.blob.rotation.x !== 0
+        || q.body.body.blob.rotation.y !== 0
+        || q.body.body.blob.rotation.z !== 0
       ) {
-        q.body.blob.rotation.x = 0;
-        q.body.blob.rotation.y = 0;
-        q.body.blob.rotation.z = 0;
+        q.body.body.blob.rotation.x = 0;
+        q.body.body.blob.rotation.y = 0;
+        q.body.body.blob.rotation.z = 0;
       }
       return;
     }
-    if (q.body.blob.rotation.x !== v) q.body.blob.rotation.x = v;
-    if (q.body.blob.rotation.y !== v) q.body.blob.rotation.y = v;
-    if (q.body.blob.rotation.z !== v) q.body.blob.rotation.z = v;
+    if (q.body.body.blob.rotation.x !== v) q.body.body.blob.rotation.x = v;
+    if (q.body.body.blob.rotation.y !== v) q.body.body.blob.rotation.y = v;
+    if (q.body.body.blob.rotation.z !== v) q.body.body.blob.rotation.z = v;
   });
 
   // Set resolution only when it changes
   watch(resolution, (v) => {
-    q.body.blob.setResolution(v);
+    if (!q.body) return;
+    q.body.body.blob.setResolution(v);
   }, { immediate: true });
 });
 </script>

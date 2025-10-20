@@ -10,7 +10,7 @@
         class="ml-4"
         :label="$t('randomDNA')"
         @click="() => {
-          q.body.blob.setRandomBlob();
+          q.body?.body.blob.setRandomBlob();
           onNewDNA();
         }"
       />
@@ -312,7 +312,7 @@
 </template>
 
 <script setup lang="ts">
-import { genDNA } from '~/@kwami/utils/randoms';
+import { genDNA } from '~/@kwami';
 
 const { q } = useStore();
 
@@ -320,13 +320,17 @@ const dna = ref('');
 
 const onNewDNA = () => {
   dna.value = genDNA();
-  q.body.blob.dna = dna.value;
+  if (q.body) {
+    q.body.body.blob.dna = dna.value;
+  }
 };
 
 onMounted(() => {
-  watch(() => q.body.blob.dna, (v) => {
-    console.log(q.body.blob.dna);
-    dna.value = v;
+  watch(() => q.body?.body.blob.dna, (v) => {
+    if (v) {
+      console.log(q.body?.body.blob.dna);
+      dna.value = v;
+    }
   }, { immediate: true });
 });
 </script>
