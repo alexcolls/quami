@@ -42,6 +42,15 @@ export class KwamiAudio {
       const analyser = audioContext.createAnalyser();
       this.analyser = analyser;
 
+      // Configure analyser for liquid, natural frequency response
+      // Higher FFT size = better frequency resolution
+      analyser.fftSize = 2048; // 1024 frequency bins
+      // Lower smoothing = more responsive to quick changes
+      analyser.smoothingTimeConstant = 0.7; // 0-1 (0 = no smoothing, 1 = max)
+      // Min/max decibels for dynamic range
+      analyser.minDecibels = -90;
+      analyser.maxDecibels = -10;
+
       sourceNode.connect(analyser);
       analyser.connect(audioContext.destination);
 
