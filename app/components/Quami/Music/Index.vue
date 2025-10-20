@@ -1,8 +1,8 @@
 <template>
   <CommonMagicWindow
     :title="$t('music')"
-    icon="i-icon-park-solid-music-one"
-    :default-position="{ x: 10, y: 130 }"
+    icon="i-icon-park-solid-video-play"
+    :default-position="{ x: 60, y: 130 }"
     :is-modal-open="isModalOpen"
   >
     <UButton
