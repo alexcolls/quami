@@ -1,0 +1,42 @@
+# Changelog
+
+All notable changes to the Quami project will be documented in this file.
+
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+## [0.1.0] - 2025-10-20
+
+### Added
+
+- Initial release of Quami - 3D interactive AI companion application
+- Integration with Kwami v2.0.0 as git submodule
+- 3D interactive blob visualization with real-time morphing
+- Audio-reactive animations with multiple skin options (tricolor, zebra)
+- Voice interaction capabilities with speech-to-text and text-to-speech
+- Natural language AI conversation system
+- User authentication via Supabase (email and wallet)
+- Wallet integration with Solana blockchain
+- Multi-language support (English, French, Spanish) via i18n
+- Profile management and session persistence
+- Dark mode and theme customization
+- Responsive UI with Nuxt UI components
+- Server-side API routes for backend functionality
+
+### Architecture
+
+- Built on Nuxt.js 4 with SSR disabled for optimal client-side performance
+- Kwami library integrated as git submodule at `app/@kwami/`
+- State management with Pinia and persisted state support
+- Three.js for 3D graphics rendering
+- Supabase for backend services and authentication
+- TypeScript for type safety across the application
+
+### Technical Details
+
+- Node server preset for production builds
+- Vite-based development environment
+- ESLint configuration with stylistic rules
+- Optimized dependency bundling for Web3 libraries
+- CORS-enabled API routes for external integrations
+- View transitions for smooth page navigation
