@@ -406,7 +406,7 @@
 </template>
 
 <script setup lang="ts">
-import { getRandomHexColor, defaultBlobConfig } from '~/@kwami';
+import { getRandomHexColor, defaultBlobConfig } from '~/app/modules/@kwami';
 
 const options = defaultBlobConfig;
 

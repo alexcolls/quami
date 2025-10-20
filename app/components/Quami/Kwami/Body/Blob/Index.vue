@@ -35,7 +35,7 @@
 </template>
 
 <script setup lang="ts">
-import { genDNA } from '~/@kwami';
+import { genDNA } from '~/app/modules/@kwami';
 
 const { q } = useStore();
 

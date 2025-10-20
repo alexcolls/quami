@@ -25,7 +25,7 @@
 <script setup lang="ts">
 // import {
 //   getRandomUUID,
-// } from '~/@kwami/utils/randoms';
+// } from '~/app/modules/@kwami/utils/randoms';
 
 // const supabase = useSupabaseClient();
 const { q } = useStore();
