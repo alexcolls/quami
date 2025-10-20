@@ -4,6 +4,7 @@
     <QuamiWallet />
     <QuamiKwami />
     <QuamiMusic />
+    <QuamiVideo />
     <QuamiTheme />
   </div>
 </template>
