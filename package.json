@@ -10,6 +10,13 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
+    "@iconify-json/circle-flags": "^1.2.10",
+    "@iconify-json/heroicons": "^1.2.3",
+    "@iconify-json/line-md": "^1.2.11",
+    "@iconify-json/material-symbols": "^1.2.42",
+    "@iconify-json/pepicons-pop": "^1.2.3",
+    "@iconify-json/svg-spinners": "^1.2.4",
+    "@nuxt-themes/layout-ui": "file:../nuxt-themes",
     "@nuxt/content": "3.7.1",
     "@nuxt/eslint": "1.9.0",
     "@nuxt/image": "1.11.0",

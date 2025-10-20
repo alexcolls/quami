@@ -1,0 +1,4 @@
+[submodule "app/@kwami"]
+	path = app/@kwami
+	url = git@github.com:alexcolls/kwami.git
+	branch = main

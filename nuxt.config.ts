@@ -8,7 +8,14 @@ export default defineNuxtConfig({
     '@nuxt/ui',
     '@nuxt/image',
     '@nuxtjs/supabase',
+    '@nuxt-themes/layout-ui',
   ],
+  
+  // Nuxt Themes Module Configuration
+  nuxtThemes: {
+    version: '1.0.0',
+    logoURL: 'https://quami.app',
+  },
   ssr: false,
   // components: [
   //   { path: '~/app/components', pathPrefix: false },
@@ -78,6 +85,7 @@ export default defineNuxtConfig({
       SUPABASE_PUBLISHABLE_KEY: process.env.NUXT_SB_PUBLIC,
       SUPABASE_URL: process.env.NUXT_SB_URL,
       SUPABASE_KEY: process.env.NUXT_SB_KEY,
+      RPC_URL: process.env.NUXT_PUBLIC_RPC_URL || 'https://api.mainnet-beta.solana.com',
     },
     ELABAI_API_KEY: process.env.NUXT_ELEVEN_LABS_KEY,
   },
