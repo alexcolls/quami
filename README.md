@@ -17,12 +17,41 @@ Quami provides an immersive 3D experience featuring an AI companion with:
 Quami is built on:
 
 - **Nuxt.js 4** - Modern Vue.js framework
-- **Kwami** - 3D interactive AI companion library (integrated as git submodule)
+- **Kwami** (`@kwami`) - 3D interactive AI companion library (independent module, integrated as git submodule)
   - Repository: [github.com/alexcolls/kwami](https://github.com/alexcolls/kwami)
   - Version: 2.0.0
+  - **Independent, reusable module** that can be used in other projects
+- **@nuxt-xui** - Layout and Common UI components library (independent module)
+  - **Independent, reusable Nuxt module** for rapid UI development
 - **Three.js** - 3D graphics rendering
 - **Supabase** - Backend and authentication
 - **Pinia** - State management
+
+## Runtime & Package Manager
+
+This project supports multiple JavaScript runtimes and package managers:
+
+- **Bun** (recommended - default used by alexcolls) - Fast all-in-one JavaScript runtime
+- **Deno** - Secure TypeScript/JavaScript runtime
+- **Node.js** - Traditional JavaScript runtime
+
+You can use any of these runtimes with their respective package managers:
+
+```bash
+# Using Bun (recommended)
+bun install
+bun run dev
+
+# Using Deno
+deno install
+deno task dev
+
+# Using Node.js/npm
+npm install
+npm run dev
+```
+
+**Note:** Throughout this README, commands are shown with all three options. Use whichever runtime you prefer, though Bun is recommended for optimal performance.
 
 ## Setup
 
@@ -45,8 +74,23 @@ git submodule update --init --recursive
 
 ### Install Dependencies
 
+Choose your preferred package manager:
+
 ```bash
+# Using Bun (recommended - default for alexcolls)
+bun install
+# or
+bun i
+
+# Using Deno
+deno install
+# or
+deno i
+
+# Using npm (Node.js)
 npm install
+# or
+npm i
 ```
 
 ### Environment Configuration
@@ -69,6 +113,13 @@ Configure your environment variables:
 Start the development server on `http://localhost:3000`:
 
 ```bash
+# Using Bun (recommended)
+bun run dev
+
+# Using Deno
+deno task dev
+
+# Using npm (Node.js)
 npm run dev
 ```
 
@@ -79,6 +130,13 @@ npm run dev
 Build the application for production:
 
 ```bash
+# Using Bun (recommended)
+bun run build
+
+# Using Deno
+deno task build
+
+# Using npm (Node.js)
 npm run build
 ```
 
@@ -87,6 +145,13 @@ npm run build
 Locally preview production build:
 
 ```bash
+# Using Bun
+bun run preview
+
+# Using Deno
+deno task preview
+
+# Using npm
 npm run preview
 ```
 
@@ -157,7 +222,33 @@ quami/
 
 ## License
 
-MIT
+**Dual License** - This project is available under two licenses:
+
+### Non-Commercial / Personal Use
+For personal, educational, and non-commercial use, this software is licensed under the **Apache License 2.0**.
+
+You are free to:
+- Use, copy, and modify the software
+- Distribute the software
+- Use it for personal projects and learning
+
+### Commercial / Business Use
+For commercial use, including:
+- Use in commercial products or services
+- Use by for-profit organizations  
+- Use that generates revenue or commercial advantage
+
+You **MUST obtain a separate commercial license**.
+
+**To obtain a commercial license, contact:**
+- Alex Colls: [github.com/alexcolls](https://github.com/alexcolls)
+
+### Disclaimer
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED. See the [LICENSE](./LICENSE) file for full terms.
+
+---
+
+**Copyright (c) 2025 Alex Colls**
 
 ## Links
 
