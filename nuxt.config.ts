@@ -1,4 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+import { fileURLToPath } from 'node:url';
+
 export default defineNuxtConfig({
   modules: [
     '@nuxt/eslint',
@@ -117,6 +119,7 @@ export default defineNuxtConfig({
     resolve: {
       alias: {
         buffer: 'buffer/',
+        '@kwami': fileURLToPath(new URL('./app/modules/@kwami', import.meta.url)),
       },
     },
     optimizeDeps: {
