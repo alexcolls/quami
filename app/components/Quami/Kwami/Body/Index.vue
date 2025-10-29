@@ -310,6 +310,7 @@ const spikes = ref({ x: 0.2, y: 0.2, z: 0.2 });
 const time = ref({ x: 1.0, y: 1.0, z: 1.0 });
 const rotation = ref({ x: 0, y: 0, z: 0 });
 const resolution = ref(180);
+const colors = ref({ x: '#ff0066', y: '#00ff66', z: '#6600ff' });
 
 // Scale & Camera
 const scale = ref(4.0);
@@ -348,14 +349,15 @@ const randomizeBlob = () => {
   if (!q.body?.body.blob) return;
   
   // Save current skin and scale
-  const currentSkin = q.body.body.blob.currentSkin;
+  const currentSkin = q.body.body.blob.getCurrentSkin();
   const currentScale = scale.value;
   
   // Randomize the blob
   q.body.body.blob.setRandomBlob();
   
   // Restore scale
-  q.body.body.blob.setScale(currentScale);
+  const mesh = q.body.body.blob.getMesh();
+  mesh.scale.setScalar(currentScale);
   
   // Restore the skin
   q.body.body.blob.setSkin(currentSkin);
@@ -384,9 +386,10 @@ const resetToDefaults = () => {
   blob.setOpacity(DEFAULT_VALUES.opacity);
   
   // Reset camera position
-  if (q.body.body.camera) {
-    q.body.body.camera.position.set(DEFAULT_VALUES.camera.x, DEFAULT_VALUES.camera.y, DEFAULT_VALUES.camera.z);
-    q.body.body.camera.lookAt(0, 0, 0);
+  if (q.body.body) {
+    const cam = q.body.body.getCamera();
+    cam.position.set(DEFAULT_VALUES.camera.x, DEFAULT_VALUES.camera.y, DEFAULT_VALUES.camera.z);
+    cam.lookAt(0, 0, 0);
   }
   
   // Update UI
@@ -403,47 +406,33 @@ const updateAllControlsFromBlob = () => {
   if (!q.body?.body.blob) return;
   
   const blob = q.body.body.blob;
+  const mesh = blob.getMesh();
   
-  // Update from blob
-  spikes.value = { ...blob.getSpikes() };
-  time.value = { ...blob.getTime() };
-  rotation.value = { ...blob.getRotation() };
-  resolution.value = blob._resolution || 180;
-  scale.value = blob.getScale();
-  shininess.value = blob.getShininess();
-  wireframe.value = blob.getWireframe();
-  opacity.value = blob.getOpacity();
-  lightIntensity.value = blob.lightIntensity || 0;
+  // Update from blob (direct property access)
+  spikes.value = { ...blob.spikes };
+  time.value = { ...blob.time };
+  rotation.value = { ...blob.rotation };
+  colors.value = { ...blob.colors };
+  
+  // Get scale from mesh
+  scale.value = mesh.scale.x;
+  
+  // Get material properties
+  const material = mesh.material as any;
+  wireframe.value = material.wireframe || false;
+  opacity.value = material.opacity !== undefined ? material.opacity : 1.0;
+  shininess.value = material.uniforms?.shininess?.value || 50;
+  lightIntensity.value = 0;
   
   // Update camera
-  if (q.body.body.camera) {
+  if (q.body.body) {
+    const cam = q.body.body.getCamera();
     camera.value = {
-      x: q.body.body.camera.position.x,
-      y: q.body.body.camera.position.y,
-      z: q.body.body.camera.position.z,
+      x: cam.position.x,
+      y: cam.position.y,
+      z: cam.position.z,
     };
   }
-  
-  // Update audio effects
-  const audioConfig = blob.audioEffects || {};
-  audioEffects.value = {
-    bass: audioConfig.bassSpike || 0.45,
-    mid: audioConfig.midSpike || 0.35,
-    high: audioConfig.highSpike || 0.30,
-    smoothing: audioConfig.smoothing || 0.7,
-    timeEnabled: audioConfig.timeEnabled || false,
-    midTime: audioConfig.midTime || 0.2,
-    highTime: audioConfig.highTime || 0.3,
-    ultraTime: audioConfig.ultraTime || 0.15,
-  };
-  audioReactive.value = audioConfig.enabled !== false;
-  
-  // Update interaction
-  touchStrength.value = blob.touchStrength || 1.0;
-  touchDuration.value = blob.touchDuration || 1100;
-  maxTouches.value = blob.maxTouchPoints || 5;
-  transitionSpeed.value = blob.transitionSpeed || 0.05;
-  thinkingDuration.value = (blob.thinkingDuration || 10000) / 1000;
 };
 
 onMounted(() => {
@@ -479,14 +468,16 @@ onMounted(() => {
   // Watch scale
   watch(scale, (v) => {
     if (!q.body?.body.blob) return;
-    q.body.body.blob.setScale(v);
+    const mesh = q.body.body.blob.getMesh();
+    mesh.scale.setScalar(v);
   });
 
   // Watch camera
   watch(camera, (v) => {
-    if (!q.body?.body.camera) return;
-    q.body.body.camera.position.set(v.x, v.y, v.z);
-    q.body.body.camera.lookAt(0, 0, 0);
+    if (!q.body?.body) return;
+    const cam = q.body.body.getCamera();
+    cam.position.set(v.x, v.y, v.z);
+    cam.lookAt(0, 0, 0);
   }, { deep: true });
 
   // Watch wireframe
@@ -498,7 +489,12 @@ onMounted(() => {
   // Watch opacity
   watch(opacity, (v) => {
     if (!q.body?.body.blob) return;
-    q.body.body.blob.setOpacity(v);
+    const mesh = q.body.body.blob.getMesh();
+    const material = mesh.material as any;
+    if (material) {
+      material.opacity = v;
+      material.transparent = v < 1;
+    }
   });
 
   // Watch shininess
@@ -510,68 +506,11 @@ onMounted(() => {
   // Watch light intensity
   watch(lightIntensity, (v) => {
     if (!q.body?.body.blob) return;
-    q.body.body.blob.setLightIntensity(v);
+    // Light intensity might need to be implemented in the core
+    // For now, just store the value
   });
 
-  // Watch audio effects
-  watch(audioReactive, (v) => {
-    if (!q.body?.body.blob) return;
-    q.body.body.blob.audioEffects.enabled = v;
-  });
-
-  watch(audioEffects, (v) => {
-    if (!q.body?.body.blob) return;
-    q.body.body.blob.audioEffects = {
-      ...q.body.body.blob.audioEffects,
-      bassSpike: v.bass,
-      midSpike: v.mid,
-      highSpike: v.high,
-      smoothing: v.smoothing,
-      timeEnabled: v.timeEnabled,
-      midTime: v.midTime,
-      highTime: v.highTime,
-      ultraTime: v.ultraTime,
-    };
-  }, { deep: true });
-
-  // Watch FFT size
-  watch(fftSize, (v) => {
-    if (!q.body?.body.audio) return;
-    // Apply FFT size to audio analyzer
-    if (q.body.body.audio.analyzer) {
-      q.body.body.audio.analyzer.fftSize = v;
-    }
-  });
-
-  // Watch interaction settings
-  watch(touchStrength, (v) => {
-    if (!q.body?.body.blob) return;
-    q.body.body.blob.touchStrength = v;
-  });
-
-  watch(touchDuration, (v) => {
-    if (!q.body?.body.blob) return;
-    q.body.body.blob.touchDuration = v;
-  });
-
-  watch(maxTouches, (v) => {
-    if (!q.body?.body.blob) return;
-    q.body.body.blob.maxTouchPoints = v;
-  });
-
-  watch(transitionSpeed, (v) => {
-    if (!q.body?.body.blob) return;
-    q.body.body.blob.transitionSpeed = v;
-  });
-
-  watch(thinkingDuration, (v) => {
-    if (!q.body?.body.blob) return;
-    q.body.body.blob.thinkingDuration = v * 1000; // Convert to milliseconds
-  });
-
-  watch(clickInteraction, (v) => {
-    // Handle click interaction enable/disable
-    // This would need to be implemented in the main Kwami instance
-  });
+  // Audio effects and interaction features are not yet implemented in core
+  // These watchers can be added when the core supports them
 });
 </script>
