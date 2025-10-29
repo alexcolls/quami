@@ -9,7 +9,5 @@
 </template>
 
 <script setup lang="ts">
-
 const { ui } = useStore();
-
 </script>

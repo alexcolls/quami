@@ -1,116 +1,577 @@
 <template>
-  <div class="p-2 w-[500px]">
-    <div class="flex justify-start">
+  <div class="p-3 w-[500px] max-h-[80vh] overflow-y-auto space-y-3">
+    <!-- Header Actions -->
+    <div class="flex justify-between items-center gap-2">
       <UButton
         icon="i-mdi-dice-multiple"
-        class="ml-4"
-        :label="$t('randomDNA')"
-        @click="q.body?.body.blob.setRandomBlob()"
+        size="sm"
+        label="Random"
+        @click="randomizeBlob"
       />
-      <div class="ml-4">
-        {{ 0.022 }}
-      </div>
+      <UButton
+        icon="i-heroicons-arrow-down-tray"
+        size="sm"
+        label="Export"
+        @click="exportGLTF"
+      />
+      <UButton
+        icon="i-mdi-refresh"
+        size="sm"
+        label="Reset"
+        @click="resetToDefaults"
+      />
     </div>
-    <div class="mt-5 sm:mt-6 space-y-3">
-      <QuamiKwamiBodyBlob />
+
+    <!-- Blob Component -->
+    <QuamiKwamiBodyBlob />
+
+    <!-- Geometry & Motion -->
+    <UAccordion :items="[{ label: '🧬 Geometry & Motion', slot: 'geometry' }]">
+      <template #geometry>
+        <div class="space-y-4 p-3">
+          <!-- Noise Frequency (Spikes) -->
+          <div>
+            <h4 class="text-sm font-semibold mb-2">Noise Frequency</h4>
+            <p class="text-xs text-gray-500 mb-2">Control how much the blob stretches along each axis</p>
+            <div class="space-y-2">
+              <div>
+                <label class="text-xs">X: {{ spikes.x.toFixed(1) }}</label>
+                <input v-model.number="spikes.x" type="range" min="0" max="20" step="0.1" class="w-full">
+              </div>
+              <div>
+                <label class="text-xs">Y: {{ spikes.y.toFixed(1) }}</label>
+                <input v-model.number="spikes.y" type="range" min="0" max="20" step="0.1" class="w-full">
+              </div>
+              <div>
+                <label class="text-xs">Z: {{ spikes.z.toFixed(1) }}</label>
+                <input v-model.number="spikes.z" type="range" min="0" max="20" step="0.1" class="w-full">
+              </div>
+            </div>
+          </div>
+
+          <!-- Animation Speed (Time) -->
+          <div>
+            <h4 class="text-sm font-semibold mb-2">Animation Speed</h4>
+            <p class="text-xs text-gray-500 mb-2">Change how quickly the blob cycles through its movement</p>
+            <div class="space-y-2">
+              <div>
+                <label class="text-xs">X: {{ time.x.toFixed(1) }}</label>
+                <input v-model.number="time.x" type="range" min="0" max="5" step="0.1" class="w-full">
+              </div>
+              <div>
+                <label class="text-xs">Y: {{ time.y.toFixed(1) }}</label>
+                <input v-model.number="time.y" type="range" min="0" max="5" step="0.1" class="w-full">
+              </div>
+              <div>
+                <label class="text-xs">Z: {{ time.z.toFixed(1) }}</label>
+                <input v-model.number="time.z" type="range" min="0" max="5" step="0.1" class="w-full">
+              </div>
+            </div>
+          </div>
+
+          <!-- Auto Rotation -->
+          <div>
+            <h4 class="text-sm font-semibold mb-2">Auto Rotation</h4>
+            <div class="space-y-2">
+              <div>
+                <label class="text-xs">X: {{ rotation.x.toFixed(3) }}</label>
+                <input v-model.number="rotation.x" type="range" min="0" max="0.01" step="0.001" class="w-full">
+              </div>
+              <div>
+                <label class="text-xs">Y: {{ rotation.y.toFixed(3) }}</label>
+                <input v-model.number="rotation.y" type="range" min="0" max="0.01" step="0.001" class="w-full">
+              </div>
+              <div>
+                <label class="text-xs">Z: {{ rotation.z.toFixed(3) }}</label>
+                <input v-model.number="rotation.z" type="range" min="0" max="0.01" step="0.001" class="w-full">
+              </div>
+            </div>
+          </div>
+
+          <!-- Resolution -->
+          <div>
+            <h4 class="text-sm font-semibold mb-2">Mesh Detail</h4>
+            <div>
+              <label class="text-xs">Resolution: {{ resolution }}</label>
+              <input v-model.number="resolution" type="range" min="120" max="220" step="1" class="w-full">
+            </div>
+          </div>
+        </div>
+      </template>
+    </UAccordion>
+
+    <!-- Scale & Camera -->
+    <UAccordion :items="[{ label: '📐 Scale & Camera', slot: 'camera' }]">
+      <template #camera>
+        <div class="space-y-4 p-3">
+          <!-- Global Scale -->
+          <div>
+            <h4 class="text-sm font-semibold mb-2">Global Scale</h4>
+            <div>
+              <label class="text-xs">Scale: {{ scale.toFixed(1) }}</label>
+              <input v-model.number="scale" type="range" min="3" max="8" step="0.1" class="w-full">
+            </div>
+          </div>
+
+          <!-- Camera Position -->
+          <div>
+            <h4 class="text-sm font-semibold mb-2">Camera Orbit</h4>
+            <p class="text-xs text-gray-500 mb-2">Fine-tune the default camera orbit around the blob</p>
+            <div class="space-y-2">
+              <div>
+                <label class="text-xs">X: {{ camera.x.toFixed(1) }}</label>
+                <input v-model.number="camera.x" type="range" min="-20" max="20" step="0.5" class="w-full">
+              </div>
+              <div>
+                <label class="text-xs">Y: {{ camera.y.toFixed(1) }}</label>
+                <input v-model.number="camera.y" type="range" min="-20" max="20" step="0.5" class="w-full">
+              </div>
+              <div>
+                <label class="text-xs">Z: {{ camera.z.toFixed(1) }}</label>
+                <input v-model.number="camera.z" type="range" min="-20" max="30" step="0.5" class="w-full">
+              </div>
+            </div>
+          </div>
+        </div>
+      </template>
+    </UAccordion>
+
+    <!-- Material Properties -->
+    <UAccordion :items="[{ label: '🖌️ Material', slot: 'material' }]">
+      <template #material>
+        <div class="space-y-4 p-3">
+          <div>
+            <label class="text-xs">Opacity: {{ opacity.toFixed(2) }}</label>
+            <input v-model.number="opacity" type="range" min="0" max="1" step="0.01" class="w-full">
+          </div>
+          <div>
+            <label class="text-xs">Shininess: {{ shininess }}</label>
+            <input v-model.number="shininess" type="range" min="1" max="200" step="1" class="w-full">
+          </div>
+          <div>
+            <label class="text-xs">Light Intensity: {{ lightIntensity.toFixed(1) }}</label>
+            <input v-model.number="lightIntensity" type="range" min="0" max="5" step="0.1" class="w-full">
+          </div>
+          <div class="flex items-center gap-2">
+            <UCheckbox v-model="wireframe" label="Wireframe Mode" />
+          </div>
+        </div>
+      </template>
+    </UAccordion>
+
+    <!-- Audio Effects -->
+    <UAccordion :items="[{ label: '🎵 Audio Effects', slot: 'audio' }]">
+      <template #audio>
+        <div class="space-y-4 p-3">
+          <div class="flex items-center gap-2 mb-3">
+            <UCheckbox v-model="audioReactive" label="Enable Audio Reactivity" />
+          </div>
+          
+          <!-- Frequency Modulation -->
+          <div>
+            <h4 class="text-sm font-semibold mb-2">Frequency Modulation</h4>
+            <p class="text-xs text-gray-500 mb-2">Boost how strongly each frequency band pushes the blob</p>
+            <div class="space-y-2">
+              <div>
+                <label class="text-xs">Bass Movement: {{ audioEffects.bass.toFixed(2) }}</label>
+                <input v-model.number="audioEffects.bass" type="range" min="0" max="1" step="0.05" class="w-full">
+              </div>
+              <div>
+                <label class="text-xs">Mid Flow: {{ audioEffects.mid.toFixed(2) }}</label>
+                <input v-model.number="audioEffects.mid" type="range" min="0" max="1" step="0.05" class="w-full">
+              </div>
+              <div>
+                <label class="text-xs">High Detail: {{ audioEffects.high.toFixed(2) }}</label>
+                <input v-model.number="audioEffects.high" type="range" min="0" max="1" step="0.05" class="w-full">
+              </div>
+            </div>
+          </div>
+
+          <!-- Time Modulation -->
+          <div>
+            <h4 class="text-sm font-semibold mb-2">Time Modulation</h4>
+            <p class="text-xs text-gray-500 mb-2">Control how audio affects animation speed</p>
+            <div class="flex items-center gap-2 mb-2">
+              <UCheckbox v-model="audioEffects.timeEnabled" label="Enable (Can be chaotic)" />
+            </div>
+            <div class="space-y-2">
+              <div>
+                <label class="text-xs">Mid → Speed: {{ audioEffects.midTime.toFixed(1) }}</label>
+                <input v-model.number="audioEffects.midTime" type="range" min="0" max="2" step="0.1" class="w-full">
+              </div>
+              <div>
+                <label class="text-xs">High → Speed: {{ audioEffects.highTime.toFixed(1) }}</label>
+                <input v-model.number="audioEffects.highTime" type="range" min="0" max="2" step="0.1" class="w-full">
+              </div>
+              <div>
+                <label class="text-xs">Ultra → Speed: {{ audioEffects.ultraTime.toFixed(2) }}</label>
+                <input v-model.number="audioEffects.ultraTime" type="range" min="0" max="2" step="0.1" class="w-full">
+              </div>
+            </div>
+          </div>
+
+          <!-- Audio Analyzer -->
+          <div>
+            <h4 class="text-sm font-semibold mb-2">Audio Analyzer</h4>
+            <div class="space-y-2">
+              <div>
+                <label class="text-xs">FFT Size: {{ fftSize }}</label>
+                <select v-model.number="fftSize" class="w-full text-xs p-1 rounded border">
+                  <option :value="512">512 (Fast, Low Res)</option>
+                  <option :value="1024">1024 (Balanced)</option>
+                  <option :value="2048">2048 (Default)</option>
+                  <option :value="4096">4096 (High Res)</option>
+                </select>
+              </div>
+              <div>
+                <label class="text-xs">Smoothing: {{ audioEffects.smoothing.toFixed(2) }}</label>
+                <input v-model.number="audioEffects.smoothing" type="range" min="0" max="1" step="0.05" class="w-full">
+              </div>
+            </div>
+          </div>
+        </div>
+      </template>
+    </UAccordion>
+
+    <!-- Interaction -->
+    <UAccordion :items="[{ label: '👆 Interaction', slot: 'interaction' }]">
+      <template #interaction>
+        <div class="space-y-4 p-3">
+          <!-- Touch/Click Effects -->
+          <div>
+            <h4 class="text-sm font-semibold mb-2">Touch/Click Effects</h4>
+            <div class="flex items-center gap-2 mb-2">
+              <UCheckbox v-model="clickInteraction" label="Enable Click Interaction" />
+            </div>
+            <div class="space-y-2">
+              <div>
+                <label class="text-xs">Touch Strength: {{ touchStrength.toFixed(1) }}</label>
+                <input v-model.number="touchStrength" type="range" min="0.1" max="2" step="0.1" class="w-full">
+              </div>
+              <div>
+                <label class="text-xs">Touch Duration: {{ touchDuration }}ms</label>
+                <input v-model.number="touchDuration" type="range" min="500" max="3000" step="100" class="w-full">
+              </div>
+              <div>
+                <label class="text-xs">Max Touch Points: {{ maxTouches }}</label>
+                <input v-model.number="maxTouches" type="range" min="1" max="10" step="1" class="w-full">
+              </div>
+            </div>
+          </div>
+
+          <!-- State Transitions -->
+          <div>
+            <h4 class="text-sm font-semibold mb-2">State Transitions</h4>
+            <div class="space-y-2">
+              <div>
+                <label class="text-xs">Transition Speed: {{ transitionSpeed.toFixed(2) }}</label>
+                <input v-model.number="transitionSpeed" type="range" min="0.01" max="0.2" step="0.01" class="w-full">
+              </div>
+              <div>
+                <label class="text-xs">Thinking Duration: {{ thinkingDuration }}s</label>
+                <input v-model.number="thinkingDuration" type="range" min="3" max="30" step="1" class="w-full">
+              </div>
+            </div>
+          </div>
+        </div>
+      </template>
+    </UAccordion>
+
+    <!-- Save Button -->
+    <div class="mt-4">
       <CommonBtnGradient
         :label="$t('save')"
         icon="i-mdi-content-save"
-        class="p-2 ml-4"
+        class="w-full"
+        @click="saveConfig"
       />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-// import {
-//   getRandomUUID,
-// } from '~/app/modules/@kwami/utils/randoms';
-
-// const supabase = useSupabaseClient();
 const { q } = useStore();
 
-// const isSaving = ref(false);
-// const saveBlobParams = async () => {
-//   if (isSaving.value) { return; }
-//   isSaving.value = true;
-//   if (!auth.user.id) {
-//     isSaving.value = false;
-//     return;
-//   }
-//   await supabase.from('kwami.body.blob').insert({
-//     user_id: auth.user.id,
-//     spike_x: q.body.blob.spikes.x,
-//     spike_y: q.body.blob.spikes.y,
-//     spike_z: q.body.blob.spikes.z,
-//     time_x: q.body.blob.time.x,
-//     time_y: q.body.blob.time.y,
-//     time_z: q.body.blob.time.z,
-//     rotation_x: q.body.blob.rotation.x,
-//     rotation_y: q.body.blob.rotation.y,
-//     rotation_z: q.body.blob.rotation.z,
-//     kwami_id: getRandomUUID(),
-//     skin: 'tricolor',
-//     skin_options: {
-//       wireframe: wireframe.value,
-//       colors: [
-//         q.body.blob.skins.tricolor.uniforms._color1.value,
-//         q.body.blob.skins.tricolor.uniforms._color2.value,
-//         q.body.blob.skins.tricolor.uniforms._color3.value,
-//       ],
-//     },
-//     resolution: q.body.blob._resolution,
-//   }, { returning: 'minimal' });
-//   isSaving.value = false;
-// };
+// Default values
+const DEFAULT_VALUES = {
+  spikes: { x: 0.2, y: 0.2, z: 0.2 },
+  time: { x: 1, y: 1, z: 1 },
+  rotation: { x: 0, y: 0, z: 0 },
+  scale: 4.0,
+  resolution: 180,
+  shininess: 50,
+  wireframe: false,
+  opacity: 1,
+  camera: { x: -0.9, y: 7.3, z: -1.8 },
+};
 
-const vecs = ref(12);
-const time = ref(12);
-const rotation = ref(0);
-const isRotation = ref(false);
-// const wireframe = ref(false);
-const resolution = ref(20);
+// Geometry & Motion
+const spikes = ref({ x: 0.2, y: 0.2, z: 0.2 });
+const time = ref({ x: 1.0, y: 1.0, z: 1.0 });
+const rotation = ref({ x: 0, y: 0, z: 0 });
+const resolution = ref(180);
+
+// Scale & Camera
+const scale = ref(4.0);
+const camera = ref({ x: -0.9, y: 7.3, z: -1.8 });
+
+// Material
+const opacity = ref(1.0);
+const shininess = ref(50);
+const lightIntensity = ref(0);
+const wireframe = ref(false);
+
+// Audio Effects
+const audioReactive = ref(true);
+const fftSize = ref(2048);
+const audioEffects = ref({
+  bass: 0.45,
+  mid: 0.35,
+  high: 0.30,
+  smoothing: 0.7,
+  timeEnabled: false,
+  midTime: 0.2,
+  highTime: 0.3,
+  ultraTime: 0.15,
+});
+
+// Interaction
+const clickInteraction = ref(true);
+const touchStrength = ref(1.0);
+const touchDuration = ref(1100);
+const maxTouches = ref(5);
+const transitionSpeed = ref(0.05);
+const thinkingDuration = ref(10);
+
+// Actions
+const randomizeBlob = () => {
+  if (!q.body?.body.blob) return;
+  
+  // Save current skin and scale
+  const currentSkin = q.body.body.blob.currentSkin;
+  const currentScale = scale.value;
+  
+  // Randomize the blob
+  q.body.body.blob.setRandomBlob();
+  
+  // Restore scale
+  q.body.body.blob.setScale(currentScale);
+  
+  // Restore the skin
+  q.body.body.blob.setSkin(currentSkin);
+  
+  // Update UI from blob
+  updateAllControlsFromBlob();
+};
+
+const exportGLTF = () => {
+  q.body?.body.blob.exportGLTF();
+};
+
+const resetToDefaults = () => {
+  if (!q.body?.body.blob) return;
+  
+  const blob = q.body.body.blob;
+  
+  // Apply defaults
+  blob.setSpikes(DEFAULT_VALUES.spikes.x, DEFAULT_VALUES.spikes.y, DEFAULT_VALUES.spikes.z);
+  blob.setTime(DEFAULT_VALUES.time.x, DEFAULT_VALUES.time.y, DEFAULT_VALUES.time.z);
+  blob.setRotation(DEFAULT_VALUES.rotation.x, DEFAULT_VALUES.rotation.y, DEFAULT_VALUES.rotation.z);
+  blob.setScale(DEFAULT_VALUES.scale);
+  blob.setResolution(DEFAULT_VALUES.resolution);
+  blob.setShininess(DEFAULT_VALUES.shininess);
+  blob.setWireframe(DEFAULT_VALUES.wireframe);
+  blob.setOpacity(DEFAULT_VALUES.opacity);
+  
+  // Reset camera position
+  if (q.body.body.camera) {
+    q.body.body.camera.position.set(DEFAULT_VALUES.camera.x, DEFAULT_VALUES.camera.y, DEFAULT_VALUES.camera.z);
+    q.body.body.camera.lookAt(0, 0, 0);
+  }
+  
+  // Update UI
+  updateAllControlsFromBlob();
+};
+
+const saveConfig = () => {
+  if (q.body) {
+    q.save(q.body);
+  }
+};
+
+const updateAllControlsFromBlob = () => {
+  if (!q.body?.body.blob) return;
+  
+  const blob = q.body.body.blob;
+  
+  // Update from blob
+  spikes.value = { ...blob.getSpikes() };
+  time.value = { ...blob.getTime() };
+  rotation.value = { ...blob.getRotation() };
+  resolution.value = blob._resolution || 180;
+  scale.value = blob.getScale();
+  shininess.value = blob.getShininess();
+  wireframe.value = blob.getWireframe();
+  opacity.value = blob.getOpacity();
+  lightIntensity.value = blob.lightIntensity || 0;
+  
+  // Update camera
+  if (q.body.body.camera) {
+    camera.value = {
+      x: q.body.body.camera.position.x,
+      y: q.body.body.camera.position.y,
+      z: q.body.body.camera.position.z,
+    };
+  }
+  
+  // Update audio effects
+  const audioConfig = blob.audioEffects || {};
+  audioEffects.value = {
+    bass: audioConfig.bassSpike || 0.45,
+    mid: audioConfig.midSpike || 0.35,
+    high: audioConfig.highSpike || 0.30,
+    smoothing: audioConfig.smoothing || 0.7,
+    timeEnabled: audioConfig.timeEnabled || false,
+    midTime: audioConfig.midTime || 0.2,
+    highTime: audioConfig.highTime || 0.3,
+    ultraTime: audioConfig.ultraTime || 0.15,
+  };
+  audioReactive.value = audioConfig.enabled !== false;
+  
+  // Update interaction
+  touchStrength.value = blob.touchStrength || 1.0;
+  touchDuration.value = blob.touchDuration || 1100;
+  maxTouches.value = blob.maxTouchPoints || 5;
+  transitionSpeed.value = blob.transitionSpeed || 0.05;
+  thinkingDuration.value = (blob.thinkingDuration || 10000) / 1000;
+};
 
 onMounted(() => {
-  watch(vecs, (v) => {
-    if (!q.body) return;
-    q.body.body.blob.spikes.x = v;
-    q.body.body.blob.spikes.y = v;
-    q.body.body.blob.spikes.z = v;
-    q.save(q.body);
-  });
+  // Initialize values from blob if available
+  if (q.body?.body.blob) {
+    updateAllControlsFromBlob();
+  }
+
+  // Watch spikes
+  watch(spikes, (v) => {
+    if (!q.body?.body.blob) return;
+    q.body.body.blob.setSpikes(v.x, v.y, v.z);
+  }, { deep: true });
+
+  // Watch time
   watch(time, (v) => {
-    if (!q.body) return;
-    q.body.body.blob.time.x = v;
-    q.body.body.blob.time.y = v;
-    q.body.body.blob.time.z = v;
-    q.save(q.body);
-  });
+    if (!q.body?.body.blob) return;
+    q.body.body.blob.setTime(v.x, v.y, v.z);
+  }, { deep: true });
+
+  // Watch rotation
   watch(rotation, (v) => {
-    if (!q.body) return;
-    // Do not write to rotation.value here to avoid recursive updates
-    isRotation.value = v !== 0;
-    if (!isRotation.value) {
-      if (
-        q.body.body.blob.rotation.x !== 0
-        || q.body.body.blob.rotation.y !== 0
-        || q.body.body.blob.rotation.z !== 0
-      ) {
-        q.body.body.blob.rotation.x = 0;
-        q.body.body.blob.rotation.y = 0;
-        q.body.body.blob.rotation.z = 0;
-      }
-      return;
-    }
-    if (q.body.body.blob.rotation.x !== v) q.body.body.blob.rotation.x = v;
-    if (q.body.body.blob.rotation.y !== v) q.body.body.blob.rotation.y = v;
-    if (q.body.body.blob.rotation.z !== v) q.body.body.blob.rotation.z = v;
+    if (!q.body?.body.blob) return;
+    q.body.body.blob.setRotation(v.x, v.y, v.z);
+  }, { deep: true });
+
+  // Watch resolution
+  watch(resolution, (v) => {
+    if (!q.body?.body.blob) return;
+    q.body.body.blob.setResolution(v);
   });
 
-  // Set resolution only when it changes
-  watch(resolution, (v) => {
-    if (!q.body) return;
-    q.body.body.blob.setResolution(v);
-  }, { immediate: true });
+  // Watch scale
+  watch(scale, (v) => {
+    if (!q.body?.body.blob) return;
+    q.body.body.blob.setScale(v);
+  });
+
+  // Watch camera
+  watch(camera, (v) => {
+    if (!q.body?.body.camera) return;
+    q.body.body.camera.position.set(v.x, v.y, v.z);
+    q.body.body.camera.lookAt(0, 0, 0);
+  }, { deep: true });
+
+  // Watch wireframe
+  watch(wireframe, (v) => {
+    if (!q.body?.body.blob) return;
+    q.body.body.blob.setWireframe(v);
+  });
+
+  // Watch opacity
+  watch(opacity, (v) => {
+    if (!q.body?.body.blob) return;
+    q.body.body.blob.setOpacity(v);
+  });
+
+  // Watch shininess
+  watch(shininess, (v) => {
+    if (!q.body?.body.blob) return;
+    q.body.body.blob.setShininess(v);
+  });
+
+  // Watch light intensity
+  watch(lightIntensity, (v) => {
+    if (!q.body?.body.blob) return;
+    q.body.body.blob.setLightIntensity(v);
+  });
+
+  // Watch audio effects
+  watch(audioReactive, (v) => {
+    if (!q.body?.body.blob) return;
+    q.body.body.blob.audioEffects.enabled = v;
+  });
+
+  watch(audioEffects, (v) => {
+    if (!q.body?.body.blob) return;
+    q.body.body.blob.audioEffects = {
+      ...q.body.body.blob.audioEffects,
+      bassSpike: v.bass,
+      midSpike: v.mid,
+      highSpike: v.high,
+      smoothing: v.smoothing,
+      timeEnabled: v.timeEnabled,
+      midTime: v.midTime,
+      highTime: v.highTime,
+      ultraTime: v.ultraTime,
+    };
+  }, { deep: true });
+
+  // Watch FFT size
+  watch(fftSize, (v) => {
+    if (!q.body?.body.audio) return;
+    // Apply FFT size to audio analyzer
+    if (q.body.body.audio.analyzer) {
+      q.body.body.audio.analyzer.fftSize = v;
+    }
+  });
+
+  // Watch interaction settings
+  watch(touchStrength, (v) => {
+    if (!q.body?.body.blob) return;
+    q.body.body.blob.touchStrength = v;
+  });
+
+  watch(touchDuration, (v) => {
+    if (!q.body?.body.blob) return;
+    q.body.body.blob.touchDuration = v;
+  });
+
+  watch(maxTouches, (v) => {
+    if (!q.body?.body.blob) return;
+    q.body.body.blob.maxTouchPoints = v;
+  });
+
+  watch(transitionSpeed, (v) => {
+    if (!q.body?.body.blob) return;
+    q.body.body.blob.transitionSpeed = v;
+  });
+
+  watch(thinkingDuration, (v) => {
+    if (!q.body?.body.blob) return;
+    q.body.body.blob.thinkingDuration = v * 1000; // Convert to milliseconds
+  });
+
+  watch(clickInteraction, (v) => {
+    // Handle click interaction enable/disable
+    // This would need to be implemented in the main Kwami instance
+  });
 });
 </script>
