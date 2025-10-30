@@ -89,7 +89,7 @@ By participating in this project, you agree to maintain a respectful and collabo
 
 Quami uses git submodules for:
 - `app/modules/@kwami` - The 3D AI companion library
-- `app/modules/nuxt-themes` - UI component library
+- `app/modules/nuxt-ux` - UI component library
 
 **Before making changes to submodules:**
 
@@ -242,7 +242,7 @@ onMounted(() => {
 
 - **Use Tailwind CSS** utility classes
 - **Keep scoped styles minimal**
-- **Use design system tokens** from `@nuxt-xui`
+- **Use design system tokens** from `nuxt-ux`
 - **Mobile-first** approach
 
 ```vue
@@ -409,7 +409,7 @@ quami/
 │   ├── locales/            # i18n translations
 │   ├── modules/            # Git submodules
 │   │   ├── @kwami/         # Kwami library (submodule)
-│   │   └── nuxt-themes/    # UI theme library (submodule)
+│   │   └── nuxt-ux/        # UI components library (submodule)
 │   ├── pages/              # Nuxt pages (routes)
 │   ├── stores/             # Pinia stores
 │   ├── types/              # TypeScript type definitions
