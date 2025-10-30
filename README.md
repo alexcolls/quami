@@ -1,4 +1,4 @@
-# 🌕 quami
+# ☀️ quami
 
 A 3D interactive AI companion application powered by Nuxt.js and the Kwami library.
 
