@@ -21,8 +21,10 @@ Quami is built on:
   - Repository: [github.com/alexcolls/kwami](https://github.com/alexcolls/kwami)
   - Version: 2.0.0
   - **Independent, reusable module** that can be used in other projects
-- **nuxt-ux** - Layout and Common UI components library (independent module, integrated as git submodule)
+- **@alexcolls/nuxt-ux** - Layout and Common UI components library (npm package)
   - Repository: [github.com/alexcolls/nuxt-ux](https://github.com/alexcolls/nuxt-ux)
+  - NPM: [@alexcolls/nuxt-ux](https://www.npmjs.com/package/@alexcolls/nuxt-ux)
+  - Version: 0.5.1
   - **Independent, reusable Nuxt module** for rapid UI development
 - **Three.js** - 3D graphics rendering
 - **Supabase** - Backend and authentication
@@ -190,8 +192,7 @@ quami/
 ├── app/
 │   ├── components/          # Vue components
 │   ├── modules/             # Git submodules
-│   │   ├── @kwami/          # Kwami library (git submodule)
-│   │   └── nuxt-ux/         # UI components library (git submodule)
+│   │   └── @kwami/          # Kwami library (git submodule)
 │   ├── stores/              # Pinia stores
 │   ├── locales/             # i18n translations
 │   └── types/               # TypeScript definitions

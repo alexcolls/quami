@@ -87,9 +87,9 @@ By participating in this project, you agree to maintain a respectful and collabo
 
 ### Working with Submodules
 
-Quami uses git submodules for:
-- `app/modules/@kwami` - The 3D AI companion library
-- `app/modules/nuxt-ux` - UI component library
+Quami uses:
+- **Git submodule:** `app/modules/@kwami` - The 3D AI companion library
+- **NPM package:** `@alexcolls/nuxt-ux` - UI component library
 
 **Before making changes to submodules:**
 
@@ -408,8 +408,7 @@ quami/
 │   ├── composables/        # Vue composables
 │   ├── locales/            # i18n translations
 │   ├── modules/            # Git submodules
-│   │   ├── @kwami/         # Kwami library (submodule)
-│   │   └── nuxt-ux/        # UI components library (submodule)
+│   │   └── @kwami/         # Kwami library (submodule)
 │   ├── pages/              # Nuxt pages (routes)
 │   ├── stores/             # Pinia stores
 │   ├── types/              # TypeScript type definitions

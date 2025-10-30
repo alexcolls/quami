@@ -10,14 +10,8 @@ export default defineNuxtConfig({
     '@nuxt/ui',
     '@nuxt/image',
     '@nuxtjs/supabase',
-    '@nuxt-themes/layout-ui',
+    '@alexcolls/nuxt-ux',
   ],
-  
-  // Nuxt Themes Module Configuration
-  nuxtThemes: {
-    version: '1.0.0',
-    logoURL: 'https://quami.app',
-  },
   ssr: false,
   // components: [
   //   { path: '~/app/components', pathPrefix: false },
