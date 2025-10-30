@@ -24,7 +24,8 @@ Quami is built on:
 - **@alexcolls/nuxt-ux** - Layout and Common UI components library (npm package)
   - Repository: [github.com/alexcolls/nuxt-ux](https://github.com/alexcolls/nuxt-ux)
   - NPM: [@alexcolls/nuxt-ux](https://www.npmjs.com/package/@alexcolls/nuxt-ux)
-  - Version: 0.5.1
+  - Version: 0.6.0
+  - 67+ reusable UI components with Common prefix
   - **Independent, reusable Nuxt module** for rapid UI development
 - **Three.js** - 3D graphics rendering
 - **Supabase** - Backend and authentication

@@ -4,7 +4,7 @@
     "": {
       "name": "nuxt-app",
       "dependencies": {
-        "@alexcolls/nuxt-ux": "^0.5.1",
+        "@alexcolls/nuxt-ux": "0.6.0",
         "@iconify-json/circle-flags": "^1.2.10",
         "@iconify-json/heroicons": "^1.2.3",
         "@iconify-json/line-md": "^1.2.11",
@@ -49,7 +49,7 @@
 
     "@ai-sdk/vue": ["@ai-sdk/vue@2.0.59", "", { "dependencies": { "@ai-sdk/provider-utils": "3.0.10", "ai": "5.0.59", "swrv": "^1.0.4" }, "peerDependencies": { "vue": "^3.3.4", "zod": "^3.25.76 || ^4.1.8" }, "optionalPeers": ["vue", "zod"] }, "sha512-bnu14TB1i4mOATCyQwyekrch/16qwYUFV8mywvOIQzOm+ZRLzHm1mUM7RDlfPI0ZE3y/M76CWNwyxfaxB/BlmA=="],
 
-    "@alexcolls/nuxt-ux": ["@alexcolls/nuxt-ux@0.5.1", "", { "dependencies": { "@nuxt/kit": "^4.0.0" }, "peerDependencies": { "@nuxt/ui": "^2.21.0", "@nuxtjs/i18n": "^8.3.1 || ^9.0.0", "nuxt": "^3.0.0 || ^4.0.0" } }, "sha512-Wx5ISfaqOoAg1kP3Y1Lzmj2tYZ1bAclwpGq/QJYzOky6q+LlB9YOixul8MnmD24OGFSU191oK6hltii1GntHWQ=="],
+    "@alexcolls/nuxt-ux": ["@alexcolls/nuxt-ux@0.6.0", "", { "dependencies": { "@nuxt/kit": "^4.0.0" }, "peerDependencies": { "@nuxt/ui": "^2.21.0", "@nuxtjs/i18n": "^8.3.1 || ^9.0.0", "nuxt": "^3.0.0 || ^4.0.0" } }, "sha512-Pup/dj5UUoFKUOah/7lqc5m3WEgChyy3TrNVeR4mefIa0ISWRRi/vQtfdywgeuqDtw/EICpZqEGMPWPgXf9qzQ=="],
 
     "@alloc/quick-lru": ["@alloc/quick-lru@5.2.0", "", {}, "sha512-UrcABB+4bUrFABwbluTIBErXwvbsU/V7TZWfmbgJfbkwiBuziS9gxdODUyuiecfdGQ85jglMW6juS3+z5TsKLw=="],
 
