@@ -1,6 +1,6 @@
-# ☀️ quami
+# 🌕 quami
 
-A 3D interactive AI companion application powered by Nuxt.js and the Kwami library.
+A 3D interactive AI companion application powered by Nuxt 4 and the Kwami library.
 
 ## Overview
 
@@ -159,32 +159,56 @@ deno task preview
 npm run preview
 ```
 
-## Kwami Submodule
+## Submodules
 
-The Kwami library is integrated as a git submodule at `app/@kwami/`. 
+### Kwami Submodule
 
-### Update Kwami
+The Kwami library is integrated as a git submodule at `app/modules/@kwami/`.
+
+#### Update Kwami
 
 To update to the latest version of Kwami:
 
 ```bash
-cd app/@kwami
+cd app/modules/@kwami
 git pull origin main
-cd ../..
-git add app/@kwami
+cd ../../..
+git add app/modules/@kwami
 git commit -m "⬆️ Update kwami submodule"
 ```
 
-### Working with Kwami
+#### Working with Kwami
 
-The application imports Kwami components using the `~/@kwami` alias:
+The application imports Kwami using the `@kwami` alias:
 
 ```typescript
-import { Kwami } from '~/@kwami';
-import audioFiles from '~/@kwami/assets/audio';
+import { Kwami } from '@kwami';
+import audioFiles from '@kwami/assets/audio';
 ```
 
-For Kwami documentation, see [app/@kwami/README.md](app/@kwami/README.md).
+For Kwami documentation, see [app/modules/@kwami/README.md](app/modules/@kwami/README.md).
+
+## UI Components
+
+### @alexcolls/nuxt-ux
+
+All Common UI components are provided by the `@alexcolls/nuxt-ux` npm package:
+
+- 67+ reusable components (buttons, modals, loaders, etc.)
+- Auto-imported with `Common` prefix (e.g., `<CommonBtn>`, `<CommonMagicWindow>`)
+- Includes i18n support (en, es, fr)
+- Dark mode support
+- Fully typed with TypeScript
+
+Components are automatically available in your templates:
+
+```vue
+<template>
+  <CommonMagicWindow title="Hello">
+    <CommonBtn label="Click me" @click="handleClick" />
+  </CommonMagicWindow>
+</template>
+```
 
 ## Project Structure
 
@@ -204,26 +228,40 @@ quami/
 
 ## Features
 
-### 3D Companion
+### 🎨 3D Companion (Kwami)
 
-- Real-time morphing blob visualization
+- Real-time morphing blob visualization with Three.js
 - Audio-reactive animations
-- Multiple skin options (tricolor, zebra)
-- Customizable colors and effects
+- Multiple skin options (tricolor, tricolor2, zebra)
+- Customizable appearance:
+  - Geometry & Motion (spikes, time, rotation, resolution)
+  - Scale & Camera controls
+  - Material properties (opacity, shininess, wireframe)
+  - Audio effects (frequency modulation)
+  - Interaction settings
+- Export as GLB/GLTF
+- DNA-based randomization
 
-### AI Interaction
+### 🤖 AI Interaction (Coming Soon)
 
 - Voice input via speech recognition
-- Text-to-speech responses
+- Text-to-speech responses via ElevenLabs
 - Natural language processing
 - Conversation history
 
-### User Management
+### 👤 User Management
 
 - Email authentication via Supabase
-- Wallet connection (Solana)
+- Wallet connection (Solana/Phantom)
 - Profile management
-- Session persistence
+- Session persistence with Pinia
+
+### 🎨 UI Components
+
+- 67+ reusable components from @alexcolls/nuxt-ux
+- Responsive design with Tailwind CSS
+- Dark mode support
+- Multi-language (en, es, fr)
 
 ## License
 
@@ -255,8 +293,14 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 **Copyright (c) 2025 Alex Colls**
 
+## Contributing
+
+Contributions are welcome! Please see [CONTRIBUTING.md](./CONTRIBUTING.md) for guidelines.
+
 ## Links
 
-- [Nuxt Documentation](https://nuxt.com/docs)
+- [Nuxt 4 Documentation](https://nuxt.com/docs)
 - [Kwami Repository](https://github.com/alexcolls/kwami)
+- [@alexcolls/nuxt-ux](https://www.npmjs.com/package/@alexcolls/nuxt-ux)
+- [Supabase Documentation](https://supabase.com/docs)
 - [Deployment Documentation](https://nuxt.com/docs/getting-started/deployment)
