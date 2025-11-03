@@ -12,8 +12,8 @@
       <QuamiThemeBtnColors />
       <QuamiThemeBtnLangs />
       <QuamiThemeBtnVideo />
-      <QuamiThemeBtnBtnLang />
-      <QuamiThemeBtnBtnTheme />
+      <QuamiThemeBtnLang />
+      <QuamiThemeBtnTheme />
       <USwitch
         v-model="ui.showVideo"
       />

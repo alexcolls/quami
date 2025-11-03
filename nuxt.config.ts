@@ -10,7 +10,7 @@ export default defineNuxtConfig({
     '@nuxt/ui',
     '@nuxt/image',
     '@nuxtjs/supabase',
-    '@alexcolls/nuxt-ux',
+    // '@alexcolls/nuxt-ux', // TODO: Fix useStore import in package
   ],
   ssr: false,
   // components: [

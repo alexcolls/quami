@@ -22,6 +22,11 @@
       />
     </div>
 
+    <!-- Current DNA -->
+    <div v-if="q.body.blob.dna" class="p-2 bg-gray-100 dark:bg-gray-800 rounded text-xs">
+      <span class="font-semibold">DNA:</span> {{ q.body.blob.dna }}
+    </div>
+
     <!-- Blob Component -->
     <QuamiKwamiBodyBlob />
 
