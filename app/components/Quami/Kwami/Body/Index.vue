@@ -146,7 +146,7 @@
       <template #material>
         <div class="space-y-4 p-3">
           <div>
-            <label class="text-xs">Opacity: {{ opacity.toFixed(2) }}</label>
+            <label class="text-xs">Blob Opacity: {{ opacity.toFixed(2) }}</label>
             <input v-model.number="opacity" type="range" min="0" max="1" step="0.01" class="w-full">
           </div>
           <div>
@@ -159,6 +159,56 @@
           </div>
           <div class="flex items-center gap-2">
             <UCheckbox v-model="wireframe" label="Wireframe Mode" />
+          </div>
+        </div>
+      </template>
+    </UAccordion>
+
+    <!-- Background -->
+    <UAccordion :items="[{ label: '🖼️ Background', slot: 'background' }]">
+      <template #background>
+        <div class="space-y-4 p-3">
+          <div class="grid grid-cols-3 gap-2 items-center">
+            <label class="text-xs">Gradient Color 1</label>
+            <input v-model="bg.color1" type="color" class="col-span-2">
+            <label class="text-xs">Gradient Color 2</label>
+            <input v-model="bg.color2" type="color" class="col-span-2">
+            <label class="text-xs">Gradient Color 3</label>
+            <input v-model="bg.color3" type="color" class="col-span-2">
+          </div>
+          <div>
+            <label class="text-xs">Gradient Style</label>
+            <select v-model="bg.style" class="w-full text-xs p-1 rounded border">
+              <option value="linear">Linear</option>
+              <option value="radial">Radial</option>
+            </select>
+          </div>
+          <div class="grid grid-cols-3 gap-2 items-center" v-if="bg.style === 'linear'">
+            <label class="text-xs">Angle: {{ bg.angle }}</label>
+            <input v-model.number="bg.angle" type="range" min="0" max="360" step="1" class="col-span-2">
+            <label class="text-xs">Stop 1: {{ bg.stop1 }}</label>
+            <input v-model.number="bg.stop1" type="range" min="0" max="100" step="1" class="col-span-2">
+            <label class="text-xs">Stop 2: {{ bg.stop2 }}</label>
+            <input v-model.number="bg.stop2" type="range" min="0" max="100" step="1" class="col-span-2">
+          </div>
+          <div>
+            <label class="text-xs">Background Opacity: {{ bg.opacity.toFixed(2) }}</label>
+            <input v-model.number="bg.opacity" type="range" min="0" max="1" step="0.01" class="w-full">
+          </div>
+          <div class="flex gap-2">
+            <UButton size="xs" label="Apply Gradient" @click="applyGradient" />
+            <UButton size="xs" label="Transparent" @click="setTransparent" />
+            <UButton size="xs" label="Clear Media" @click="clearMedia" />
+          </div>
+          <div class="grid grid-cols-3 gap-2 items-center">
+            <label class="text-xs">Image URL</label>
+            <input v-model="bg.imageUrl" type="text" placeholder="https://..." class="col-span-2 p-1 rounded border text-xs">
+            <label class="text-xs">Video URL</label>
+            <input v-model="bg.videoUrl" type="text" placeholder="https://..." class="col-span-2 p-1 rounded border text-xs">
+          </div>
+          <div class="flex gap-2">
+            <UButton size="xs" label="Apply Image" @click="applyImage" />
+            <UButton size="xs" label="Apply Video" @click="applyVideo" />
           </div>
         </div>
       </template>
@@ -327,6 +377,20 @@ const shininess = ref(50);
 const lightIntensity = ref(0);
 const wireframe = ref(false);
 
+// Background
+const bg = reactive({
+  color1: '#667eea',
+  color2: '#764ba2',
+  color3: '#f093fb',
+  style: 'linear' as 'linear' | 'radial',
+  angle: 90,
+  stop1: 50,
+  stop2: 100,
+  opacity: 1,
+  imageUrl: '',
+  videoUrl: '',
+});
+
 // Audio Effects
 const audioReactive = ref(true);
 const fftSize = ref(2048);
@@ -408,6 +472,30 @@ const saveConfig = () => {
   }
 };
 
+// Background actions
+const applyGradient = () => {
+  if (!q.body?.body) return;
+  const colors = [bg.color1, bg.color2, bg.color3];
+  const stops = [0, bg.stop1 / 100, Math.max(bg.stop1 / 100, bg.stop2 / 100)];
+  if (bg.style === 'radial') {
+    q.body.body.setBackgroundGradient(colors, { direction: 'radial', stops, opacity: bg.opacity });
+  } else {
+    q.body.body.setBackgroundGradient(colors, { angle: bg.angle, stops, opacity: bg.opacity });
+  }
+};
+const setTransparent = () => {
+  q.body?.body.setBackgroundTransparent();
+};
+const clearMedia = () => {
+  q.body?.body.clearBackgroundMedia();
+};
+const applyImage = () => {
+  if (bg.imageUrl) q.body?.body.setBackgroundImage(bg.imageUrl, { opacity: bg.opacity });
+};
+const applyVideo = () => {
+  if (bg.videoUrl) q.body?.body.setBackgroundVideo(bg.videoUrl, { opacity: bg.opacity, autoplay: true, loop: true, muted: true });
+};
+
 const updateAllControlsFromBlob = () => {
   if (!q.body?.body?.blob) return;
   
@@ -445,6 +533,8 @@ onMounted(() => {
   // Initialize values from blob if available
   if (q.body?.body?.blob) {
     updateAllControlsFromBlob();
+    // Initialize background as transparent
+    q.body?.body.setBackgroundTransparent();
   }
 
   // Watch spikes
@@ -492,15 +582,10 @@ onMounted(() => {
     q.body.body.blob.setWireframe(v);
   });
 
-  // Watch opacity
+  // Watch opacity (blob material)
   watch(opacity, (v) => {
     if (!q.body?.body?.blob) return;
-    const mesh = q.body.body.blob.getMesh();
-    const material = mesh.material as any;
-    if (material) {
-      material.opacity = v;
-      material.transparent = v < 1;
-    }
+    q.body.body.blob.setOpacity(v);
   });
 
   // Watch shininess
