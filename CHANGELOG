@@ -5,6 +5,47 @@ All notable changes to the Quami project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.0] - 2025-11-03
+
+### Added
+
+- Comprehensive CONTRIBUTING.md with development guidelines and commit conventions
+- Complete Kwami body parameter controls from playground:
+  - Geometry & Motion controls (spikes, time, rotation, resolution)
+  - Scale & Camera orbit controls
+  - Material properties (opacity, shininess, light intensity, wireframe)
+  - Audio effects controls (frequency modulation, time modulation, analyzer)
+  - Interaction controls (touch effects, state transitions)
+  - Randomize, export GLTF, and reset to defaults functionality
+- @alexcolls/nuxt-ux@0.6.0 npm package with 67+ reusable UI components
+- Auto-imported Common components (CommonBtn, CommonMagicWindow, etc.)
+- Documentation folder structure (docs/) for better organization
+
+### Changed
+
+- Migrated from local Common components to @alexcolls/nuxt-ux package
+- Moved submodules to app/modules/ directory for better organization
+- Updated Kwami import paths to use @kwami alias
+- Replaced nuxt-themes submodule with @alexcolls/nuxt-ux npm package
+- Updated README with accurate paths, versions, and comprehensive feature list
+- Fixed Kwami body component API compatibility with core library
+- Updated wallet components with troubleshooting documentation
+- Enhanced blob animation and Audio core implementation
+
+### Fixed
+
+- Kwami body component API compatibility (direct property access)
+- @kwami import resolution errors
+- Main README emoji (sun ☀️)
+- Camera access using getCamera() method
+- Scale access via mesh.scale.setScalar()
+- Locale file extensions in nuxt-ux module (.ts → .js)
+
+### Removed
+
+- Local app/components/Common folder (migrated to nuxt-ux package)
+- nuxt-themes submodule (replaced with nuxt-ux npm package)
+
 ## [0.1.0] - 2025-10-20
 
 ### Added
@@ -26,7 +67,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Architecture
 
 - Built on Nuxt.js 4 with SSR disabled for optimal client-side performance
-- Kwami library integrated as git submodule at `app/@kwami/`
+- Kwami library integrated as git submodule at `app/modules/@kwami/`
 - State management with Pinia and persisted state support
 - Three.js for 3D graphics rendering
 - Supabase for backend services and authentication
