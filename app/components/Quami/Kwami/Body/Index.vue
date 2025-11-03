@@ -146,10 +146,6 @@
       <template #material>
         <div class="space-y-4 p-3">
           <div>
-            <label class="text-xs">Blob Opacity: {{ opacity.toFixed(2) }}</label>
-            <input v-model.number="opacity" type="range" min="0" max="1" step="0.01" class="w-full">
-          </div>
-          <div>
             <label class="text-xs">Shininess: {{ shininess }}</label>
             <input v-model.number="shininess" type="range" min="1" max="200" step="1" class="w-full">
           </div>
@@ -194,6 +190,11 @@
           <div>
             <label class="text-xs">Background Opacity: {{ bg.opacity.toFixed(2) }}</label>
             <input v-model.number="bg.opacity" type="range" min="0" max="1" step="0.01" class="w-full">
+          </div>
+          <div>
+            <label class="text-xs">Blob Opacity: {{ blobOpacity.toFixed(2) }}</label>
+            <input v-model.number="blobOpacity" type="range" min="0" max="1" step="0.01" class="w-full">
+          </div>
           </div>
           <div class="flex gap-2">
             <UButton size="xs" label="Apply Gradient" @click="applyGradient" />
@@ -372,7 +373,7 @@ const scale = ref(4.0);
 const camera = ref({ x: -0.9, y: 7.3, z: -1.8 });
 
 // Material
-const opacity = ref(1.0);
+const blobOpacity = ref(1.0);
 const shininess = ref(50);
 const lightIntensity = ref(0);
 const wireframe = ref(false);
@@ -511,10 +512,10 @@ const updateAllControlsFromBlob = () => {
   // Get scale from mesh
   scale.value = mesh.scale.x;
   
-  // Get material properties
+  // Get material & opacity
   const material = mesh.material as any;
   wireframe.value = material.wireframe || false;
-  opacity.value = material.opacity !== undefined ? material.opacity : 1.0;
+  blobOpacity.value = typeof material.opacity === 'number' ? material.opacity : (q.body.body.blob.getOpacity?.() ?? 1.0);
   shininess.value = material.uniforms?.shininess?.value || 50;
   lightIntensity.value = 0;
   
@@ -576,14 +577,37 @@ onMounted(() => {
     cam.lookAt(0, 0, 0);
   }, { deep: true });
 
+  // Interaction-related watchers
+  watch(touchStrength, (v) => {
+    if (!q.body?.body?.blob) return;
+    q.body.body.blob.touchStrength = v;
+  });
+  watch(touchDuration, (v) => {
+    if (!q.body?.body?.blob) return;
+    q.body.body.blob.touchDuration = v;
+  });
+  watch(maxTouches, (v) => {
+    if (!q.body?.body?.blob) return;
+    q.body.body.blob.maxTouchPoints = v;
+  });
+  watch(transitionSpeed, (v) => {
+    if (!q.body?.body?.blob) return;
+    q.body.body.blob.transitionSpeed = v;
+  });
+  watch(thinkingDuration, (v) => {
+    if (!q.body?.body?.blob) return;
+    // store seconds to ms internally for parity
+    q.body.body.blob.thinkingDuration = v * 1000;
+  });
+
   // Watch wireframe
   watch(wireframe, (v) => {
     if (!q.body?.body?.blob) return;
     q.body.body.blob.setWireframe(v);
   });
 
-  // Watch opacity (blob material)
-  watch(opacity, (v) => {
+  // Watch blob opacity
+  watch(blobOpacity, (v) => {
     if (!q.body?.body?.blob) return;
     q.body.body.blob.setOpacity(v);
   });
@@ -597,8 +621,7 @@ onMounted(() => {
   // Watch light intensity
   watch(lightIntensity, (v) => {
     if (!q.body?.body?.blob) return;
-    // Light intensity might need to be implemented in the core
-    // For now, just store the value
+    q.body.body.blob.setLightIntensity?.(v);
   });
 
   // Audio effects and interaction features are not yet implemented in core
