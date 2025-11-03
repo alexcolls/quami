@@ -23,8 +23,8 @@
     </div>
 
     <!-- Current DNA -->
-    <div v-if="q.body?.blob?.dna" class="p-2 bg-gray-100 dark:bg-gray-800 rounded text-xs">
-      <span class="font-semibold">DNA:</span> {{ q.body.blob.dna }}
+    <div v-if="q.body?.body?.blob?.dna" class="p-2 bg-gray-100 dark:bg-gray-800 rounded text-xs">
+      <span class="font-semibold">DNA:</span> {{ q.body.body.blob.dna }}
     </div>
 
     <!-- Blob Component -->
@@ -34,10 +34,9 @@
     <UAccordion :items="[{ label: '🧬 Geometry & Motion', slot: 'geometry' }]">
       <template #geometry>
         <div class="space-y-4 p-3">
-          <!-- Noise Frequency (Spikes) -->
+          <!-- Spikes -->
           <div>
-            <h4 class="text-sm font-semibold mb-2">Noise Frequency</h4>
-            <p class="text-xs text-gray-500 mb-2">Control how much the blob stretches along each axis</p>
+            <h4 class="text-sm font-semibold mb-2">Spikes</h4>
             <div class="space-y-2">
               <div>
                 <label class="text-xs">X: {{ spikes.x.toFixed(1) }}</label>
@@ -54,10 +53,9 @@
             </div>
           </div>
 
-          <!-- Animation Speed (Time) -->
+          <!-- Time -->
           <div>
-            <h4 class="text-sm font-semibold mb-2">Animation Speed</h4>
-            <p class="text-xs text-gray-500 mb-2">Change how quickly the blob cycles through its movement</p>
+            <h4 class="text-sm font-semibold mb-2">Time</h4>
             <div class="space-y-2">
               <div>
                 <label class="text-xs">X: {{ time.x.toFixed(1) }}</label>
@@ -74,9 +72,9 @@
             </div>
           </div>
 
-          <!-- Auto Rotation -->
+          <!-- Rotation -->
           <div>
-            <h4 class="text-sm font-semibold mb-2">Auto Rotation</h4>
+            <h4 class="text-sm font-semibold mb-2">Rotation</h4>
             <div class="space-y-2">
               <div>
                 <label class="text-xs">X: {{ rotation.x.toFixed(3) }}</label>
@@ -95,7 +93,7 @@
 
           <!-- Resolution -->
           <div>
-            <h4 class="text-sm font-semibold mb-2">Mesh Detail</h4>
+            <h4 class="text-sm font-semibold mb-2">Resolution</h4>
             <div>
               <label class="text-xs">Resolution: {{ resolution }}</label>
               <input v-model.number="resolution" type="range" min="120" max="220" step="1" class="w-full">
@@ -109,9 +107,9 @@
     <UAccordion :items="[{ label: '📐 Scale & Camera', slot: 'camera' }]">
       <template #camera>
         <div class="space-y-4 p-3">
-          <!-- Global Scale -->
+          <!-- Scale -->
           <div>
-            <h4 class="text-sm font-semibold mb-2">Global Scale</h4>
+            <h4 class="text-sm font-semibold mb-2">Scale</h4>
             <div>
               <label class="text-xs">Scale: {{ scale.toFixed(1) }}</label>
               <input v-model.number="scale" type="range" min="3" max="8" step="0.1" class="w-full">
@@ -186,7 +184,6 @@
             <input v-model.number="bg.stop1" type="range" min="0" max="100" step="1" class="col-span-2">
             <label class="text-xs">Stop 2: {{ bg.stop2 }}</label>
             <input v-model.number="bg.stop2" type="range" min="0" max="100" step="1" class="col-span-2">
-          </div>
           <div>
             <label class="text-xs">Background Opacity: {{ bg.opacity.toFixed(2) }}</label>
             <input v-model.number="bg.opacity" type="range" min="0" max="1" step="0.01" class="w-full">
@@ -195,9 +192,13 @@
             <label class="text-xs">Blob Opacity: {{ blobOpacity.toFixed(2) }}</label>
             <input v-model.number="blobOpacity" type="range" min="0" max="1" step="0.01" class="w-full">
           </div>
+          <div class="flex items-center gap-2">
+            <UCheckbox v-model="glass" label="Glass transparency" />
           </div>
-          <div class="flex gap-2">
+          <div class="flex gap-2 flex-wrap">
             <UButton size="xs" label="Apply Gradient" @click="applyGradient" />
+            <UButton size="xs" label="Randomize Gradient" @click="randomizeGradient" />
+            <UButton size="xs" label="Reset Background" @click="resetBackground" />
             <UButton size="xs" label="Transparent" @click="setTransparent" />
             <UButton size="xs" label="Clear Media" @click="clearMedia" />
           </div>
@@ -210,6 +211,17 @@
           <div class="flex gap-2">
             <UButton size="xs" label="Apply Image" @click="applyImage" />
             <UButton size="xs" label="Apply Video" @click="applyVideo" />
+          </div>
+          <div class="grid grid-cols-3 gap-2 items-center">
+            <label class="text-xs">Blob Texture Image</label>
+            <input v-model="blobMedia.image" type="text" placeholder="https://..." class="col-span-2 p-1 rounded border text-xs">
+            <label class="text-xs">Blob Texture Video</label>
+            <input v-model="blobMedia.video" type="text" placeholder="https://..." class="col-span-2 p-1 rounded border text-xs">
+          </div>
+          <div class="flex gap-2">
+            <UButton size="xs" label="Apply Blob Image" @click="applyBlobImage" />
+            <UButton size="xs" label="Apply Blob Video" @click="applyBlobVideo" />
+            <UButton size="xs" label="Clear Blob Media" @click="clearBlobMedia" />
           </div>
         </div>
       </template>
@@ -392,6 +404,9 @@ const bg = reactive({
   videoUrl: '',
 });
 
+const blobMedia = reactive({ image: '', video: '' });
+const glass = ref(false);
+
 // Audio Effects
 const audioReactive = ref(true);
 const fftSize = ref(2048);
@@ -496,6 +511,28 @@ const applyImage = () => {
 const applyVideo = () => {
   if (bg.videoUrl) q.body?.body.setBackgroundVideo(bg.videoUrl, { opacity: bg.opacity, autoplay: true, loop: true, muted: true });
 };
+const randomizeGradient = () => {
+  const rand = () => '#' + Math.floor(Math.random()*16777215).toString(16).padStart(6,'0');
+  bg.color1 = rand(); bg.color2 = rand(); bg.color3 = rand();
+  bg.angle = Math.floor(Math.random()*361);
+  bg.stop1 = Math.floor(Math.random()*81)+10;
+  bg.stop2 = Math.max(bg.stop1, Math.floor(Math.random()*101));
+  applyGradient();
+};
+const resetBackground = () => {
+  bg.color1 = '#667eea'; bg.color2 = '#764ba2'; bg.color3 = '#f093fb';
+  bg.style = 'linear'; bg.angle = 90; bg.stop1 = 50; bg.stop2 = 100; bg.opacity = 1;
+  bg.imageUrl = ''; bg.videoUrl = '';
+  q.body?.body.clearBackgroundMedia();
+  applyGradient();
+};
+const applyBlobImage = () => {
+  if (blobMedia.image) q.body?.body.setBlobSurfaceImage(blobMedia.image);
+};
+const applyBlobVideo = () => {
+  if (blobMedia.video) q.body?.body.setBlobSurfaceVideo(blobMedia.video, { autoplay: true, loop: true, muted: true });
+};
+const clearBlobMedia = () => { q.body?.body.clearBlobSurfaceMedia(); };
 
 const updateAllControlsFromBlob = () => {
   if (!q.body?.body?.blob) return;
@@ -616,6 +653,13 @@ onMounted(() => {
   watch(shininess, (v) => {
     if (!q.body?.body?.blob) return;
     q.body.body.blob.setShininess(v);
+  });
+
+  // Glass mode
+  watch(glass, (v) => {
+    if (!q.body?.body) return;
+    q.body.body.setBlobImageTransparencyMode?.(v, { mode: 'glass' });
+    if (v && blobOpacity.value >= 1) blobOpacity.value = 0.8;
   });
 
   // Watch light intensity
