@@ -23,7 +23,7 @@
     </div>
 
     <!-- Current DNA -->
-    <div v-if="q.body.blob.dna" class="p-2 bg-gray-100 dark:bg-gray-800 rounded text-xs">
+    <div v-if="q.body?.blob?.dna" class="p-2 bg-gray-100 dark:bg-gray-800 rounded text-xs">
       <span class="font-semibold">DNA:</span> {{ q.body.blob.dna }}
     </div>
 
@@ -351,7 +351,7 @@ const thinkingDuration = ref(10);
 
 // Actions
 const randomizeBlob = () => {
-  if (!q.body?.body.blob) return;
+  if (!q.body?.body?.blob) return;
   
   // Save current skin and scale
   const currentSkin = q.body.body.blob.getCurrentSkin();
@@ -372,23 +372,24 @@ const randomizeBlob = () => {
 };
 
 const exportGLTF = () => {
-  q.body?.body.blob.exportGLTF();
+  if (!q.body?.body?.blob) return;
+  q.body.body.blob.exportGLTF();
 };
 
 const resetToDefaults = () => {
-  if (!q.body?.body.blob) return;
+  if (!q.body?.body?.blob) return;
   
   const blob = q.body.body.blob;
+  const mesh = blob.getMesh();
   
   // Apply defaults
   blob.setSpikes(DEFAULT_VALUES.spikes.x, DEFAULT_VALUES.spikes.y, DEFAULT_VALUES.spikes.z);
   blob.setTime(DEFAULT_VALUES.time.x, DEFAULT_VALUES.time.y, DEFAULT_VALUES.time.z);
   blob.setRotation(DEFAULT_VALUES.rotation.x, DEFAULT_VALUES.rotation.y, DEFAULT_VALUES.rotation.z);
-  blob.setScale(DEFAULT_VALUES.scale);
+  mesh.scale.setScalar(DEFAULT_VALUES.scale);
   blob.setResolution(DEFAULT_VALUES.resolution);
   blob.setShininess(DEFAULT_VALUES.shininess);
   blob.setWireframe(DEFAULT_VALUES.wireframe);
-  blob.setOpacity(DEFAULT_VALUES.opacity);
   
   // Reset camera position
   if (q.body.body) {
@@ -408,7 +409,7 @@ const saveConfig = () => {
 };
 
 const updateAllControlsFromBlob = () => {
-  if (!q.body?.body.blob) return;
+  if (!q.body?.body?.blob) return;
   
   const blob = q.body.body.blob;
   const mesh = blob.getMesh();
@@ -442,37 +443,37 @@ const updateAllControlsFromBlob = () => {
 
 onMounted(() => {
   // Initialize values from blob if available
-  if (q.body?.body.blob) {
+  if (q.body?.body?.blob) {
     updateAllControlsFromBlob();
   }
 
   // Watch spikes
   watch(spikes, (v) => {
-    if (!q.body?.body.blob) return;
+    if (!q.body?.body?.blob) return;
     q.body.body.blob.setSpikes(v.x, v.y, v.z);
   }, { deep: true });
 
   // Watch time
   watch(time, (v) => {
-    if (!q.body?.body.blob) return;
+    if (!q.body?.body?.blob) return;
     q.body.body.blob.setTime(v.x, v.y, v.z);
   }, { deep: true });
 
   // Watch rotation
   watch(rotation, (v) => {
-    if (!q.body?.body.blob) return;
+    if (!q.body?.body?.blob) return;
     q.body.body.blob.setRotation(v.x, v.y, v.z);
   }, { deep: true });
 
   // Watch resolution
   watch(resolution, (v) => {
-    if (!q.body?.body.blob) return;
+    if (!q.body?.body?.blob) return;
     q.body.body.blob.setResolution(v);
   });
 
   // Watch scale
   watch(scale, (v) => {
-    if (!q.body?.body.blob) return;
+    if (!q.body?.body?.blob) return;
     const mesh = q.body.body.blob.getMesh();
     mesh.scale.setScalar(v);
   });
@@ -487,13 +488,13 @@ onMounted(() => {
 
   // Watch wireframe
   watch(wireframe, (v) => {
-    if (!q.body?.body.blob) return;
+    if (!q.body?.body?.blob) return;
     q.body.body.blob.setWireframe(v);
   });
 
   // Watch opacity
   watch(opacity, (v) => {
-    if (!q.body?.body.blob) return;
+    if (!q.body?.body?.blob) return;
     const mesh = q.body.body.blob.getMesh();
     const material = mesh.material as any;
     if (material) {
@@ -504,13 +505,13 @@ onMounted(() => {
 
   // Watch shininess
   watch(shininess, (v) => {
-    if (!q.body?.body.blob) return;
+    if (!q.body?.body?.blob) return;
     q.body.body.blob.setShininess(v);
   });
 
   // Watch light intensity
   watch(lightIntensity, (v) => {
-    if (!q.body?.body.blob) return;
+    if (!q.body?.body?.blob) return;
     // Light intensity might need to be implemented in the core
     // For now, just store the value
   });
