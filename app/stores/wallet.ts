@@ -6,6 +6,7 @@ import {
   SystemProgram,
   Transaction,
 } from '@solana/web3.js';
+import { Metaplex } from '@metaplex-foundation/js';
 
 window.Buffer = window.Buffer || Buffer;
 
@@ -20,6 +21,17 @@ interface Account {
   }[];
 }
 
+interface KwamiNFT {
+  mint: string;
+  name: string;
+  uri: string;
+  updateAuthority: string;
+  collection?: {
+    verified: boolean;
+    key: string;
+  };
+}
+
 export const useWalletStore = defineStore('wallet', {
   persist: true,
   state: () => ({
@@ -32,12 +44,17 @@ export const useWalletStore = defineStore('wallet', {
       USDT: 0,
       BTC: 0,
       ETH: 0,
+      QWAMI: 0,
     },
     tokens: {
       USDC: 'CyfUTbeYbpnjvUfE31jAvBM1MEfcm85UfEnEgRay3MjN',
     },
     rpcUrl: '',
     phantomStatus: 'unknown' as 'unknown' | 'not_installed' | 'locked' | 'ready' | 'connected',
+    // Kwami NFTs
+    kwamiNfts: [] as KwamiNFT[],
+    isLoadingKwamis: false,
+    kwamiLoadError: null as string | null,
   }),
   actions: {
     // Initialize Phantom listeners
@@ -180,6 +197,8 @@ export const useWalletStore = defineStore('wallet', {
         await Promise.allSettled([
           this.fetchSolBalance(connection),
           this.fetchAllAccounts(connection),
+          this.fetchQwamiBalance(connection),
+          this.fetchKwamiNfts(connection),
         ]);
 
         console.log('Wallet data fetched successfully');
@@ -363,7 +382,10 @@ export const useWalletStore = defineStore('wallet', {
             this.publicKey = '';
             this.isConnected = false;
             this.accounts = [];
-            this.balances = { SOL: 0, USDC: 0, USDT: 0, BTC: 0, ETH: 0 };
+            this.balances = { SOL: 0, USDC: 0, USDT: 0, BTC: 0, ETH: 0, QWAMI: 0 };
+            this.kwamiNfts = [];
+            this.isLoadingKwamis = false;
+            this.kwamiLoadError = null;
             console.log('Disconnected from Phantom Wallet');
           } else {
             console.error('Phantom Wallet not connected');
@@ -374,6 +396,142 @@ export const useWalletStore = defineStore('wallet', {
       } catch (error) {
         console.error('Disconnection from Phantom Wallet failed:', error);
       }
+    },
+
+    /**
+     * Fetch QWAMI token balance
+     */
+    async fetchQwamiBalance(connection: Connection) {
+      try {
+        if (!this.publicKey) {
+          console.warn('Wallet not connected, skipping QWAMI balance fetch');
+          return;
+        }
+
+        const config = useRuntimeConfig();
+        const qwamiMint = config.public.QWAMI_TOKEN_MINT;
+
+        if (!qwamiMint) {
+          console.warn('QWAMI token mint address not configured');
+          this.balances.QWAMI = 0;
+          return;
+        }
+
+        console.log('Fetching QWAMI balance for', this.publicKey);
+
+        try {
+          // Find token account for QWAMI
+          const tokenAccounts = await connection.getParsedTokenAccountsByOwner(
+            new PublicKey(this.publicKey),
+            { mint: new PublicKey(qwamiMint) },
+          );
+
+          if (tokenAccounts.value.length === 0) {
+            console.log('No QWAMI token account found');
+            this.balances.QWAMI = 0;
+            return;
+          }
+
+          const balance = tokenAccounts.value[0].account.data.parsed.info.tokenAmount.uiAmount || 0;
+          this.balances.QWAMI = balance;
+          console.log('QWAMI Balance:', balance);
+        } catch (error) {
+          console.warn('Error fetching QWAMI balance:', error);
+          this.balances.QWAMI = 0;
+        }
+      } catch (error) {
+        console.error('Failed to fetch QWAMI balance:', error);
+        this.balances.QWAMI = 0;
+      }
+    },
+
+    /**
+     * Fetch Kwami NFTs from wallet
+     */
+    async fetchKwamiNfts(connection: Connection) {
+      try {
+        if (!this.publicKey) {
+          console.warn('Wallet not connected, skipping Kwami NFT fetch');
+          return;
+        }
+
+        this.isLoadingKwamis = true;
+        this.kwamiLoadError = null;
+
+        const config = useRuntimeConfig();
+        const collectionMint = config.public.KWAMI_COLLECTION_MINT;
+
+        if (!collectionMint) {
+          console.warn('Kwami collection mint address not configured');
+          this.kwamiNfts = [];
+          this.isLoadingKwamis = false;
+          return;
+        }
+
+        console.log('Fetching Kwami NFTs for', this.publicKey);
+
+        try {
+          const metaplex = Metaplex.make(connection);
+          const owner = new PublicKey(this.publicKey);
+          const collectionAddress = new PublicKey(collectionMint);
+
+          // Fetch all NFTs owned by the wallet
+          const nfts = await metaplex.nfts().findAllByOwner({ owner });
+
+          // Filter for Kwami collection
+          const kwamiNfts = nfts.filter((nft: any) => {
+            if (!nft.collection) return false;
+            return nft.collection.address.toString() === collectionAddress.toString() &&
+                   nft.collection.verified;
+          });
+
+          // Map to simplified format
+          this.kwamiNfts = kwamiNfts.map((nft: any) => ({
+            mint: nft.address.toString(),
+            name: nft.name,
+            uri: nft.uri,
+            updateAuthority: nft.updateAuthorityAddress.toString(),
+            collection: {
+              verified: nft.collection.verified,
+              key: nft.collection.address.toString(),
+            },
+          }));
+
+          console.log(`Found ${this.kwamiNfts.length} Kwami NFT(s)`);
+        } catch (error) {
+          console.warn('Error fetching Kwami NFTs:', error);
+          this.kwamiLoadError = error instanceof Error ? error.message : 'Unknown error';
+          this.kwamiNfts = [];
+        }
+
+        this.isLoadingKwamis = false;
+      } catch (error) {
+        console.error('Failed to fetch Kwami NFTs:', error);
+        this.kwamiLoadError = error instanceof Error ? error.message : 'Unknown error';
+        this.kwamiNfts = [];
+        this.isLoadingKwamis = false;
+      }
+    },
+
+    /**
+     * Refresh wallet data (balances, NFTs, etc.)
+     */
+    async refreshWalletData() {
+      if (!this.isConnected || !this.publicKey || !this.rpcUrl) {
+        console.warn('Wallet not connected, cannot refresh');
+        return;
+      }
+
+      const connection = new Connection(this.rpcUrl);
+      
+      await Promise.allSettled([
+        this.fetchSolBalance(connection),
+        this.fetchAllAccounts(connection),
+        this.fetchQwamiBalance(connection),
+        this.fetchKwamiNfts(connection),
+      ]);
+
+      console.log('Wallet data refreshed');
     },
   },
 });
