@@ -6,7 +6,7 @@ Quami is the first Web OS (web2 & web3) that integrates Kwami—a fully customiz
 Quami integrates Kwami with your mainstream apps to deliver a private, OS-like experience:
 
 - **Quami (this repo):** The Web OS layer (web2 & web3) providing privacy-first app connectors, wallet integrations, and a glassmorphic system UI with Kwami at the center.
-- **Kwami (../kwami):** An independent 3D AI engine—fully customizable morphing blob with conversational AI and an MCP app connector; even the canvas background is configurable.
+- **Kwami ([github.com/alexcolls/kwami](https://github.com/alexcolls/kwami)):** An independent 3D AI engine—fully customizable morphing blob with conversational AI and an MCP app connector; even the canvas background is configurable.
 
 Quami provides an immersive 3D experience featuring an AI companion with:
 
