@@ -1,8 +1,12 @@
 # ☀️ quami
 
-A 3D interactive AI companion application powered by Nuxt 4 and the Kwami library.
-
+Quami is the first Web OS (web2 & web3) that integrates Kwami—a fully customizable 3D AI (blob) with conversational AI and an MCP app connector—across your mainstream apps. It enables private and anonymous data access and interaction through a beautiful, fully customizable glass UI with Kwami at the center.
 ## Overview
+
+Quami integrates Kwami with your mainstream apps to deliver a private, OS-like experience:
+
+- **Quami (this repo):** The Web OS layer (web2 & web3) providing privacy-first app connectors, wallet integrations, and a glassmorphic system UI with Kwami at the center.
+- **Kwami (../kwami):** An independent 3D AI engine—fully customizable morphing blob with conversational AI and an MCP app connector; even the canvas background is configurable.
 
 Quami provides an immersive 3D experience featuring an AI companion with:
 
@@ -10,6 +14,8 @@ Quami provides an immersive 3D experience featuring an AI companion with:
 - **Voice Interaction** - Natural conversation capabilities with text-to-speech and speech-to-text
 - **Dynamic Appearance** - Customizable skins and visual effects
 - **Wallet Integration** - Blockchain connectivity for digital asset management
+- **App Connectors (Web2 & Web3)** - Integrations with mainstream apps via privacy-first connectors (including MCP)
+- **Privacy & Anonymity** - Permissioned, privacy-by-design data access and interaction
 - **Multi-language Support** - i18n support for English, French, and Spanish
 
 ## Architecture

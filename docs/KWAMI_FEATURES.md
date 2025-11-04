@@ -141,22 +141,25 @@ Based on the CHANGELOG, version 2.0.0 added:
 9. ✅ **Random blob generation** - With configurable parameters
 
 ### Not Yet in Kwami Core (But You Have in Quami):
-- ❌ **Background video/images** - This is handled in **your Quami app**, not Kwami core
+- ❌ **Video backgrounds** - Kwami core handles solid/gradient/image canvas backgrounds; rich video backgrounds are handled in **your Quami app**
 - ❌ **State management** - Handled by your Pinia stores
 - ❌ **UI components** - Your Common components
 
-## 🖼️ Background Video/Image Feature
+## 🖼️ Canvas Backgrounds and Media
 
-**Important Note:** The background video/image functionality you're looking for is **NOT in Kwami core**. It's in your Quami app components:
+Kwami core exposes built-in canvas background controls (solid color, gradients, and images). Quami extends this with rich video backgrounds and system-wide UI backgrounds.
 
-### Background Components (in your app):
+- In Kwami core: use the Body background API to set solid colors, gradients, or images.
+- In Quami (this app): video backgrounds and advanced background UIs are provided by:
+
+### Background Components (in this app):
 1. `app/components/Common/BackgroundVideos.vue` - Video backgrounds
 2. `app/components/Common/BgVideoGrid.vue` - Grid of videos
 3. `app/components/Common/BgVideoGlobe.vue` - Globe video background
 4. `app/components/Quami/Video/Index.vue` - Video manager
 5. `app/components/Quami/Theme/Btn/Video.vue` - Video controls
 
-These are **separate from Kwami** and work alongside it. The Kwami blob renders on top of these backgrounds.
+These work alongside Kwami. The Kwami blob renders on top of these backgrounds.
 
 ## 🚀 Kwami Roadmap (Not Yet Implemented)
 
