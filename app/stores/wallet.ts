@@ -74,17 +74,17 @@ export const useWalletStore = defineStore('wallet', {
         if (publicKey) {
           console.log('Account changed:', publicKey.toString());
           this.publicKey = publicKey.toString();
-          // Refresh balances
+          // Refresh all wallet data including QWAMI and Kwami NFTs
           if (this.rpcUrl) {
-            const connection = new Connection(this.rpcUrl);
-            this.fetchSolBalance(connection);
-            this.fetchAllAccounts(connection);
+            this.refreshWalletData();
           }
         } else {
           console.log('Account disconnected');
           this.isConnected = false;
           this.publicKey = '';
           this.accounts = [];
+          this.kwamiNfts = [];
+          this.balances.QWAMI = 0;
         }
       });
 
@@ -94,6 +94,10 @@ export const useWalletStore = defineStore('wallet', {
         this.isConnected = false;
         this.publicKey = '';
         this.accounts = [];
+        this.kwamiNfts = [];
+        this.balances.QWAMI = 0;
+        this.isLoadingKwamis = false;
+        this.kwamiLoadError = null;
       });
 
       console.log('Phantom event listeners initialized');
