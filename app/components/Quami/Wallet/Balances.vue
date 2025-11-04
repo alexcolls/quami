@@ -70,6 +70,63 @@
           </div>
         </div>
 
+        <!-- QWAMI Token Balance -->
+        <div class="mb-4 p-3 bg-gradient-to-r from-purple-900/30 to-blue-900/30 rounded-lg border border-purple-500/20">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <div class="w-8 h-8 rounded-full bg-gradient-to-r from-purple-500 to-blue-500 flex items-center justify-center text-white text-xs font-bold">
+                QW
+              </div>
+              <span class="text-sm text-gray-300">QWAMI Token</span>
+            </div>
+            <div class="text-right">
+              <p class="text-lg font-semibold text-white">
+                {{ wallet.balances.QWAMI.toLocaleString() }}
+              </p>
+              <p class="text-xs text-gray-500">
+                QWAMI
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Kwami NFTs -->
+        <div class="mb-4 p-3 bg-gradient-to-r from-green-900/30 to-teal-900/30 rounded-lg border border-green-500/20">
+          <div class="flex items-center justify-between mb-2">
+            <div class="flex items-center gap-2">
+              <div class="i-mdi-Creation text-2xl text-green-400" />
+              <span class="text-sm text-gray-300">Kwami NFTs</span>
+            </div>
+            <div class="text-right">
+              <p class="text-lg font-semibold text-white">
+                {{ wallet.kwamiNfts.length }}
+              </p>
+            </div>
+          </div>
+          <div v-if="wallet.isLoadingKwamis" class="flex items-center gap-2 text-xs text-gray-400">
+            <div class="i-eos-icons-loading" />
+            <span>Loading Kwamis...</span>
+          </div>
+          <div v-else-if="wallet.kwamiLoadError" class="text-xs text-red-400">
+            {{ wallet.kwamiLoadError }}
+          </div>
+          <div v-else-if="wallet.kwamiNfts.length > 0" class="space-y-1">
+            <div
+              v-for="kwami in wallet.kwamiNfts.slice(0, 3)"
+              :key="kwami.mint"
+              class="text-xs text-gray-400 truncate"
+            >
+              {{ kwami.name }}
+            </div>
+            <div v-if="wallet.kwamiNfts.length > 3" class="text-xs text-gray-500 italic">
+              +{{ wallet.kwamiNfts.length - 3 }} more
+            </div>
+          </div>
+          <div v-else class="text-xs text-gray-500 italic">
+            No Kwami NFTs yet
+          </div>
+        </div>
+
         <!-- Token Balances -->
         <div
           v-if="account.tokens.length > 0"

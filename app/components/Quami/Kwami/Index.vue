@@ -26,6 +26,11 @@
             ? 'opacity-100 ' : 'opacity-0 hidden delay-200'"
           class="transition-opacity duration-300"
         />
+        <QuamiKwamiMint
+          :class="selectedTab.title.toUpperCase() === 'MINT'
+            ? 'opacity-100 ' : 'opacity-0 hidden delay-200'"
+          class="transition-opacity duration-300"
+        />
       </div>
     </template>
   </CommonMagicWindow>
@@ -44,6 +49,10 @@ const tabs = [
   {
     title: 'Soul',
     icon: 'i-mdi-cards-heart-outline',
+  },
+  {
+    title: 'Mint',
+    icon: 'i-mdi-Creation',
   },
 ];
 
