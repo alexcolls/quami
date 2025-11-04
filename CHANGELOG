@@ -5,6 +5,128 @@ All notable changes to the Quami project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.0] - 2025-11-04
+
+### Added
+
+#### Solana Blockchain Integration
+- **Kwami NFT System** - Complete NFT minting and management on Solana:
+  - DNA-based uniqueness validation using SHA-256 hashing
+  - On-chain DNA registry (max 1000 DNAs per registry)
+  - Burn-and-remint flow for body configuration changes
+  - Metadata-only updates for mind/soul changes
+  - Metaplex standard compliance for wallet compatibility
+- **QWAMI Token** - SPL token for AI service consumption:
+  - 1 trillion max supply with 9 decimals
+  - Base price of $0.01 USD per token
+  - Mint/burn functionality with authority controls
+  - Supply tracking (total minted/burned)
+  - Token balance display in wallet
+
+#### Anchor Programs (Rust)
+- `solana/anchor/qwami-token/` - QWAMI token program:
+  - Initialize, mint_tokens, burn_tokens instructions
+  - Update base price and transfer authority
+  - Supply cap enforcement
+- `solana/anchor/kwami-nft/` - Kwami NFT program:
+  - Initialize, mint_kwami, update_metadata, burn_kwami
+  - DNA registry management
+  - Uniqueness validation
+  - Metaplex integration
+
+#### Frontend State Management
+- `app/stores/kwami-nft.ts` - NFT state management:
+  - DNA calculation from body configuration
+  - Minting flow state machine (9 states)
+  - Progress tracking (0-100%)
+  - Update flow with DNA change detection
+  - Owned NFTs tracking
+- Enhanced `app/stores/wallet.ts`:
+  - QWAMI balance fetching
+  - Kwami NFT detection via Metaplex
+  - Collection filtering (verified NFTs only)
+  - Auto-refresh on account changes
+
+#### Minting UI Components
+- `app/components/Quami/Kwami/Mint/Index.vue` - Main minting interface
+- `app/components/Quami/Kwami/Mint/DNAPreview.vue` - Real-time DNA display with uniqueness check
+- `app/components/Quami/Kwami/Mint/MetadataForm.vue` - Name (50 chars) and description (500 chars) inputs
+- `app/components/Quami/Kwami/Mint/MintButton.vue` - Gradient button with loading states
+- Added "Mint" tab to Kwami component interface
+- Updated wallet balances to display QWAMI and Kwami NFT counts
+
+#### Backend API Routes
+- `server/api/kwami/mint.post.ts` - NFT minting with DNA validation and Arweave upload
+- `server/api/kwami/update.post.ts` - Metadata updates with burn/remint detection
+- `server/api/kwami/check-dna.post.ts` - On-chain DNA uniqueness validation
+- `server/api/qwami/balance.get.ts` - QWAMI token balance queries
+
+#### Metaplex & Arweave Integration
+- `solana/metaplex/utils/uploadToArweave.ts` - Comprehensive upload utilities:
+  - File upload to Arweave via Bundlr
+  - JSON metadata upload
+  - Complete NFT asset upload workflow
+  - Funding and balance checking
+- `solana/metaplex/utils/createCollection.ts` - Collection initialization
+- `solana/scripts/initialize-collection.sh` - Automated deployment script
+- Collection metadata configuration
+
+#### Utility Functions
+- `app/utils/kwami/calculateKwamiDNA.ts` - SHA-256 DNA computation from body config:
+  - Includes: spikes, time, rotation, colors, resolution, skin, shininess, wireframe, baseScale, opacity
+  - Excludes: background, audio, mind, soul
+  - Normalized JSON serialization for consistent hashing
+- `app/utils/kwami/prepareKwamiMetadata.ts` - Metaplex-standard metadata formatting
+
+#### Documentation
+- `docs/DNA_SYSTEM.md` - Complete DNA system documentation:
+  - Algorithm explanation
+  - Security considerations
+  - On-chain registry structure
+  - Burn-and-remint vs. metadata-only updates
+  - Best practices and FAQ
+- `docs/KWAMI_NFT_MINTING.md` - User guide for minting:
+  - Step-by-step minting process
+  - Wallet setup instructions
+  - Troubleshooting common issues
+  - Managing and updating NFTs
+- `docs/QWAMI_TOKEN.md` - Token economics documentation:
+  - Tokenomics model and distribution
+  - Utility and consumption mechanics
+  - Staking rewards and governance
+  - Integration guide for developers
+- `solana/SETUP.md` - Development environment setup
+- `solana/README.md` - Programs overview and architecture
+- Program-specific READMEs with deployment instructions
+
+#### Project Structure
+- `solana/` directory with organized subdirectories:
+  - `anchor/` for Rust programs
+  - `metaplex/` for NFT utilities
+  - `scripts/` for deployment and management
+  - `collection/` for collection metadata
+
+### Changed
+
+- Enhanced Phantom wallet integration with QWAMI and NFT detection
+- Updated wallet event listeners to sync blockchain data
+- Expanded `.env.sample` with Solana configuration variables
+- Added Solana dependencies to `package.json`:
+  - @coral-xyz/anchor
+  - @metaplex-foundation/js
+  - @solana/spl-token
+  - bs58
+  - crypto-js
+
+### Technical Details
+
+- **DNA Registry**: PDA-based storage with 1000 DNA capacity per registry
+- **NFT Storage**: Permanent storage on Arweave for metadata and assets
+- **Token Supply**: 1 trillion QWAMI max, 9 decimals, mintable/burnable
+- **Blockchain**: Solana devnet (configurable for mainnet)
+- **Collection**: Metaplex certified collection for verified NFTs
+- **Security**: SHA-256 collision-resistant hashing, authority-controlled minting
+
 ## [0.2.0] - 2025-11-03
 
 ### Added
