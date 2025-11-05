@@ -3,6 +3,7 @@
     <QuamiAccount />
     <QuamiWallet />
     <QuamiKwami />
+    <QuamiCandy />
     <QuamiMusic />
     <QuamiVideo />
     <QuamiTheme />
