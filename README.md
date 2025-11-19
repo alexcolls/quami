@@ -1,4 +1,4 @@
-# ☀️ quami
+# 🔮 quami
 
 Quami is a Web OS that integrates Kwami—a fully customizable 3D AI (blob) with conversational AI and an MCP app connector—across your mainstream apps. It enables private and anonymous data access and interaction through a beautiful, fully customizable glass UI with Kwami at the center.
 ## Overview
