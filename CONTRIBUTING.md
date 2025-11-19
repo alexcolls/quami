@@ -313,12 +313,12 @@ Group related changes by feature/fix:
 
 ```bash
 # ✅ Good: One commit per logical change
-git commit -m "✨ Add wallet connection UI components"
-git commit -m "✨ Implement Solana wallet integration"
-git commit -m "✅ Add wallet connection tests"
+git commit -m "✨ Add user profile UI components"
+git commit -m "✨ Implement user authentication flow"
+git commit -m "✅ Add authentication tests"
 
 # ❌ Bad: All changes in one commit
-git commit -m "Add wallet stuff"
+git commit -m "Add user stuff"
 ```
 
 ## Pull Request Process
@@ -401,8 +401,6 @@ quami/
 │   ├── components/          # Vue components
 │   │   ├── Common/          # Shared UI components
 │   │   ├── Quami/          # Quami-specific components
-│   │   │   ├── Kwami/      # Kwami AI companion UI
-│   │   │   ├── Wallet/     # Wallet integration
 │   │   │   └── Account/    # User account management
 │   │   └── Canvas/         # 3D canvas components
 │   ├── composables/        # Vue composables

@@ -5,6 +5,25 @@ All notable changes to the Quami project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.4.0] - 2025-11-19
+
+### Removed
+- **Complete Web3/Blockchain Removal** - Quami is now 100% web2:
+  - Removed entire `solana/` directory including Anchor programs and Metaplex scripts
+  - Removed wallet integration components and stores
+  - Removed Kwami NFT minting functionality
+  - Removed QWAMI token integration
+  - Removed Solana dependencies (@solana/web3.js, @solana/spl-token, @coral-xyz/anchor, @metaplex-foundation/*)
+  - Removed crypto libraries (bs58, crypto-js, buffer)
+  - Removed web3-related server APIs (kwami mint, qwami balance)
+  - Removed web3-related documentation files
+  - Cleaned up configuration files (nuxt.config.ts, .env.sample)
+  - Updated README and CONTRIBUTING docs to reflect web2-only focus
+
+### Changed
+- Quami is now a pure web2 application focused on privacy and AI features
+- kwami.io will be the separate web3 project for blockchain functionality
+
 ## [0.3.0] - 2025-11-04
 
 ### Added

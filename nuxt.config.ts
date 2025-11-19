@@ -82,7 +82,6 @@ export default defineNuxtConfig({
       SUPABASE_PUBLISHABLE_KEY: process.env.NUXT_SB_PUBLIC,
       SUPABASE_URL: process.env.NUXT_SB_URL,
       SUPABASE_KEY: process.env.NUXT_SB_KEY,
-      RPC_URL: process.env.NUXT_PUBLIC_RPC_URL || 'https://api.mainnet-beta.solana.com',
     },
     ELABAI_API_KEY: process.env.NUXT_ELEVEN_LABS_KEY,
   },
@@ -108,21 +107,9 @@ export default defineNuxtConfig({
     },
   },
   vite: {
-    define: {
-      global: 'globalThis',
-    },
     resolve: {
       alias: {
-        buffer: 'buffer/',
         '@kwami': fileURLToPath(new URL('./app/modules/@kwami', import.meta.url)),
-      },
-    },
-    optimizeDeps: {
-      include: ['buffer'],
-      esbuildOptions: {
-        define: {
-          global: 'globalThis',
-        },
       },
     },
   },
