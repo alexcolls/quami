@@ -1,9 +1,6 @@
 <template>
   <div class="quami-windows">
     <QuamiAccount />
-    <QuamiWallet />
-    <QuamiKwami />
-    <QuamiCandy />
     <QuamiMusic />
     <QuamiVideo />
     <QuamiTheme />
