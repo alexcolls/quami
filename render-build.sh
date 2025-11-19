@@ -1,21 +1,25 @@
 #!/bin/bash
 set -e
 
-# Clean and install dependencies (fix npm optional deps bug)
+echo "==> Starting Render build process..."
+
+# Clean everything to fix npm optional deps bug
 echo "==> Cleaning node_modules and package-lock.json..."
 rm -rf node_modules package-lock.json
 
-echo "==> Installing dependencies (skipping postinstall)..."
-npm install --ignore-scripts --legacy-peer-deps
+# Install dependencies with force to ensure optional deps are properly installed
+echo "==> Installing dependencies (with force)..."
+npm install --force --include=optional
 
-# Reinstall to get optional deps properly
-echo "==> Reinstalling to fix optional dependencies..."
-npm install --legacy-peer-deps
-
-# Run nuxt prepare manually
-echo "==> Preparing Nuxt..."
-npx nuxt prepare
+# Verify oxc-parser binding is installed
+echo "==> Verifying oxc-parser binding..."
+if [ ! -f "node_modules/@oxc-parser/binding-linux-x64-gnu/parser.linux-x64-gnu.node" ]; then
+  echo "==> oxc-parser binding not found, reinstalling..."
+  npm install --force @oxc-parser/binding-linux-x64-gnu
+fi
 
 # Build the application
 echo "==> Building application..."
 npm run build
+
+echo "==> Build completed successfully!"
