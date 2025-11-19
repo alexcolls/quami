@@ -1,4 +1,4 @@
-# Contributing to Quami ☀️
+# Contributing to Quami 🔮
 
 Thank you for your interest in contributing to Quami! This document provides guidelines and instructions for contributing to the project.
 
@@ -489,7 +489,7 @@ Contributors will be recognized in:
 - Release notes
 - GitHub contributors page
 
-Thank you for contributing to Quami! 🌕✨
+Thank you for contributing to Quami! 🔮✨
 
 ---
 

@@ -45,7 +45,7 @@ export default defineNuxtConfig({
   app: {
     baseURL: '/',
     head: {
-      title: 'QUAMI',
+      title: '🔮 QUAMI',
       meta: [
         { charset: 'utf-8' },
         {
@@ -59,7 +59,7 @@ export default defineNuxtConfig({
       ],
       link: [
         { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' },
-        { rel: 'icon', type: 'image/png', href: '/favicon.png' },
+        { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
       ],
     },
     pageTransition: { name: 'page', mode: 'out-in' },
