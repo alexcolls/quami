@@ -1,7 +1,3 @@
-[submodule "app/modules/@kwami"]
-	path = app/modules/@kwami
-	url = https://github.com/alexcolls/kwami.git
-	branch = main
 [submodule "app/modules/nuxt-themes"]
 	path = app/modules/nuxt-themes
 	url = https://github.com/alexcolls/nuxt-themes.git

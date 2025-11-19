@@ -1,5 +1,5 @@
 import { Kwami } from '@kwami';
-import audioFiles from '@kwami/assets/audio';
+import audioFiles from '~/assets/aud';
 
 const useQStore = defineStore('q', {
   persist: false,
