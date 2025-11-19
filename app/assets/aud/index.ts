@@ -1,5 +1,6 @@
 import template from './template.mp3';
 
-export default {
-  template
-};
+// Export as array for Kwami compatibility
+const audioFiles = [template];
+
+export default audioFiles;

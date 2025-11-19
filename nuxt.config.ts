@@ -42,6 +42,9 @@ export default defineNuxtConfig({
     ],
   },
   devtools: { enabled: true },
+  devServer: {
+    port: 5555,
+  },
   app: {
     baseURL: '/',
     head: {
@@ -106,10 +109,15 @@ export default defineNuxtConfig({
       },
     },
   },
+  alias: {
+    '@kwami': fileURLToPath(new URL('./node_modules/kwami', import.meta.url)),
+    '@kwami/assets': fileURLToPath(new URL('./app/assets', import.meta.url)),
+  },
   vite: {
     resolve: {
       alias: {
-        '@kwami': fileURLToPath(new URL('./app/modules/@kwami', import.meta.url)),
+        '@kwami': fileURLToPath(new URL('./node_modules/kwami', import.meta.url)),
+        '@kwami/assets': fileURLToPath(new URL('./app/assets', import.meta.url)),
       },
     },
   },

@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@alexcolls/nuxt-ux": "0.6.0",
+    "@elevenlabs/elevenlabs-js": "^2.24.1",
     "@iconify-json/circle-flags": "^1.2.10",
     "@iconify-json/heroicons": "^1.2.3",
     "@iconify-json/line-md": "^1.2.11",
@@ -33,6 +34,7 @@
     "@unhead/vue": "^2.0.3",
     "better-sqlite3": "^12.3.0",
     "eslint": "^9.0.0",
+    "kwami": "^1.4.1",
     "nuxt": "^4.1.2",
     "pinia": "^3.0.3",
     "simplex-noise": "^4.0.3",
