@@ -2,7 +2,9 @@ services:
   - type: web
     name: quami
     env: node
-    buildCommand: ./render-build.sh
+    region: oregon
+    plan: free
+    buildCommand: chmod +x render-build.sh && ./render-build.sh
     startCommand: node .output/server/index.mjs
     envVars:
       - key: NODE_VERSION

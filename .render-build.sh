@@ -1,0 +1,23 @@
+#!/bin/bash
+set -e
+
+echo "==> Starting Render build process..."
+
+# Clean everything to fix npm optional deps bug
+echo "==> Cleaning node_modules and package-lock.json..."
+rm -rf node_modules package-lock.json
+
+# Install dependencies with force to ensure optional deps are properly installed
+echo "==> Installing dependencies (with force)..."
+npm install --force --include=optional
+
+# Rebuild native bindings for Linux
+echo "==> Rebuilding native bindings for Linux platform..."
+npm rebuild sharp @oxc-parser/binding-linux-x64-gnu --force
+
+# Build the application
+echo "==> Building application..."
+npm run build
+
+echo "==> Build completed successfully!"
+
