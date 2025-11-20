@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: quami
+    env: node
+    buildCommand: ./render-build.sh
+    startCommand: node .output/server/index.mjs
+    envVars:
+      - key: NODE_VERSION
+        value: 20.11.0
+      - key: NPM_CONFIG_INCLUDE
+        value: optional
+
