@@ -18,6 +18,10 @@ if [ ! -f "node_modules/@oxc-parser/binding-linux-x64-gnu/parser.linux-x64-gnu.n
   npm install --force @oxc-parser/binding-linux-x64-gnu
 fi
 
+# Rebuild sharp for the Linux platform to fix @nuxt/image deployment
+echo "==> Rebuilding sharp for Linux platform..."
+npm rebuild sharp --force
+
 # Build the application
 echo "==> Building application..."
 npm run build
