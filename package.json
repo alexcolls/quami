@@ -9,7 +9,7 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare && npm rebuild sharp @oxc-parser/binding-linux-x64-gnu --force || true"
+    "postinstall": "nuxt prepare && npm rebuild sharp @oxc-parser/binding-linux-x64-gnu @oxc-transform/binding-linux-x64-gnu --force || true"
   },
   "dependencies": {
     "@alexcolls/nuxt-ux": "0.6.0",
@@ -30,6 +30,7 @@
     "@nuxtjs/i18n": "^10.1.0",
     "@nuxtjs/supabase": "^2.0.0",
     "@oxc-parser/binding-linux-x64-gnu": "^0.40.1",
+    "@oxc-transform/binding-linux-x64-gnu": "^0.40.1",
     "@pinia-plugin-persistedstate/nuxt": "^1.2.1",
     "@pinia/nuxt": "^0.11.2",
     "@types/three": "^0.180.0",

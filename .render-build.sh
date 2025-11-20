@@ -13,7 +13,7 @@ npm install --force --include=optional
 
 # Rebuild native bindings for Linux
 echo "==> Rebuilding native bindings for Linux platform..."
-npm rebuild sharp @oxc-parser/binding-linux-x64-gnu --force
+npm rebuild sharp @oxc-parser/binding-linux-x64-gnu @oxc-transform/binding-linux-x64-gnu --force
 
 # Build the application
 echo "==> Building application..."
