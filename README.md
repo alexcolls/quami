@@ -1,5 +1,12 @@
 # 🔮 quami
 
+> **Note:** Quami is currently under development. A "Coming Soon" landing page is deployed at [quami.io](https://quami.io) with the following roadmap:
+> - **July 2026**: Public Alpha release
+> - **September 2026**: Beta release
+> - **January 2027**: v1.0 Stable release
+>
+> Meanwhile, you can explore our Web3 app at [kwami.io](https://kwami.io), which launches mainnet in January 2025.
+
 Quami is a Web OS that integrates Kwami—a fully customizable 3D AI (blob) with conversational AI and an MCP app connector—across your mainstream apps. It enables private and anonymous data access and interaction through a beautiful, fully customizable glass UI with Kwami at the center.
 ## Overview
 
