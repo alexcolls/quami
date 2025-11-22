@@ -5,6 +5,25 @@ All notable changes to the Quami project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.4.1] - 2025-11-22
+
+### Added
+- **Coming Soon Landing Page** - Beautiful single-page landing at quami.io:
+  - Interactive Kwami blob in the center with glass morphism effects
+  - Roadmap timeline with three milestones:
+    - 🚀 July 2026: Public Alpha
+    - 🎯 September 2026: Beta Release
+    - ✨ January 2027: v1.0 Stable
+  - Call-to-action linking to kwami.io (Web3 app launching mainnet January 2025)
+  - Fully responsive design for mobile and desktop
+  - Dark mode support with adaptive glassmorphism
+  - Gradient background with animated floating ghost emoji
+  - Hover effects and smooth transitions throughout
+
+### Changed
+- Replaced incomplete app/pages/index.vue with coming soon page
+- Updated README with development status and roadmap note
+
 ## [0.4.0] - 2025-11-19
 
 ### Removed
